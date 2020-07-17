@@ -1,0 +1,104 @@
+.table-border-style .table {
+    margin-bottom: 0
+}
+.table {
+    width: 100%;
+    max-width: 100%;
+    /*margin-bottom: 1rem;*/
+}
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 18px;
+}
+
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -ms-overflow-style: -ms-autohiding-scrollbar
+}
+.table-responsive {
+    overflow-x: auto;
+    min-height: 0.01%;
+}
+.table-responsive {
+    overflow-x: auto;
+    min-height: 0.01%;
+}
+.card-block {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1.25rem
+}
+.card-header:first-child {
+    border-radius: calc(.25rem - 1px) calc(.25rem - 1px) 0 0
+}
+.card .card-header {
+    background-color: transparent;
+    padding: 15px 20px
+}
+.card-header {
+    padding: .75rem 1.25rem;
+    margin-bottom: 0;
+    background-color: #f7f7f9;
+    border-bottom: 1px solid rgba(0,0,0,.125)
+}
+.card {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: .25rem
+}
+.card {
+    border-radius: 2px;
+    border-top: 4px solid #8cddcd;
+    box-shadow: 0 2px 1px rgba(0,0,0,.05);
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    margin-bottom: 30px
+}
+.site-loader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 999;
+    height: 100%;
+    background: rgba(255,255,255,0.5);
+}
+body {
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #292b2c;
+    background-color: #fff
+}
+.table-active, .table-active > td, .table-active > th {
+    background-color: #B3E2F5
+}
+.table-success, .table-success > td, .table-success > th {
+    background-color: #dff0d8
+}
+.table-warning, .table-warning > td, .table-warning > th {
+    background-color: #fcf8e3
+}
+.table-danger, .table-danger > td, .table-danger > th {
+    background-color: #f2dede
+}
+.table-info, .table-info > td, .table-info > th {
+    background-color: #d9edf7
+}

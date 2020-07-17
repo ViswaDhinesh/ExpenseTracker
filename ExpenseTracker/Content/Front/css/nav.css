@@ -1,0 +1,295 @@
+#header1 {
+  padding: 30px 0;
+  height: 92px;
+  position: relative;
+  left: 0;
+  top: 0;
+  right: 0;
+  transition: all 0.5s;
+  z-index: 997;
+  background-color: transparent;
+}
+
+#header1.header-scrolled {
+  background: rgba(0, 0, 0, 0.9);
+  padding: 20px 0;
+  height: 72px;
+  transition: all 0.5s;
+}
+
+#header1 #logo {
+  float: none;
+}
+
+#header1 #logo h1 {
+  font-size: 34px;
+  margin: 0;
+  padding: 0;
+  line-height: 1;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-align: center;
+}
+
+#header1 #logo h1 a,
+#header1 #logo h1 a:hover {
+  color: #222;
+  padding-left: 10px;
+  border-left: 4px solid #fff;
+}
+
+#header1 #logo img {
+  padding: 0;
+  margin: 0 auto;
+  display: block;
+
+}
+
+
+/*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+
+/* Nav Menu Essentials */
+
+.nav-menu,
+.nav-menu * {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-menu ul {
+  position: absolute;
+  display: none;
+  top: 100%;
+  left: 0;
+  z-index: 99;
+}
+
+.nav-menu li {
+  position: relative;
+  white-space: nowrap;
+}
+
+.nav-menu > li {
+  float: left;
+}
+
+.nav-menu li:hover > ul,
+.nav-menu li.sfHover > ul {
+  display: block;
+}
+
+.nav-menu ul ul {
+  top: 0;
+  left: 100%;
+}
+
+.nav-menu ul li {
+  min-width: 180px;
+}
+
+/* Nav Menu Arrows */
+
+.sf-arrows .sf-with-ul {
+  padding-right: 30px;
+}
+
+.sf-arrows .sf-with-ul:after {
+  content: "\f107";
+  position: absolute;
+  right: 15px;
+  font-family: FontAwesome;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.sf-arrows ul .sf-with-ul:after {
+  content: "\f105";
+}
+
+/* Nav Meu Container */
+
+#nav-menu-container {
+  float: right;
+  margin: 0;
+}
+
+/* Mobile Nav Toggle */
+
+#mobile-nav-toggle {
+  position: fixed;
+  left: 15px;
+  top: 0;
+  z-index: 999;
+  margin: 20px 20px 0 0;
+  border: 0;
+  background: none;
+  font-size: 24px;
+  display: none;
+  transition: all 0.4s;
+  outline: none;
+  cursor: pointer;
+}
+.mobile-nav-active #mobile-nav-toggle {
+ 
+  right: 0;
+   left: auto;
+}
+
+#mobile-nav-toggle i {
+  color: #222;
+}
+
+/* Mobile Nav Styling */
+
+#mobile-nav {
+  position: fixed;
+  top: 0;
+  padding-top: 18px;
+  bottom: 0;
+  z-index: 998;
+  background: rgba(0, 0, 0, 0.8);
+  left: -260px;
+  width: 260px;
+  overflow-y: auto;
+  transition: 0.4s;
+}
+
+#mobile-nav ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+#mobile-nav ul li {
+  position: relative;
+}
+
+#mobile-nav ul li a {
+  color: #fff; 
+  text-transform: capitalize;
+  overflow: hidden;
+  padding: 10px 22px 10px 15px;
+  position: relative;
+  text-decoration: none;
+  width: 100%;
+  display: block;
+  outline: none; 
+  font: 14px/normal Lato-Regular;
+}
+
+#mobile-nav ul li a:hover {
+  color: #fff;
+}
+
+#mobile-nav ul li li {
+  padding-left: 30px;
+}
+
+#mobile-nav ul li.menu-active a {
+  color: #fff;
+}
+
+#mobile-nav ul .menu-has-children i {
+  position: absolute;
+  right: 0;
+  z-index: 99;
+  padding: 15px;
+  cursor: pointer;
+  color: #fff;
+  font-size: 10px;
+}
+
+#mobile-nav ul .menu-has-children i.fa-chevron-up {
+  color: #fff;
+}
+
+#mobile-nav ul .menu-has-children li a {
+  text-transform: capitalize;
+}
+
+#mobile-nav ul .menu-item-active {
+  color: #fff;
+}
+
+#mobile-body-overly {
+  width: 100%;
+  height: 100%;
+  z-index: 997;
+  top: 0;
+  left: 0;
+  position: fixed;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+}
+
+/* Mobile Nav body classes */
+
+body.mobile-nav-active {
+  overflow: hidden;
+}
+
+body.mobile-nav-active #mobile-nav {
+  left: 0;
+}
+
+body.mobile-nav-active #mobile-nav-toggle {
+  color: #fff;
+}
+
+
+/*--------------------------------------------------------------
+# Responsive Media Queries
+--------------------------------------------------------------*/
+
+
+@media (max-width: 992px) {
+   #nav-menu-container {
+    display: none;
+  }
+
+  #mobile-nav-toggle {
+    display: inline;
+  }
+}
+.footer_mobile_menu h5
+{
+    color: #fff;
+    padding-left: 13px;
+    font-size: 16px;    
+    padding-top: 5px;
+}
+.footer_mobile_menu ul
+{
+  margin-left: 10px !important;
+}
+.footer_mobile_menu .social_icon li
+{
+      display: inline-block;
+}
+#mobile-nav .social_icon li:before
+{
+    
+    background: url(../images/social_1.png) no-repeat;   
+}
+#mobile-nav .social_icon li:nth-child(2):before {
+    background-position: 0px -173px
+}
+
+#mobile-nav .social_icon li:nth-child(3):before {
+    background-position: 0px -68px;
+}
+
+#mobile-nav .social_icon li:nth-child(4):before {
+    background-position: 0px -105px;
+}
+
+#mobile-nav .social_icon li:nth-child(5):before {
+    background-position: 0px -141px;
+}
+.mobile-nav-active .fa-remove:before, .fa-close:before, .fa-times:before {
+    color: #fff;
+}

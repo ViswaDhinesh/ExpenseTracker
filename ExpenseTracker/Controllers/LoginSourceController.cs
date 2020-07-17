@@ -1,0 +1,106 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.Mvc;
+
+namespace ExpenseTracker
+{
+    //[ExceptionHandler]
+    public class LoginSourceController : Controller
+    {
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            if (Session["UserID"] != null)
+            {
+                long roleId = Convert.ToInt64(Session["RoleID"]);
+                string Url = Request.Url.AbsolutePath;
+                string[] UrlSplit = Url.Split('/');
+                Url = "/" + UrlSplit[1] + "/";
+
+                ExpenseTrackerEntites dbEntities = new ExpenseTrackerEntites();
+
+                long subMenuId = 0;
+
+                subMenuId = dbEntities.ETSubMenus.Where(n => n.SubMenuUrl.ToLower().Contains(Url.ToLower()) && n.Status).FirstOrDefault().SubMenuID;
+
+
+                bool isPermission = dbEntities.ETMenuAccesses.Where(x => x.RoleID == roleId).Any(x => x.SubMenuID == subMenuId);
+                if (!isPermission)
+                {
+                    Session["UserID"] = null;
+                    Session["UserName"] = null;
+                    Session["RoleID"] = null;
+                    Session["RoleName"] = null;
+                    TempData["SessionExpired"] = "You don't have permission to access this page";
+                    Response.Redirect("/admin");
+                }
+                else
+                {
+                    List<ETMenuAccess> menuMappings = new List<ETMenuAccess>();
+                    List<ETMenu> menus = new List<ETMenu>();
+                    List<ETSubMenu> subMenus = new List<ETSubMenu>();
+                    List<ETSubMenu> currentSubMenus = new List<ETSubMenu>();
+                    List<long> menuIds = new List<long>();
+                    List<long> subMenuIds = new List<long>();
+
+                    if (!string.IsNullOrEmpty(Convert.ToString(Session["UserID"])) && !string.IsNullOrEmpty(Convert.ToString(Session["RoleID"])))
+                    {
+                        long userId = Convert.ToInt64(Session["UserID"]);
+                        int count = dbEntities.ETUsers.Where(x => x.UserID == userId && x.Status).Count();
+                        if (count == 0)
+                        {
+                            Session["UserID"] = null;
+                            Session["UserName"] = null;
+                            Session["RoleID"] = null;
+                            Session["RoleName"] = null;
+                            TempData["SessionExpired"] = "Sorry, Your account was deactivated";
+                            Response.Redirect("/admin");
+                        }
+                        else
+                        {
+                            menuMappings = dbEntities.ETMenuAccesses.Where(x => x.RoleID == roleId).ToList();
+                            if (menuMappings != null && menuMappings.Count > 0)
+                            {
+                                menuIds = menuMappings.Select(x => x.MenuAccessID).Distinct().ToList();
+                                subMenuIds = menuMappings.Select(x => x.SubMenuID).Distinct().ToList();
+                                menus = dbEntities.ETMenus.Where(x => menuIds.Contains(x.MenuID) && x.Status).OrderBy(x => x.MenuID).ThenBy(x => x.MenuName).ToList();
+                                subMenus = dbEntities.ETSubMenus.Where(x => subMenuIds.Contains(x.SubMenuID) && x.Status).OrderBy(x => x.SubMenuID).ThenBy(x => x.SubMenuName).ToList();
+
+                                ViewBag.menus = menus;
+                                ViewBag.subMenus = subMenus;
+                            }
+                            else
+                            {
+                                Session["UserID"] = null;
+                                Session["UserName"] = null;
+                                Session["RoleID"] = null;
+                                Session["RoleName"] = null;
+                                TempData["SessionExpired"] = "Sorry, You don't have permission";
+                                Response.Redirect("/admin");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        Session["UserID"] = null;
+                        Session["UserName"] = null;
+                        Session["RoleID"] = null;
+                        Session["RoleName"] = null;
+                        TempData["SessionExpired"] = "Session Expired";
+                        Response.Redirect("/admin");
+                    }
+                }
+            }
+            else
+            {
+                Session["UserID"] = null;
+                Session["UserName"] = null;
+                Session["RoleID"] = null;
+                Session["RoleName"] = null;
+                Response.Redirect("/admin");
+            }
+
+        }
+    }
+}

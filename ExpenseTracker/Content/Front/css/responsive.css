@@ -1,0 +1,2242 @@
+@media(max-width:992px) {
+    body {
+        overflow-x: hidden !important;
+    }
+
+    .fixed-top {
+        position: static;
+    }
+
+    .shop_details {
+        position: relative;
+        padding: 20px;
+    }
+
+    .shop_img img {
+        width: 100%;
+    }
+
+    .news_letter_content .news_form {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    .home_slider {
+        margin-top: 0;
+    }
+
+    .house_gemes_features .feature_img {
+        float: none;
+        max-height: 63px;
+        margin-top: 20px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .house_gemes_features .features_content {
+        text-align: center;
+        margin-bottom: 60px;
+    }
+
+    .house_gemes_features .features_list:before {
+        background-color: transparent;
+    }
+
+    footer {
+        padding-top: 0px;
+        margin-top: 0px;
+    }
+
+    .container-fluid {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .footer .container-fluid {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+    /*New Start*/
+    .desktop_only {
+        display: none !important;
+    }
+
+    .navbar-light .navbar-toggler {
+        border-color: transparent;
+    }
+
+    .bg-light {
+        border-top: 0;
+    }
+
+    .top_nav li {
+        position: relative;
+    }
+
+    .top_search .form-control {
+        width: 100%;
+    }
+
+    .search_icon {
+        right: 30px;
+    }
+
+    .top_icon {
+        position: absolute;
+        right: 60px;
+        top: 28px;
+    }
+
+    .cart_icon {
+        width: 25px;
+        height: 25px;
+    }
+
+    .mobile_navigation .count {
+        position: absolute;
+        /* background: #ddd; */
+        z-index: 9999;
+        padding: 3px;
+        top: 15px;
+        right: 20px;
+        font-size: 12px;
+        color: #ed037d;
+    }
+
+    .featured_category_inner {
+        max-height: 100%;
+    }
+
+    .featured_category {
+        padding: 0px;
+    }
+
+    .foot_list {
+        padding-bottom: 30px;
+    }
+
+    .signin-sec {
+        padding-top: 20px;
+    }
+
+    .btn_pg_outline .btn-outline-dark {
+        padding: 7px 10px !important;
+    }
+
+    .home_slider .slide-caption__title h2 {
+        font: 18px/normal EB Garamond;
+    }
+
+    .home_slider .slide-caption {
+        position: absolute;
+        top: Calc(50% - 50px);
+        left: 50%;
+        transform: none;
+        text-align: center;
+        right: 20px;
+    }
+
+    .prev-slide,
+    .next-slide {
+        display: none;
+    }
+
+    .news_letter_content .news_form .btn-dark {
+        width: 25%;
+        padding: 11px 0px;
+    }
+
+    .news_letter_content .news_form .form-control {
+        width: 75%;
+    }
+
+    .social-icon ul {
+        padding-left: 0px;
+        text-align: center;
+    }
+
+        .social-icon ul li {
+            display: inline-block;
+            margin: 0px 7px;
+        }
+
+    .or-option p {
+        margin: 0px auto;
+        width: 235px;
+    }
+
+    .guest-inner {
+        width: 100%;
+    }
+
+    section.guest-sec {
+        padding-top: 20px;
+    }
+
+    .product_img {
+        max-width: 100%;
+        height: auto !important;
+    }
+
+    .page_banner {
+        margin-top: 0px;
+    }
+
+    .filter .filter_box {
+        padding: 10px 10px 20px 20px;
+    }
+
+    .filter .refine {
+        text-align: left !important;
+    }
+
+    .filter_box div[class*="col-md-"] {
+        margin-bottom: 15px;
+    }
+
+    .product_list {
+        padding: 28px 10px;
+    }
+
+    .card-flip {
+        padding: 20px 0px;
+    }
+
+    .pro_cart_col {
+        position: relative !important;
+        bottom: auto !important;
+        left: auto !important;
+        right: auto !important;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .filter .container {
+        max-width: 700px;
+    }
+
+    .category_list .category_caption h3 {
+        font: 16px/1.3 EB Garamond;
+    }
+
+    .category_list .category_caption h3 {
+        padding: 10px;
+    }
+
+    .pieces_list {
+        margin-bottom: 10px !important;
+    }
+
+    .product_details_banner .page_banner_inner {
+        padding: 10px 20px 10px;
+    }
+
+    .shopping_checkout {
+        padding: 0px;
+    }
+
+        .shopping_checkout .bag_item:after {
+            top: 15px;
+        }
+
+    #header1 #logo {
+        float: none;
+        width: 200px;
+        position: relative;
+        margin: 0 auto;
+    }
+
+    .payment_addr {
+        margin-bottom: 30px;
+    }
+
+    .blog_list .container-fluid {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .blog_list_details_inner {
+        padding: 0px;
+    }
+
+    .related_post .category_caption h3 {
+        font: 16px/normal EB Garamond;
+    }
+
+    .about_dashboard {
+        margin-top: 0;
+    }
+
+        .about_dashboard .container-fluid {
+            padding: 20px;
+        }
+
+    .contact_sec {
+        padding: 40px;
+    }
+
+    .wishlist_info:after {
+        display: none;
+    }
+
+    .category_item img {
+        margin: 0 auto;
+        display: block;
+    }
+
+    .timeline li.timeline-inverted .timeline-panel {
+        margin-right: 0px;
+    }
+
+    .timeline li .timeline-panel {
+        margin-left: 0px;
+    }
+
+    .contact_sec {
+        margin-bottom: 30px;
+    }
+
+    #home1 .btn_pg_outline .btn-outline-dark {
+        border: 0;
+        padding: 0 !important;
+        margin: 0;
+    }
+
+    #home1 .slide-caption__title {
+        text-align: left;
+    }
+
+        #home1 .slide-caption__title h2 {
+            font: 18px/1.2 EB Garamond;
+            margin-bottom: 0;
+            padding-bottom: 7px;
+        }
+
+    #featured_category_list.owl-carousel .owl-item {
+        border-bottom: 0;
+    }
+
+    .coupon_apply {
+        padding-left: 15px;
+    }
+
+    .top_search .form-control {
+        padding-right: 50px;
+    }
+    .pdt_title 
+    {
+        width: 100%;
+    }
+}
+
+@media(max-width: 575px) {
+    .pro_cart_col .ad_cart_btn .btn {
+        float: left;
+    }
+
+    .shopping_checkout .header .text-right {
+        text-align: left !important;
+    }
+
+    .shopping_bag {
+        padding: 0px;
+    }
+
+    .applied_coupon_list .coupon_status p {
+        float: left;
+    }
+
+    .address_info:after {
+        display: none;
+    }
+
+    .blog_links .social {
+        float: left;
+        margin-top: 15px;
+    }
+
+    .contact_info {
+        border-right: 0;
+    }
+
+    .phone_col {
+        margin-left: 0;
+    }
+
+    .about_contact_info .phone:before {
+        left: 12px;
+    }
+
+    #guest_track .track_list {
+        border-radius: 0;
+    }
+
+    .track_list_col {
+        padding-bottom: 30px;
+    }
+
+    #guest_track .track_list_col.track_first:after {
+        right: 0px;
+    }
+
+    #guest_track .track_list_col.track_third:after {
+        right: 0;
+    }
+
+    .wishlist_info {
+        padding: 0;
+    }
+
+    .order_history .odr_price {
+        float: left;
+    }
+
+    .order_history_head {
+        margin-top: 0;
+        padding: 0;
+    }
+
+    .history_right {
+        text-align: left !important;
+    }
+
+    .order_history .border-btm.wishlist_col {
+        padding: 30px 0px;
+    }
+
+    .order-items p span {
+        float: none;
+        font-weight: bold !important;
+        font: 12px "Lato-Regular";
+        line-height: 1.4;
+        padding-left: 6px;
+    }
+
+    .odr_col, .dollars, .dollars1 {
+        width: 50%;
+    }
+
+    .order-items p {
+        font: 18px/normal EB Garamond;
+    }
+
+    .shiping_charge img {
+        max-height: 15px;
+    }
+
+    .shiping_charge p {
+        font: 12px "Lato-lightItalic";
+    }
+
+    .cancel.left {
+        padding-left: 15px;
+    }
+
+    .cancel.right {
+        padding-right: 15px;
+    }
+
+    .cancel a {
+        margin: 10px 0px;
+        width: 100%;
+    }
+
+    .review_header .pull-right {
+        float: left;
+    }
+
+        .review_header .pull-right .btn {
+            margin-bottom: 10px;
+            margin-top: 0;
+        }
+
+    .shopping_checkout .order_summary .order_list_cost {
+        text-align: left;
+    }
+
+    .blog_sidebar {
+        padding: 45px 0px 0px 0px;
+    }
+    #product_unsubscribe .news_letter_content .news_form .form-control {
+    width: 70%;
+    }
+    #product_unsubscribe .modal-body {
+        padding: 2rem 1rem 3rem 1rem;
+    }
+    #product_unsubscribe .news_letter_content [class*='col-']
+    {
+	    padding:0;
+    }
+    #product_unsubscribe .news_letter_content .news_form .btn-dark {
+        width: 30%;
+    }
+
+}
+
+@media(max-width: 767px) {
+    .offer {
+        top: -20px;
+    }
+
+    .front_content .card-block .wishlist img {
+        top: -10px;
+    }
+
+    .contact_info {
+        border-right: 0;
+        margin-bottom: 20px;
+    }
+
+    .wishlist_info .total_item {
+        font: 20px/normal Lato-Bold;
+    }
+
+    .wishlist_info .more_gemes {
+        margin-left: 0;
+        margin-top: 0;
+    }
+
+    .border-btm.wishlist_col {
+        padding-bottom: 20px;
+    }
+
+    .wishlist_col .close_icon {
+        top: 0;
+    }
+
+    .history_right {
+        text-align: left !important;
+    }
+
+    .dollars p::after {
+        display: none;
+    }
+
+    .cancel.left {
+        padding-left: 15px;
+    }
+
+    .cancel.right {
+        padding-right: 15px;
+    }
+
+    .cancel a {
+        margin: 10px 0px;
+        width: 100%;
+    }
+
+    .feedback_inner {
+        width: 100%;
+    }
+
+    .order_return_table .scroll {
+        width: 100%;
+        overflow-x: scroll;
+    }
+
+    .timeline::after {
+        top: 40px;
+        bottom: 0;
+        position: absolute;
+        content: " ";
+        width: 2px;
+        height: 166px;
+        background-color: #000;
+        left: 32px;
+        margin-left: -1.5px;
+    }
+
+    ul.timeline:before {
+        left: 30px;
+    }
+
+    .timeline:before 
+    {
+        top: 40px;
+        bottom: 76px;
+    }
+
+    #login_track .track_list {
+        padding: 30px 10px;
+        background: #f5f5f5;
+        border-radius: 0;
+        margin-top: 30px;
+        margin-bottom: 0;
+    }
+
+    .pdt_title {
+        width: 100%;
+    }
+
+    .product_details {
+        padding: 20px;
+    }
+
+    .review {
+        padding: 20px;
+    }
+
+    .order_content .table tr:last-child td {
+        border-bottom: none;
+    }
+
+    .footer .blog_info {
+        border-bottom: 1px solid #ddd;
+    }
+
+        .footer .blog_info.blog_info_last {
+            border-bottom: 0px;
+        }
+
+    .card-header .btn-link p {
+        width: 97% !important;
+    }
+
+    #bloglist .category_item img {
+        height: auto !important;
+        max-height: 100% !important;
+    }
+
+    .related_post .category_img img {
+        height: auto;
+        max-height: 100%;
+    }
+    .filter .refine  
+    {
+	    font: 14px/2.5 EB Garamond;
+    }
+}
+/*Responsive Table Start*/
+.table-responsive-stack tr {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: row;
+    flex-direction: row;
+}
+
+.table-responsive-stack td,
+.table-responsive-stack th {
+    display: block;
+    /*      
+flex-grow | flex-shrink | flex-basis   */
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+}
+
+.table-responsive-stack .table-responsive-stack-thead {
+    font-weight: bold;
+}
+
+@media screen and (max-width: 768px) {
+    .table-responsive-stack tr {
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        /*border-bottom: 3px solid #ccc;*/
+        display: block;
+    }
+    /*  IE9 FIX   */
+    .table-responsive-stack td {
+        float: left\9;
+        width: 100%;
+    }
+}
+/*Responsive Table End*/
+@media(min-width: 320px) and (max-width: 480px) {
+    .home_slider .slide-caption__title h2 {
+        font: 12px/normal EB Garamond;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+
+    .guest-btn {
+        width: 100%;
+    }
+
+    section.guest-sec p.signin-title {
+        font: 18px EB Garamond;
+        padding-top: 30px;
+    }
+
+    .news_letter_content .news_form .btn-dark {
+        padding: 13px 0px;
+        font: 10px/normal Lato-Bold;
+    }
+}
+
+@media(min-width: 320px) and (max-width: 362px) {
+    .news_letter_content .news_form .btn-dark {
+        font-size: 10px;
+        padding: 13.5px 0px;
+    }
+}
+
+@media(min-width: 480px) and (max-width: 992px) {
+    .news_letter_content .news_form {
+        width: 450px;
+        margin: 0 auto;
+    }
+}
+
+@media(min-width: 768px) and (max-width: 992px) {
+    .sign-up-form .col-md-9 {
+        max-width: 100%;
+    }
+
+    .product_list .col-md-4.d-flex {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+
+    .shopping_checkout .shop_col {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+
+    .blog_list .shop_col {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+
+    .blog_list_details .shop_col {
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+
+    .shopping_bag {
+        padding: 0px;
+    }
+
+    .wishlist_col h3 a {
+        font: 19px/normal EB Garamond;
+    }
+
+    .wishlist_info .total_item {
+        font: 17px/4 Lato-Bold;
+        color: #222;
+        margin-left: 0;
+    }
+
+    .wishlist_info .more_gemes {
+        margin-left: 0px;
+        margin-top: 21px;
+        padding: 14px 18px !important;
+        font: normal 12px/normal Lato-Bold;
+        border-width: 1.5px;
+    }
+
+    .wishlist_col .close_icon {
+        top: 0;
+    }
+
+    #login_track .track_list {
+        padding: 20px 20px;
+    }
+
+    .order_content .table tr:last-child td {
+        border-bottom: none;
+    }
+    .offer
+    {
+	    top:-20px;
+    }
+    .front_content .card-block .wishlist img
+    {
+	    top:-8px;
+    }
+}
+/*Mobile End*/
+/*Large Screen Start*/
+@media (max-width: 2500px) and (min-width: 1500px) {
+    .nav_menu li a {
+        color: #000 !important;
+        font: 14px/normal Lato-Bold;
+    }
+
+    .header_top .logo {
+        width: 190px;
+        margin: 0 auto;
+    }
+
+    .top_nav li.nav-item .nav-link {
+        font: 13.5px/normal Lato-Bold;
+    }
+
+    .top_search .form-control {
+        width: 320px;
+        height: 45px;
+        padding-left: 20px;
+    }
+
+        .top_search .form-control::placeholder {
+            font-size: 13.5px;
+        }
+
+    .search_icon {
+        position: absolute;
+        right: 150px;
+        top: 14px;
+        width: 18px;
+        height: 18px;
+    }
+
+    .home_slider .slide-caption__title h2 {
+        padding-top: 50px;
+        font: 42px/normal EB Garamond;
+        text-transform: uppercase;
+        padding-bottom: 5px;
+        color: #222;
+        font-weight: 500;
+    }
+
+    .home_slider .slide-caption__title p {
+        font: normal 17px/1.5 Lato-Light;
+        color: #262626;
+        width: 400px;
+        margin-bottom: 10px;
+    }
+
+    .home_slider .more_gemes {
+        padding: 13px 35px !important;
+    }
+
+    .home_slider .slide-caption {
+        width: 500px;
+        position: absolute;
+        top: 48%;
+        left: auto;
+        transform: translate(-50%, -50%);
+        text-align: left;
+        right: -83px;
+    }
+
+    .home_slider .prev-slide {
+        left: 55.7% !important;
+        top: Calc(100% - 16.5%) !important;
+    }
+
+    .home_slider .next-slide {
+        right: 39.5% !important;
+        top: Calc(100% - 16.5%) !important;
+    }
+
+        .home_slider .prev-slide img,
+        .home_slider .next-slide img {
+            margin-top: 15px;
+            width: 12px;
+            height: 10px;
+        }
+
+    .bg-light {
+        padding: 20px 0px;
+    }
+
+    .owl-carousel .owl-item img {
+        margin-top: 30px;
+    }
+
+    .layer_box {
+        padding: 18px;
+    }
+
+    .btn_pg_outline .btn-outline-dark {
+        border: 1.5px solid #000;
+        padding: 13px 40px !important;
+    }
+
+    .house_gemes_features .features_content h5 {
+        font: 23px/1 EB Garamond;
+        color: #222;
+        margin-bottom: 2px;
+        font-weight: 500;
+    }
+
+    .house_gemes_features {
+        background: #f9f9f9;
+        padding: 75px 30px 38px;
+    }
+
+        .house_gemes_features .features_content p {
+            font: 23px/1.2 EB Garamond;
+            color: #222;
+            margin-bottom: 0px;
+        }
+
+        .house_gemes_features .feature_img {
+            float: right;
+            /* padding-left: 22px; */
+            max-height: 53px;
+            margin-top: 5px;
+            margin-right: 5px;
+        }
+
+        .house_gemes_features .features_content a {
+            font: normal 12px/3 Lato-Regular;
+            border-bottom: 1px solid #000;
+            color: #585858;
+            text-decoration: none;
+        }
+
+        .house_gemes_features .features_content span {
+            font: normal 10px/1.5 Lato-Regular;
+            padding: 4px;
+            color: #222;
+        }
+
+        .house_gemes_features .features_list:before {
+            content: "";
+            position: absolute;
+            right: 9px;
+            background-color: #222;
+            height: 60px;
+            width: 1px;
+            top: 9px;
+            opacity: 0.1;
+        }
+
+    .free_domestic {
+        margin-left: 15px;
+    }
+
+    .new_arrival .title h3 {
+        font: 27px/normal EB Garamond;
+        text-transform: uppercase;
+        color: #222;
+        margin-bottom: 0px;
+        font-weight: 500;
+    }
+
+    .new_arrival .title p {
+        font: normal 14px/2 Lato-Light;
+        margin-bottom: 5px;
+        color: #222;
+    }
+
+    .new_arrival .arrival_caption .arrival_name {
+        font: 22px/normal EB Garamond;
+        text-transform: uppercase;
+        color: #585858;
+        margin-bottom: 5px;
+        font-weight: 500;
+    }
+
+    .new_arrival .arrival_caption .arrival_info {
+        font: normal 14px/1.5 Lato-Regular;
+        margin-bottom: 5px;
+        color: #222;
+    }
+
+    .new_arrival .arrival_caption .price {
+        font: 20px/1.5 Lato-Bold;
+        color: #222;
+    }
+
+    .new_arrival_list .prev-slide img,
+    .new_arrival_list .next-slide img {
+        background-color: #fff;
+        width: 45px;
+        height: 45px;
+        margin-top: 40px;
+        opacity: 0.3;
+    }
+
+        .new_arrival_list .prev-slide img:hover,
+        .new_arrival_list .next-slide img:hover {
+            opacity: 1;
+        }
+
+    .new_arrival_list.owl-carousel .owl-item img {
+        display: block;
+        width: auto;
+        margin: 0 auto;
+        /*max-height: 180px;*/
+    }
+
+    .new_arrival .title {
+        padding-bottom: 35px;
+    }
+
+    .new_arrival_list .item {
+        padding: 0px 85px;
+    }
+
+    .shop_img img {
+        width: 90%;
+    }
+
+    .shop_now .shop_details h3 {
+        font: 33px/normal EB Garamond;
+        color: #222;
+        font-weight: 500;
+    }
+
+    .shop_now .shop_details p {
+        font: normal 16px/1.5 Lato-Light;
+        margin-bottom: 20px;
+    }
+
+    .shop_details {
+        position: absolute;
+        left: 0;
+        right: 29px;
+        top: calc(100% - 270px);
+        padding-left: 46.5%;
+    }
+
+    .featured_category_inner .title {
+        padding-bottom: 10px;
+    }
+
+    .featured_category_inner {
+        background-color: #fafafa;
+        /*        background-size: cover;*/
+        padding: 40px 0px 0px 0px;
+        max-height: 365px;
+        background-size: 100% 330px;
+    }
+
+    #featured_category_list.owl-carousel .owl-item .arrival_caption .arrival_name {
+        font: 20px/normal EB Garamond;
+        text-transform: uppercase;
+        color: #222;
+        padding-top: 12px;
+        padding-bottom: 12px;
+        font-weight: 500;
+    }
+
+    .home_footer {
+        background-color: #fff;
+        margin-top: 55px;
+        padding-top: 0px;
+    }
+
+    .home_blog {
+        border-top: 0px;
+    }
+
+    .footer .blog_info p {
+        width: 300px;
+        font: 15px/1.5 Lato-Italic;
+        color: #444444;
+        margin-bottom: 5px;
+    }
+
+    .footer .blog_info a {
+        font: 15px/normal Lato-Italic;
+        color: #222;
+        text-decoration: none;
+    }
+
+    .footer .footer_content .foot_list .list-group-item a {
+        color: #444444;
+        font: normal 13px/0.5 Lato-Regular;
+        text-decoration: none;
+        transition: all .2s linear;
+    }
+
+    .news_letter_content .news_letter .title h3 {
+        font: 24px/normal EB Garamond;
+        padding-bottom: 2px;
+        font-weight: 500;
+    }
+
+    .news_letter_content .news_letter .title p {
+        font: normal 14px/normal Lato-Regular;
+        padding-bottom: 12px;
+    }
+
+    .news_letter_content .news_form .form-control {
+        width: 65%;
+        border-radius: 0px;
+        font: normal 14px/normal Lato-Regular;
+        height: 42px;
+        text-transform: capitalize;
+        background: transparent;
+    }
+
+    .news_letter_content .news_form .btn-dark {
+        border-radius: 0px;
+        background-color: #191919;
+        font: 15px/normal Lato-Bold;
+        padding: 10.7px 20px;
+        text-transform: uppercase;
+    }
+
+    .featured_category .owl-carousel .next-slide {
+        right: -37px;
+        top: 130px;
+    }
+
+    .house_gemes_features .last_list:before {
+        443content: "";
+        position: absolute;
+        right: 0;
+        background-color: transparent;
+        height: 50px;
+        width: 1px;
+        top: 25px;
+    }
+
+    .daily_special .badge-dark {
+        color: #fff;
+        background-color: #222;
+        padding: 3px 8px;
+        font: normal 10px/normal Lato-Light;
+        margin-top: 3px;
+        margin-left: 5px;
+        line-height: 1.5;
+        vertical-align: top;
+        border-radius: .15rem;
+    }
+
+    .signin-sec {
+        padding-top: 215px;
+    }
+
+    .signin-title {
+        font: 26px/1.4 EB Garamond;
+        margin-bottom: 5px;
+        padding-left: 4px;
+        font-weight: 500;
+    }
+
+    .signin-sec .form-control {
+        height: 45px;
+        width: 65%;
+        /* color: #999; */
+        /*        text-transform: capitalize;*/
+        font: 14px/normal Lato-Regular;
+    }
+
+        .signin-sec .form-control::placeholder {
+            color: #666;
+        }
+
+    .email-address {
+        font: normal 14px/1.5 Lato-Light;
+        padding-bottom: 13px;
+        padding-top: 12px;
+        color: #262626;
+    }
+
+    .signin-sec .btn-dark {
+        background-color: #191919 !important;
+        border-color: #191919 !important;
+        text-transform: uppercase;
+        border-radius: 0px;
+        padding: 13.1px;
+        font: normal 14px/normal Lato-Bold;
+        width: 65%;
+    }
+
+    .signin-sec .form-group {
+        margin-bottom: 1.4rem;
+    }
+
+    .forget_label {
+        color: #404040;
+    }
+
+    .signup-sec .form-group.email-address.form-check.terms-condition {
+        padding-left: 0px;
+        margin-bottom: 5px;
+    }
+
+    .signup-sec .custom_checkbox {
+        padding-top: 0;
+    }
+
+    section.guest-sec {
+        padding-top: 215px;
+    }
+
+    .guest-inner {
+        border-bottom: 1px solid #e5e5e5;
+        padding-bottom: 40px;
+        width: 1240px;
+        margin: 0 auto;
+    }
+
+    .page_banner .page_list li a {
+        font: normal 14px/normal Lato-Light;
+        color: #262626;
+        text-decoration: none;
+        padding: 1px 2px;
+    }
+
+    .page_banner h3 {
+        font: 27px/normal EB Garamond;
+        color: #222;
+        padding-top: 3px;
+    }
+
+    .guest-btn {
+        width: 300px;
+        border-radius: 0;
+        padding: 13.1px;
+        font: normal 14px/normal Lato-Bold;
+    }
+
+    .page_banner {
+        margin-top: 166px;
+        background: url(../images/page_banner.jpg) no-repeat top center;
+        background-size: cover;
+    }
+
+    .page_banner_inner {
+        padding: 70px;
+        margin-top: 5px;
+    }
+
+    .page_banner .page_list {
+        list-style-type: none;
+        margin-bottom: 3px;
+        padding-left: 0px;
+    }
+
+    .page_banner h3 {
+        font: 27px/normal EB Garamond;
+        color: #222;
+        padding-top: 3px;
+        font-weight: 500;
+    }
+
+    .filter .refine span {
+        padding-left: 7px;
+    }
+
+    .filter .filter_box .form-control {
+        border-color: #222;
+        padding: 10px 16px;
+        height: 45px;
+    }
+
+    .filter .filter_box .nice-select span.current {
+        font: normal 12px/2.2 Lato-Regular;
+        color: #666;
+    }
+
+    .category_list {
+        padding: 0px 0px 32px;
+    }
+
+    .filter .refine {
+        font: 19px/2.5 EB Garamond;
+        margin-bottom: 0px;
+        color: #222;
+        padding-right: 20px;
+    }
+
+    .card-flip {
+        height: 100%;
+        /*        margin-bottom: 30px;*/
+    }
+
+    .card-block {
+        padding: 20px;
+    }
+
+        .card-block .card-title {
+            font: 22px/1.3 EB Garamond;
+            color: #222;
+            margin-bottom: 15px;
+            padding-top: 4px;
+        }
+
+    .pro_img img {
+        height: 220px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .code_info {
+        margin-top: 15px;
+    }
+
+    .product_container {
+        padding-left: 100px;
+        padding-right: 100px;
+    }
+
+    .card-block .p_label,
+    .p_code {
+        margin-bottom: 0px;
+        font: normal 13px/normal Lato-Regular;
+        color: #262626;
+    }
+
+    .pro_cart_col .p_price {
+        font: 18px/normal Lato-Bold;
+        color: #222;
+        padding-bottom: 5px;
+        padding-top: 7px;
+    }
+
+    .load_more .more_gemes {
+        padding: 8px 24px !important;
+        margin-left: 0px;
+        margin-top: 6px;
+        font: 10px/normal Lato-Regular;
+        color: #4c4c4c !important;
+    }
+
+    footer {
+        margin-top: 40px;
+    }
+
+    .back .card-block {
+        padding: 50px 40px 30px;
+    }
+
+        .back .card-block .p_label,
+        .back .card-block .p_code {
+            padding-top: 12px;
+            margin-bottom: 0px;
+            font: normal 15px/normal Lato-Italic;
+            color: #474747;
+            padding-bottom: 14px;
+        }
+
+        .back .card-block .qty {
+            font: 20px/normal EB Garamond;
+            color: #222;
+        }
+
+        .back .card-block .ad_cart_btn .btn {
+            margin-top: 31px;
+            border-radius: 0;
+            padding: 12.3px 10px;
+            font: 12px/1.5 Lato-Bold;
+            vertical-align: middle;
+        }
+
+        .back .card-block .wishlist img {
+            margin-top: 33px;
+            margin-left: 10px;
+            height: 16px;
+        }
+
+        .back .card-block .view_details {
+            padding: 30px 0px 20px;
+        }
+
+            .back .card-block .view_details a {
+                font: 19px/normal EB Garamond;
+                color: #222;
+                text-decoration: none;
+            }
+
+    .pro_cart_col .form-control {
+        height: 35px;
+        font: normal 16px/normal Lato-Regular;
+    }
+
+        .pro_cart_col .form-control::placeholder {
+            font: normal 12px/initial Lato-Regular !important;
+        }
+
+        .pro_cart_col .form-control span {
+            line-height: 2.4;
+        }
+
+    .product_details_banner {
+        background: transparent;
+        padding-top: 0;
+        border-top: 1px solid rgba(0, 0, 0, .4);
+    }
+
+    .product_details_info h3 {
+        font: 28px/1.2 EB Garamond;
+        text-transform: uppercase;
+        color: #333;
+    }
+
+    .product_details_info .badge {
+        font: normal 12px/normal Lato-Light;
+        vertical-align: middle;
+        color: #fff;
+        padding: 4px 10px;
+        margin-top: 0px;
+        margin-left: 6px;
+        border-radius: 0.15rem;
+    }
+
+    .product_details_info p {
+        font: normal 20px/1 EB Garamondr;
+        color: #222;
+    }
+
+    .product_details_info {
+        /*        border-bottom: 1px solid #000;*/
+        padding-bottom: 0px;
+    }
+
+    .product_property label {
+        font: 20px/normal EB Garamond;
+        color: #222;
+    }
+
+    .product_property .form-control {
+        height: 45px;
+        font: normal 14px/2.4 Lato-Regular;
+    }
+
+    .product_property {
+        border-bottom: 1px solid #000;
+        padding-bottom: 17px;
+    }
+
+    .product_details_add p {
+        font: normal 14px/normal Lato-Light;
+        color: #222;
+        margin-bottom: 9px;
+    }
+
+    .product_details_add .add_btn .btn {
+        border-radius: 0px;
+        padding: 14px 25px;
+        font: normal 12px/normal Lato-Bold;
+    }
+
+    .property_color .price p {
+        font: normal 14px/normal Lato-Italic;
+        color: #666;
+    }
+
+    .product_details_add .wishlist_cols {
+        padding-top: 20px;
+    }
+
+    .product_details_add .add_wishlist .ad_wish_label {
+        color: #222;
+        text-transform: uppercase;
+        font: 14px/1.4 Lato-Bold;
+        padding-left: 10px;
+        padding-top: 5px;
+    }
+
+    .product_details_description {
+        padding: 0px;
+    }
+
+        .product_details_description p {
+            font: normal 15px/1.8 Lato-Light;
+            color: #222;
+            font-weight: bold;
+        }
+
+    .review .review_header .btn {
+        border-radius: 0px;
+        color: #222;
+        text-transform: uppercase;
+        font: 12px/normal Lato-Bold;
+        border-width: 2px;
+        padding: 14px 44px !important;
+    }
+
+    .review_header h3 {
+        font: 26px/2.8 EB Garamond;
+        color: #222;
+        text-transform: uppercase;
+        font-weight: 500;
+    }
+
+    .review_msg_info .user_name {
+        font: 16px/normal EB Garamond;
+        color: #666;
+        text-transform: uppercase;
+    }
+
+    .review_msg_info h3 {
+        color: #222;
+        font: 23px/1.5 Lato-Regular;
+    }
+
+    .review_msg_info p {
+        color: #222;
+        font: 16px/1.5 Lato-Light;
+    }
+
+    .user_reviews_rattings p {
+        line-height: 2;
+        font: 14px/2.5 Lato-Light;
+        color: #666;
+    }
+
+    .user_reviews_rattings img {
+        width: 85px;
+    }
+
+    .review .load_more {
+        padding: 35px;
+    }
+
+    .small-img {
+        transform: rotate(-270deg);
+        margin-left: Calc(100% - 240px) !important;
+    }
+
+    .small-container .show-small-img {
+        transform: rotate(270deg);
+    }
+
+    .review .user_img img {
+        vertical-align: middle;
+        height: 65px;
+    }
+
+    .review .user_reviews_inner {
+        padding: 35px 0px;
+        border-bottom: 1px solid #e0e0e0;
+    }
+
+    .product_details_banner .page_banner_inner {
+        padding: 10px 68px 10px;
+    }
+
+    .product_details {
+        padding: 10px 50px;
+    }
+
+    .product_details_add .price {
+        padding-left: 2px;
+    }
+
+    .small-container {
+        width: 459px;
+        height: 140px;
+        overflow: hidden;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+    }
+
+    .small-img .icon-left {
+        transform: rotate(-270deg);
+        top: -35px;
+        left: -25px;
+    }
+
+    .small-img .icon-right {
+        right: -135px;
+        transform: rotate(270deg);
+        top: -35px;
+    }
+
+    .show-small-img.active {
+        border-color: #000 !important;
+        opacity: 1 !important;
+    }
+
+    .small-container .show-small-img {
+        opacity: 0.6;
+    }
+
+    .offer {
+        padding: 7px 12px;
+    }
+
+    .shopping_checkout .header h3 {
+        font: 26px/normal EB Garamond;
+        color: #222;
+        margin-bottom: 4px;
+        font-weight: 500;
+    }
+
+    .shopping_checkout .header a.ctn_shop {
+        font: 22px/normal EB Garamond;
+        color: #222;
+        text-decoration: none;
+    }
+
+        .shopping_checkout .header a.ctn_shop:before {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            margin-left: -4px;
+            vertical-align: 0;
+            content: "\f104";
+            font-family: fontawesome;
+            border: 0px;
+            padding-right: 18px;
+            font-size: 14px;
+        }
+
+    .bag_item .bag_img img {
+        display: block;
+        margin: 0;
+        width: 95%;
+    }
+
+    .bag_item_details .item_name {
+        font: 20px/normal EB Garamond;
+        color: #585858;
+    }
+
+    .bag_item_details .item_desc {
+        font: 22px/normal EB Garamond;
+        color: #222;
+        margin-bottom: 30px;
+    }
+
+    .bag_item_details .cart_item label {
+        font: 19px/normal EB Garamond;
+        color: #222;
+        line-height: 2;
+        margin-bottom: 0;
+    }
+
+    .shopping_checkout .bag_item .form-control {
+        border-color: #222;
+        font: normal 14px/2.2 Lato-Regular;
+        color: #666;
+        width: 75%;
+        /* padding-left: 12px; */
+        padding-left: 15px;
+        height: 45px;
+    }
+
+    .bag_item_details .subtotal {
+        font: 18px/normal Lato-Bold;
+        color: #222;
+    }
+
+    .shopping_checkout .bag_item:after {
+        content: "";
+        position: absolute;
+        background: url(../images/close_item.png) no-repeat top center;
+        right: -10px;
+        top: 43px;
+        width: 38px;
+        height: 40px;
+        cursor: pointer;
+        background-size: 14px;
+    }
+
+    .shopping_checkout .order_summary .order_header h3 {
+        font: 22px/1.5 EB Garamond;
+        color: #222;
+        font-weight: 500;
+    }
+
+    .shopping_checkout .order_summary .order_list_label {
+        font: 20px/normal EB Garamond;
+        color: #222;
+        margin-bottom: 6px;
+    }
+
+    .shopping_checkout .order_summary .order_list_cost {
+        font: normal 18px/1.4 Lato-Regular;
+        color: #222;
+        text-align: right;
+        margin-bottom: 10px;
+    }
+
+    .order_summary .order_chekout_btn .btn {
+        width: 100%;
+        border-radius: 0px;
+        font: 15px/normal Lato-Bold;
+        padding: 12px;
+        transition: all .2s linear;
+    }
+
+    .shopping_checkout .bag_item {
+        padding: 38px 0px 35px 0px;
+        border-bottom: 1px solid #000;
+        position: relative;
+    }
+
+    .order_summary_list {
+        border-bottom: 1px solid #000;
+        padding: 16px 0px;
+    }
+
+    .last_item {
+        border-bottom: 0px;
+        padding-bottom: 0px;
+    }
+
+    .help_content {
+        padding: 15px 0px;
+    }
+
+        .help_content a {
+            font: normal 15px/normal Lato-Regular;
+            color: #222;
+            text-decoration: none;
+        }
+
+        .help_content p {
+            margin-bottom: 5px;
+        }
+
+    .help_panel {
+        padding: 20px 0px;
+    }
+
+    .shipping_address_head {
+        padding: 38px 0px 12px;
+    }
+
+        .shipping_address_head h3 {
+            font: 22px/normal EB Garamond;
+            text-transform: uppercase;
+            color: #222;
+            font-weight: 500;
+        }
+
+    .shipping_form .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .shipping_form .form-control {
+        border-color: #222;
+        height: 45px;
+    }
+
+    .form-control::placeholder {
+        font-size: 14px !important;
+    }
+
+    .shipping_address_list {
+        padding: 15px 0px 30px;
+        border-bottom: 1px solid #000;
+    }
+
+    .address_info p {
+        margin-bottom: 7px;
+        font: normal 16px/1.2 Lato-Light;
+        color: #222;
+    }
+
+    .address_info:after {
+        content: '';
+        position: absolute;
+        background: #efefef;
+        width: 1px;
+        height: 100px;
+        right: 26px;
+        top: 6px;
+    }
+
+    .add_new_addr {
+        /*
+        margin-left: 50px;
+        margin-right: 35px;
+*/
+        width: 200px;
+    }
+
+    .add_new_address p {
+        font: normal 12px/3 Lato-Light;
+        color: #222;
+        margin-bottom: 0px;
+    }
+
+    .shipping_method_list .first {
+        font: 20px/normal EB Garamond;
+        color: #222;
+    }
+
+    .shipping_method_list .second {
+        font: normal 18px/normal Lato-Light;
+        color: #222;
+    }
+
+    .shipping_method_list .third {
+        font: normal 16px/normal Lato-Italic;
+        color: #222;
+    }
+
+    .shipping_method_list .fourth {
+        font: normal 18px/normal Lato-Bold;
+        color: #222;
+    }
+
+    .shipping_method {
+        border-bottom: 1px solid #000;
+        padding-bottom: 20px;
+    }
+
+    .continue_btn {
+        padding: 20px 0px;
+    }
+
+        .continue_btn .btn {
+            border-radius: 0px;
+            padding: 12px 45px !important;
+            padding: 14px 40px !important;
+            font: normal 12px/normal Lato-Bold;
+            border-width: 1.5px;
+        }
+
+    .shiping_opt_col label {
+        margin-bottom: 1.2rem;
+    }
+
+    .payment_addr {
+        padding: 32px 30px;
+        margin: 0px 5px 0px 0px;
+    }
+
+        .payment_addr img {
+            height: 50px;
+        }
+
+        .payment_addr p {
+            font: 15px/2.2 EB Garamond;
+        }
+
+    .payment_selected:after {
+        content: '';
+        position: absolute;
+        background: url(../images/select_payment.png) no-repeat top center;
+        width: 40px;
+        height: 40px;
+        top: -12px;
+        right: 0px;
+        background-size: 23px;
+    }
+
+    .credit_card {
+        width: 700px;
+    }
+
+    .page_banner.contact_banner h3 {
+        font: 28px/normal EB Garamond;
+        color: #222;
+        padding-top: 3px;
+        font-weight: 500;
+    }
+
+    .contact_banner .page_banner_inner p {
+        font: normal 15px/normal Lato-Light;
+        color: #222;
+    }
+
+    .contact_banner .contact_info p {
+        margin-bottom: 0px;
+        font: normal 18px/1.4 Lato-Bold;
+        color: #222;
+    }
+
+    .contact_banner .contact_info a {
+        font: normal 14px/2.8 Lato-Light;
+        color: #222;
+        text-decoration: none;
+        border-bottom: 1px solid #000;
+    }
+
+    .contact_banner .contact_info p.head {
+        font: normal 12px/1.8 Lato-Regular;
+        color: #222;
+        text-transform: uppercase;
+    }
+
+    .contact_sec_left h3 {
+        font: 28px/1.8 EB Garamond;
+        color: #fff;
+    }
+
+    .contact_sec_left p {
+        font: normal 18px/1.4 Lato-Light;
+        color: #fff;
+        margin-bottom: 0px;
+    }
+
+    .contact_sec_left .orr {
+        padding: 25px 0;
+        font-size: 16px;
+    }
+
+    .contact_right_banner h3 {
+        font: 26px/1 EB Garamond;
+        color: #222;
+        font-weight: 500;
+    }
+
+    .contact_right_banner .form-control {
+        font: normal 12px/1.8 Lato-Regular;
+        color: #222;
+        text-transform: capitalize;
+        background: transparent;
+        height: 45px;
+        width: 100%;
+    }
+
+    .contact_right_banner .btn-dark {
+        color: #fff;
+        background-color: #0d0d0d;
+        border-color: #0d0d0d;
+        border-radius: 0;
+        padding: 12px 38px;
+        margin-top: 10px;
+        font: 14px/normal Lato-Bold;
+    }
+
+    .contact_sec {
+        background: #f3f2f2;
+        padding: 50px 151px;
+    }
+
+    .category_list .category_caption h3 {
+        font: 22px/1.3 EB Garamond;
+        margin-bottom: 5px;
+        padding: 20px 70px 0 70px;
+        color: #222;
+        font-weight: 500;
+    }
+
+    .cart_nav .dropdown-menu h3 {
+        font: 18px/normal EB Garamond;
+        color: #222;
+    }
+
+    .cart_nav .dropdown-menu p {
+        font: normal 14px/1.5 Lato-Regular;
+        color: #222;
+    }
+
+    .cart_box .cart_foot a {
+        color: #858585;
+        font: normal 15px/2.5 Lato-Regular !important;
+        text-align: left;
+        padding: 0px;
+        text-transform: capitalize;
+    }
+
+    .cart_box .cart_foot h3 {
+        color: #222;
+        font: 18px/2.5 Lato-Bold !important;
+    }
+
+    .cart_nav .dropdown-menu.show:before {
+        background-color: transparent !important;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+        border-bottom: 5px solid #000;
+        width: 0px;
+        height: 0px;
+        left: 89px;
+        top: -6px;
+    }
+
+    .cart_box .dropdown-menu.show:before {
+        left: 325px;
+    }
+
+    .back_content .card {
+        border: 2px solid #000;
+        height: 395px;
+    }
+
+    .back_content .card-block .ad_cart_btn .btn {
+        margin-top: 31px;
+        border-radius: 0;
+        padding: 13px 10px;
+        font: 12px/normal Lato-Bold;
+    }
+
+    .coupon_col .coupon_add.btn {
+        width: 100%;
+        height: 45px;
+        border-radius: 0px;
+        font: 13px/normal Lato-Bold;
+        padding: 12px;
+        transition: all .2s linear;
+        margin-top: 32px;
+        text-transform: uppercase;
+    }
+
+    .product_list {
+        padding: 28px 90px;
+    }
+
+    .faq {
+        background: #fafafa;
+        padding: 50px 151px;
+    }
+
+    .faq_question h3 {
+        font: 22px/1 EB Garamond;
+        color: #222;
+        font-weight: 500;
+    }
+    .shipping_method .custom_radio input:checked + label:after
+    {
+	    top:11px;
+    }
+}
+/*Large Screen End*/
+@media(min-width: 993px) {
+    .mobile_only {
+        display: none !important;
+    }
+
+    .desktop_only {
+        display: block !important;
+    }
+    /*style.css*/
+    .top_search {
+        position: relative;
+    }
+
+    .search_icon {
+        right: 20px;
+    }
+
+    .top_search .form-control {
+        width: 100%;
+        padding-right: 50px;
+    }
+    .track_list_col {
+        max-width: 25%;
+        flex: 25%;
+    }
+    /*style.css*/
+}
+/*Medium Device*/
+@media(min-width: 993px) and (max-width: 1199px) {
+    .home_slider .slide-caption__title h2 {
+        font: 22px/normal EB Garamond;
+    }
+
+    .shop_now .shop_details h3 {
+        font: 18px/normal EB Garamond;
+    }
+
+    .shop_details {
+        top: calc(100% - 210px);
+    }
+
+    .footer .footer_content .foot_address .list-group-item {
+        font: normal 12.5px/1.3 Lato-Regular;
+    }
+
+    .nav_menu li.nav-item {
+        padding-right: 0;
+    }
+
+    .sign-up-form .col-md-9 {
+        max-width: 100%;
+    }
+
+    .sign-up-form {
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+
+    .guest-inner {
+        width: 100%;
+    }
+
+    .product_container {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
+
+    .category_list .category_caption h3 {
+        font: 16px/1.3 EB Garamond;
+    }
+
+    .category_list .category_caption h3 {
+        padding: 10px;
+    }
+
+    footer {
+        margin-top: 0;
+    }
+
+    .top_nav li.nav-item .nav-link {
+        padding: 0px 20px;
+    }
+
+    .wishlist_icon, .cart_icon, .user_icon {
+        left: 0px;
+    }
+
+    .pro_cart_col .ad_cart_btn .btn {
+        padding: 9.5px 9px;
+    }
+
+    .pieces_list {
+        margin-bottom: 60px !important;
+    }
+
+    .blog_list .container-fluid {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+
+    .blog_list_details_inner {
+        padding: 0;
+    }
+
+    .about_dashboard .container-fluid {
+        padding: 10px 90px 0px;
+    }
+
+    .wishlist_info:after {
+        display: none;
+    }
+
+    .wishlist_col .close_icon {
+        top: 0;
+    }
+
+    #login_track .track_list {
+        padding: 20px 20px;
+    }
+
+    .contact_sec {
+        margin-bottom: 30px;
+    }
+}
+
+@media(min-width: 1200px) and (max-width: 1440px) {
+    .about_dashboard .container-fluid {
+        padding: 10px 70px 0px;
+    }
+
+    .coupon_box label {
+        font: 16px/normal EB Garamond;
+        color: #222;
+    }
+}
+/*Medium Device*/
+/*Custom Image Size*/
+/*@media(min-width:993px) {
+    .owl-carousel.home_slider .owl-item img {
+        height: 525px;
+    }
+
+    .new_arrival_list.owl-carousel .owl-item img {
+        height: 228px;
+        width: 228px;
+        max-height: 100%;
+    }
+
+    .pro_img img {
+        height: 237px;
+    }
+
+    #featured_category_list.owl-carousel .owl-item img {
+        height: 237px;
+    }
+
+    .shop_img img {
+        height: 315px;
+    }
+
+    .category_list_inner1 .category_img {
+        height: 250px;
+    }
+
+    .blog_list .category_img img {
+        height: 215px;
+    }
+
+    .blog_img img {
+        height: 432px;
+    }
+
+    .related_post .category_img img {
+        height: 215px;
+    }
+}*/
+@media(min-width:993px) {
+    .owl-carousel.home_slider .owl-item img {
+        height: 525px;
+    }
+
+    .new_arrival_list.owl-carousel .owl-item img {
+        height: auto;
+        width: auto;
+    }
+
+    .pro_img img {
+        height: auto;
+    }
+
+    #featured_category_list.owl-carousel .owl-item img {
+        height: 130px;
+        max-height: 100px;
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+    .shop_img img {
+        height: 315px;
+    }
+
+    .category_list_inner1 .category_img {
+        height: 130px;
+    }
+
+    .blog_list .category_img img {
+        height: 215px;
+        max-height: 100%;
+    }
+
+    .blog_img img {
+        height: 432px;
+    }
+
+    .related_post .category_img img {
+        height: 215px;
+        max-height: 100%;
+    }
+
+    .pro_img img {
+        height: auto;
+        max-height: 100px;
+        display: block;
+        margin: 0 auto;
+    }
+
+    .pro_img {
+        height: 130px;
+        padding : 10px 0px;
+    }
+}
+/*Custom Image Size*/
+
+@media(min-width:1800px) and (max-width:2500px) {
+    .owl-carousel.home_slider .owl-item img {
+        height: auto;
+    }
+
+    .pro_img img {
+        height: auto;
+    }
+
+    #featured_category_list.owl-carousel .owl-item img {
+        height: auto;
+    }
+
+    .shop_img img {
+        height: auto;
+    }
+
+    .category_list_inner1 .category_img {
+        height: auto;
+    }
+
+    .blog_list .category_img img {
+        height: auto;
+    }
+
+    .blog_img img {
+        height: auto;
+    }
+
+    .related_post .category_img img {
+        height: auto;
+    }
+}

@@ -1,0 +1,57 @@
+﻿@model ExpenseTracker.ETCategory
+@{
+    ViewBag.Title = "Category View";
+    Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
+    ViewBag.Menu = "Category";
+}
+
+<script>
+    function PreviousPage() {
+        window.location = "/Category/Index";
+    }
+
+</script>
+
+<div class="container-fluid">
+    <div class="pageheader col-lg-12">
+        <h3 class="page-title text-primary">Category View</h3>
+        <hr>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Category Details</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Category Type</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.CategoryTypeID)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Category Name</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.CategoryName)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Status</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>
+                            @(Model.IsActive ? "Enabled" : "Disabled")
+                        </p>
+                    </div>
+                </div>
+                <div class="row save-button-section">
+                    <div class="form-group col-md-6 col-sm-6 pull-left text-left">
+                        <input type="button" value="Back" title="Back" class="btn btn-secondary" onclick="PreviousPage();" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
