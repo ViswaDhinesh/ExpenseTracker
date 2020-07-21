@@ -1,0 +1,179 @@
+﻿@model ExpenseTracker.ETUser
+@{
+    ViewBag.Title = "User View";
+    Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
+    ViewBag.Menu = "User";
+}
+
+<script>
+    function PreviousPage() {
+        window.location = "/User/Index";
+    }
+
+</script>
+
+<div class="container-fluid">
+    <div class="pageheader col-lg-12">
+        <h3 class="page-title text-primary">User View</h3>
+        <hr>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">User Details</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Title</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.Title)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>First Name</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.FirstName)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Middle Name</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.MiddleName)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Last Name</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.LastName)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Email</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.Email)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Phone</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.Phone)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Gender</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.Gender)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Marital Status</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.MaritalStatus)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>DOB</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.DOB)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Address</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.Address)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>RoleID</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.RoleID)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Login Name</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.LoginName)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Password</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.Password)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>IsTwoFactor</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>
+                            @(Model.IsTwoFactor ? "Enabled" : "Disabled")
+                        </p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>IsOwner</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>
+                            @(Model.IsOwner ? "Enabled" : "Disabled")
+                        </p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>IsAdmin</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>
+                            @(Model.IsAdmin ? "Enabled" : "Disabled")
+                        </p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>IsManager</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>
+                            @(Model.IsManager ? "Enabled" : "Disabled")
+                        </p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Status</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>
+                            @(Model.IsActive ? "Enabled" : "Disabled")
+                        </p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>DeviceID</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.DeviceID)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>UserField1</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.UserField1)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>UserField2</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.UserField2)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>UserField3</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.UserField3)</p>
+                    </div>
+                </div>
+                <div class="row save-button-section">
+                    <div class="form-group col-md-6 col-sm-6 pull-left text-left">
+                        <input type="button" value="Back" title="Back" class="btn btn-secondary" onclick="PreviousPage();" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

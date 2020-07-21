@@ -13,6 +13,7 @@ namespace ExpenseTracker
         List<ETSource> Sources = new List<ETSource>();
         ETCategory Category = new ETCategory();
         List<ETCategory> Categories = new List<ETCategory>();
+        
         // Source
         #region SourceIsExist
         public bool SourceIsExist(string SourceName, long SourceId)
@@ -89,11 +90,9 @@ namespace ExpenseTracker
         #region getSourceType
         public SelectList getSourceType()
         {
-
             IEnumerable<SelectListItem> StateLst = (from m in dbEntities.ETSources where m.IsActive == true select m).OrderBy(m => m.SourceID).AsEnumerable().Select(m => new SelectListItem() { Text = m.SourceName, Value = m.SourceID.ToString() });
             return new SelectList(StateLst, "Value", "Text");
         }
         #endregion
-
     }
 }

@@ -1,0 +1,93 @@
+﻿@model ExpenseTracker.LoginDetail
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <script src="~/Scripts/knockout-3.4.2.js"></script>
+    <script src="~/Scripts/knockout-3.4.2.debug.js"></script>
+    <script src="~/Scripts/knockout.validation.min.js"></script>
+
+    <!--[if lt IE 9]>
+        <script src="~/Content/Admin/js/html5shiv.js"></script>
+        <script src="~/Content/Admin/js/respond.min.js"></script>
+    <![endif]-->
+    @System.Web.Optimization.Styles.Render("~/bundles/Admin/css")
+    @System.Web.Optimization.Scripts.Render("~/bundles/Admin/js")
+
+    <script src="../../Content/Admin/datatbaleJs/jquery.dataTables.min.js"></script>
+    <script src="../../Content/Admin/datatbaleJs/dataTables.bootstrap.min.js"></script>
+    <link href="../../Content/Admin/datatbaleJs/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <script src="../../Content/Admin/datatbaleJs/dataTables.responsive.min.js"></script>
+    <link href="../../Content/Admin/datatbaleJs/responsive.dataTables.min.css" rel="stylesheet" />
+    <script src="~/Content/Admin/datatbaleJs/datagridperiority.js"></script>
+    <script src="~/Content/Admin/js/bootstrap-datepicker.min.js"></script>
+</head>
+<body style="padding-bottom:0;margin-bottom:0;">
+    <div class="main-container login-container">
+        <div class="container">
+            <div class="row login-row">
+                <div class="row">
+                    <div class="page-header text-center">
+                        <div class="navbar-header">
+                            <a class="navbar-brand logo" href="/admin"><img src="~/Content/Admin/images/house-of-gems.png" /></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                    <div class="well login-box">
+                        @if (!string.IsNullOrEmpty(ViewBag.Error))
+                        {
+                            <p class="alert alert-dismissible alert-danger text-center" id="validateerrormsg1"><button type="button" class="close loginclose" data-dismiss="alert">×</button>@ViewBag.Error</p>
+                        }
+                        @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { enctype = "multipart/form-data", @class = "login-form" }))
+                        {
+                            @Html.ValidationSummary(true)
+
+                            if (ViewBag.messagealert != "" && ViewBag.messagealert != null)
+                            {
+                                <div class="alert alert-dismissible alert-success" id="removediv">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    @ViewBag.messagealert
+                                </div>
+                            }
+
+                            <div class="form-group">
+                                <label for="EMAIL_ID">Email Id or Username</label>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control UName", @placeholder = "Email ID or Username" })
+                                <span class="error-text">
+                                    @Html.ValidationMessageFor(model => model.Email)
+                                </span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="PASSWORD">Password</label>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control UPassword", @placeholder = "Password" })
+                                <span class="error-text">
+                                    @Html.ValidationMessageFor(model => model.Password)
+                                </span>
+                            </div>
+                            <div class="form-group text-center frt-pw">
+                                <a href="/login/forgotpassword" class="forget-pw" tabindex=4 title="Forgot your Password">Forgot your Password ?</a>
+                            </div>
+
+                            <div class="form-group text-center">
+                                <button class="btn btn-primary btnlogin" type="submit" title="Sign In">Sign In</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,94 @@
+﻿@model  ExpenseTracker.ETSubMenu
+@{
+    ViewBag.Title = "SubMenu Updation";
+    Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
+    ViewBag.Menu = "SubMenu";
+}
+<script>
+    function PreviousPage() {
+        window.location = "/SubMenu/Index";
+    }
+</script>
+@using (Html.BeginForm("SubMenu_edit", "SubMenu", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    <div class="container-fluid">
+        <div class="pageheader col-lg-12">
+            <h3 class="page-title text-primary">SubMenu Updation</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            @if (ViewBag.messagealert != string.Empty)
+            {
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    @ViewBag.messagealert
+                </div>
+            }
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">SubMenu Details</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Menu Type<span class="required"> *</span></label>
+                            @Html.DropDownListFor(m => m.MenuID, new SelectList(ViewBag.MenuList, "Value", "Text", ViewBag.MenuId), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.MenuID)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">SubMenu Name<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.SubMenuName, new { @class = "form-control", autocomplete = "off", maxlength = 100 })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.SubMenuName)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">SubMenu Page URL<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.SubMenuUrl, new { @class = "form-control", autocomplete = "off", maxlength = 500 })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.SubMenuUrl)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Order No.<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.OrderNo, new { @class = "form-control", autocomplete = "off", maxlength = 10 })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.OrderNo)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">IsActive</label>
+                            <div class="attr-section">
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.Status, true, new { @checked = true }) Enable
+                                    <span class="checkround"></span>
+                                </label>
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.Status, false, new { }) Disable
+                                    <span class="checkround"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row save-button-section">
+                        <div class="form-group col-md-6 col-sm-6 pull-left text-left">
+                            <input type="submit" class="btn btn-primary" title="Save" value="Save">
+                            <input type="button" class="btn btn-secondary close-space" title="Back" value="Back" onclick="PreviousPage();" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

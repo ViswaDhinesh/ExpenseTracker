@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace ExpenseTracker.Controllers
 {
-    public class SourceController : Controller
+    public class SourceController : BaseController
     {
 
         ExpenseTrackerEntites dbEntities = new ExpenseTrackerEntites();
@@ -136,7 +136,7 @@ namespace ExpenseTracker.Controllers
         #region Source Delete
         public bool SourceDelete(long id)
         {
-            if (!dbEntities.ETUsers.Where(x => x.UserID == 1).Any())
+            if (!dbEntities.ETUsers.Where(x => x.UserID == 1).Any()) // Need to change
             {
                 TempData["messagealert"] = Status.Delete;
                 Sourcee = new ETSource();
@@ -149,6 +149,20 @@ namespace ExpenseTracker.Controllers
                 }
             }
             return false;
+
+            //if (!dbEntities.TBL_ADMIN_USER.Where(x => x.ROLE_ID == id).Any())
+            //{
+            //    TempData["messagealert"] = Status.Delete;
+            //    role = new TBL_ROLE();
+            //    role = dbEntities.TBL_ROLE.Where(x => x.ROLE_ID == id && x.ROLE_NAME != "superadmin").SingleOrDefault();
+            //    if (role != null)
+            //    {
+            //        dbEntities.TBL_ROLE.Remove(role);
+            //        dbEntities.SaveChanges();
+            //        return true;
+            //    }
+            //}
+            //return false;
         }
 
         #endregion

@@ -16,19 +16,16 @@
     <script src="~/Content/Admin/datatableJs/dataTables.bootstrap.min.js"></script>
 
 </head>
-@*@using HouseofGems.Models;
+@using ExpenseTracker;
+@{
+    List<ETMenu> menus = new List<ETMenu>();
+    List<ETSubMenu> subMenus = new List<ETSubMenu>();
+    List<ETSubMenu> currentSubMenus = new List<ETSubMenu>();
 
-    @{
-        List<TBL_MENU> menus = new List<TBL_MENU>();
-        List<TBL_SUB_MENU> subMenus = new List<TBL_SUB_MENU>();
-        List<TBL_SUB_MENU> currentSubMenus = new List<TBL_SUB_MENU>();
-
-        menus = ViewBag.menus;
-        subMenus = ViewBag.subMenus;
-        HouseofgemsEntities dbentities = new HouseofgemsEntities();
-        int orderviewcount = dbentities.TBL_CUSTOMER_ORDER.Where(x => x.VIEW_STATUS == false).Count();
-
-    }*@
+    menus = ViewBag.menus;
+    subMenus = ViewBag.subMenus;
+    ExpenseTrackerEntites dbentities = new ExpenseTrackerEntites();
+}
 
 <body ng-app="CaternestApp">
     <div id="preloader" style="display:none">
@@ -47,87 +44,76 @@
                 <a class="navbar-brand logo" href="/admin"><img src="~/Content/Admin/images/Testing.png" /></a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                @* -- *@
                 <ul class="nav navbar-nav cater-menu">
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" title="Bank">Bank<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                        <ul aria-labelledby="download" class="dropdown-menu">
-                            <li>
-                                <a href="Home" title="Bank">Bank</a>
+                    @* -- *@
+                    @*<ul class="nav navbar-nav cater-menu">
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" href="#" data-toggle="dropdown" title="Bank">Bank<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <ul aria-labelledby="download" class="dropdown-menu">
+                                    <li>
+                                        <a href="Home" title="Bank">Bank</a>
+                                    </li>
+                                </ul>
                             </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" title="Source">Source<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                        <ul aria-labelledby="download" class="dropdown-menu">
-                            <li>
-                                <a href="Source" title="Source">Source</a>
-                                <a href="Source1" title="Source1">Source1</a>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" href="#" data-toggle="dropdown" title="Source">Source<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <ul aria-labelledby="download" class="dropdown-menu">
+                                    <li>
+                                        <a href="Source" title="Source">Source</a>
+                                        <a href="Source1" title="Source1">Source1</a>
+                                    </li>
+                                </ul>
                             </li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" title="Test">Test<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                        <ul aria-labelledby="download" class="dropdown-menu">
-                            <li>
-                                <a href="Test" title="Test">Test</a>
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" href="#" data-toggle="dropdown" title="Test">Test<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                <ul aria-labelledby="download" class="dropdown-menu">
+                                    <li>
+                                        <a href="Test" title="Test">Test</a>
+                                    </li>
+                                </ul>
                             </li>
-                        </ul>
-                    </li>
-                </ul>
-                @* -- *@
+                        </ul>*@
+                    @* -- *@
 
-                @*@if (menus != null)
-                            {
-                            foreach (var menu in menus)
-                            {
-                            currentSubMenus = new List<TBL_SUB_MENU>
-                                ();
-                                currentSubMenus = subMenus.Where(x => x.MENU_ID == menu.MENU_ID).ToList();
+                    @if (menus != null)
+                    {
+                        foreach (var menu in menus)
+                        {
+                            currentSubMenus = new List<ETSubMenu>();
+                            currentSubMenus = subMenus.Where(x => x.MenuID == menu.MenuID).ToList();
 
-                                if (currentSubMenus.Count > 0)
-                                {
+                            if (currentSubMenus.Count > 0)
+                            {
                                 <li class="dropdown">
-                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown" title="@menu.MENU_NAME">@menu.MENU_NAME<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown" title="@menu.MenuName">@menu.MenuName<i class="fa fa-angle-down" aria-hidden="true"></i></a>
                                     <ul aria-labelledby="download" class="dropdown-menu">
                                         @foreach (var submenu in currentSubMenus)
                                         {
                                             <li>
-                                                @if (submenu.SUB_MENU_NAME == "Low Stock Alert")
-                                                {
-                                                    <a href=@submenu.PAGE_URL title="@submenu.SUB_MENU_NAME">@submenu.SUB_MENU_NAME (@ViewBag.Lowstockcount)</a>
-                                                }
-                                                else if (submenu.SUB_MENU_NAME == "Order History")
-                                                {
-                                                    <a href=@submenu.PAGE_URL title="@submenu.SUB_MENU_NAME">@submenu.SUB_MENU_NAME (@orderviewcount)</a>
-                                                }
-                                                else
-                                                {
-                                                    <a href=@submenu.PAGE_URL title="@submenu.SUB_MENU_NAME">@submenu.SUB_MENU_NAME</a>
-                                                }
-
-
+                                                <a href=@submenu.SubMenuUrl title="@submenu.SubMenuName">@submenu.SubMenuName</a>
                                             </li>
                                         }
                                     </ul>
                                 </li>
-                                }
-                                else
-                                {
+                            }
+                            else
+                            {
                                 <li class="dropdown">
-                                    <a class="" href="#" data-toggle="dropdown" title="@menu.MENU_NAME">@menu.MENU_NAME</a>
+                                    <a class="" href="@menu.MenuUrl" data-toggle="dropdown" title="@menu.MenuName">@menu.MenuName</a>
                                 </li>
-                                }
-                                }
-                                }
+                            }
+                        }
+                    }
 
-                    </ul>*@
+                </ul>
 
                 <ul class="nav navbar-nav navbar-right">
                     <li class="customprofile">
                         <a data-toggle="dropdown" class="dropdown-toggle pull-left" href="javascript:void(0);" aria-expanded="true"><i class="fa fa-user" aria-hidden="true"></i><span>@Session["UserName"]</span> <i class="fa fa-angle-down" aria-hidden="true"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="/login/Changepassword" title="Change Password"><i class="fa fa-cog"></i><span>Change Password</span></a></li>
+                            <li><a href="/login/Profile"><i class="fa fa-sign-out"></i> <span>Profile</span></a></li>
+                            @*<li><a href="/login/Forgot Password"><i class="fa fa-sign-out"></i> <span>Forgot Password</span></a></li>*@
                             <li><a href="/login/logout"><i class="fa fa-sign-out"></i> <span>Logout</span></a></li>
                         </ul>
                     </li>

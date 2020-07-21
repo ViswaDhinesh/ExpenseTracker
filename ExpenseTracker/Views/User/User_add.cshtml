@@ -1,0 +1,250 @@
+﻿@model  ExpenseTracker.ETUser
+@{
+    ViewBag.Title = "User Creation";
+    Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
+    ViewBag.Menu = "User";
+}
+<script>
+    function PreviousPage() {
+        window.location = "/User/Index";
+    }
+</script>
+@using (Html.BeginForm("User_add", "User", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    <div class="container-fluid">
+        <div class="pageheader col-lg-12">
+            <h3 class="page-title text-primary">User Creation</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            @if (ViewBag.messagealert != string.Empty)
+            {
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    @ViewBag.messagealert
+                </div>
+            }
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">User Details</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Title<span class="required"> *</span></label>
+                            @*@Html.DropDownListFor(x => x.Title, (SelectList)ViewBag.UserTitles, "Choose Title", new { @class = "form-control IsRequiredDropDown singleSelect" })*@
+                            @Html.DropDownListFor(m => m.Title, new SelectList(ViewBag.UserTitles, "Value", "Text", ViewBag.ValueUniqueID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.Title)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">First Name<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", autocomplete = "off", maxlength = 50 })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.FirstName)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Middle Name</label>
+                            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", autocomplete = "off", maxlength = 5 })
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Last Name<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", autocomplete = "off", maxlength = 50 })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.LastName)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Email<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control", autocomplete = "off" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Phone<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.Phone, new { @class = "form-control", autocomplete = "off", maxlength = 20 })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.Phone)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Gender<span class="required"> *</span></label>
+                            @Html.DropDownListFor(m => m.Gender, new SelectList(ViewBag.Gender, "Value", "Text", ViewBag.ValueUniqueID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.Gender)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Marital Status<span class="required"> *</span></label>
+                            @Html.DropDownListFor(m => m.MaritalStatus, new SelectList(ViewBag.MaritalStatus, "Value", "Text", ViewBag.ValueUniqueID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.MaritalStatus)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">DOB<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.DOB, new { @class = "form-control", autocomplete = "off" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.DOB)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Address<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.Address, new { @class = "form-control", autocomplete = "off", maxlength = 250 })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.Address)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Role<span class="required"> *</span></label>
+                            @Html.DropDownListFor(m => m.RoleID, new SelectList(ViewBag.Role, "Value", "Text", ViewBag.RoleID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.RoleID)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Login Name<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.LoginName, new { @class = "form-control", autocomplete = "off", maxlength = 10 })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.LoginName)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Password<span class="required"> *</span></label>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control UPassword", @placeholder = "Password" })
+                            @*@Html.TextBoxFor(m => m.Password, new { @class = "form-control", autocomplete = "off", InputType.Password })*@
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.Password)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            @*Need to change*@
+                            <label style="font-weight:bold">Confirm Password<span class="required"> *</span></label>
+                            @*@Html.PasswordFor(m => m.Password, new { @class = "form-control UPassword", @placeholder = "Password" })*@
+                            @Html.TextBox("ConfirmPassword", null, new { @class = "form-control", autocomplete = "off", InputType.Password })
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">IsTwoFactor</label>
+                            <div class="attr-section">
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsTwoFactor, true, new { @checked = true }) Enable
+                                    <span class="checkround"></span>
+                                </label>
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsTwoFactor, false, new { }) Disable
+                                    <span class="checkround"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">IsOwner</label>
+                            <div class="attr-section">
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsOwner, true, new { @checked = true }) Enable
+                                    <span class="checkround"></span>
+                                </label>
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsOwner, false, new { }) Disable
+                                    <span class="checkround"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">IsAdmin</label>
+                            <div class="attr-section">
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsAdmin, true, new { @checked = true }) Enable
+                                    <span class="checkround"></span>
+                                </label>
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsAdmin, false, new { }) Disable
+                                    <span class="checkround"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">IsManager</label>
+                            <div class="attr-section">
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsManager, true, new { @checked = true }) Enable
+                                    <span class="checkround"></span>
+                                </label>
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsManager, false, new { }) Disable
+                                    <span class="checkround"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">IsActive</label>
+                            <div class="attr-section">
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsActive, true, new { @checked = true }) Enable
+                                    <span class="checkround"></span>
+                                </label>
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsActive, false, new { }) Disable
+                                    <span class="checkround"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">DeviceID</label>
+                            @Html.TextBoxFor(m => m.DeviceID, new { @class = "form-control", autocomplete = "off" })
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Additional Fields 1</label>
+                            @Html.TextBoxFor(m => m.UserField1, new { @class = "form-control", autocomplete = "off" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Additional Fields 2</label>
+                            @Html.TextBoxFor(m => m.UserField2, new { @class = "form-control", autocomplete = "off" })
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Additional Fields 3</label>
+                            @Html.TextBoxFor(m => m.UserField3, new { @class = "form-control", autocomplete = "off" })
+                        </div>
+                    </div>
+                    <div class="row save-button-section">
+                        <div class="form-group col-md-6 col-sm-6 pull-left text-left">
+                            <input type="submit" class="btn btn-primary" title="Save" value="Save">
+                            <input type="button" class="btn btn-secondary close-space" title="Back" value="Back" onclick="PreviousPage();" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

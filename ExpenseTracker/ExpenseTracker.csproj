@@ -128,15 +128,22 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\LoginSourceController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
+    <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\SourceController.cs" />
+    <Compile Include="Controllers\SubMenuController.cs" />
+    <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Controllers\ValueController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Common.cs" />
     <Compile Include="Models\Classes\SourceRepository.cs" />
+    <Compile Include="Models\Classes\UserRepository.cs" />
     <Compile Include="Models\Entity\EntityModel.cs" />
     <Compile Include="Models\Entity\ExpenseTrackerEntites.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -514,9 +521,6 @@
     <Content Include="Content\Admin\icon\x_icon.gif" />
     <Content Include="Content\Admin\images\ajax-loader.gif" />
     <Content Include="Content\Admin\images\avatar.png" />
-    <Content Include="Content\Admin\images\bg-image.png" />
-    <Content Include="Content\Admin\images\house-of-gems.png" />
-    <Content Include="Content\Admin\images\loader.gif" />
     <Content Include="Content\Admin\js\app.js" />
     <Content Include="Content\Admin\js\bootstrap-datepicker.min.js" />
     <Content Include="Content\Admin\js\bootstrap-datetimepicker.js" />
@@ -850,9 +854,32 @@
     <Content Include="Views\Category\Category_add.cshtml" />
     <Content Include="Views\Category\Category_view.cshtml" />
     <Content Include="Views\Category\Category_edit.cshtml" />
+    <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\User_add.cshtml" />
+    <Content Include="Views\User\User_edit.cshtml" />
+    <Content Include="Views\User\User_view.cshtml" />
+    <Content Include="Views\Value\Index.cshtml" />
+    <Content Include="Views\Value\Value_add.cshtml" />
+    <Content Include="Views\Value\Value_edit.cshtml" />
+    <Content Include="Views\Value\Value_view.cshtml" />
+    <Content Include="Views\Role\Index.cshtml" />
+    <Content Include="Views\Role\Role_add.cshtml" />
+    <Content Include="Views\Role\Role_edit.cshtml" />
+    <Content Include="Views\Role\Role_view.cshtml" />
+    <Content Include="Views\Menu\Index.cshtml" />
+    <Content Include="Views\Menu\Menu_add.cshtml" />
+    <Content Include="Views\Menu\Menu_edit.cshtml" />
+    <Content Include="Views\Menu\Menu_view.cshtml" />
+    <Content Include="Views\SubMenu\Index.cshtml" />
+    <Content Include="Views\SubMenu\SubMenu_add.cshtml" />
+    <Content Include="Views\SubMenu\SubMenu_edit.cshtml" />
+    <Content Include="Views\SubMenu\SubMenu_view.cshtml" />
+    <Content Include="Views\Role\Menu_Mapping.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Base\" />
     <Folder Include="Views\LoginSource\" />
   </ItemGroup>
   <ItemGroup>

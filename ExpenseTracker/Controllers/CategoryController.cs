@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace ExpenseTracker.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoryController : BaseController
     {
         // GET: Category
         ExpenseTrackerEntites dbEntities = new ExpenseTrackerEntites();
@@ -54,6 +54,7 @@ namespace ExpenseTracker.Controllers
                     if (repCategory.CategoryIsExist(Category.CategoryName, 0))
                     {
                         ViewBag.messagealert = "Category already exist";
+                        ViewBag.Source = repCategory.getSourceType();
                         return View(Category);
                     }
                     else
@@ -104,6 +105,7 @@ namespace ExpenseTracker.Controllers
                 if (repCategory.CategoryIsExist(updateCategory.CategoryName, id))
                 {
                     ViewBag.messagealert = "Category already exist";
+                    ViewBag.Source = repCategory.getSourceType();
                     return View(Category);
                 }
                 else
@@ -138,7 +140,7 @@ namespace ExpenseTracker.Controllers
         #region Category Delete
         public bool CategoryDelete(long id)
         {
-            if (!dbEntities.ETUsers.Where(x => x.UserID == 1).Any())
+            if (!dbEntities.ETUsers.Where(x => x.UserID == 1).Any()) // Need to change
             {
                 TempData["messagealert"] = Status.Delete;
                 Category = new ETCategory();
@@ -151,6 +153,20 @@ namespace ExpenseTracker.Controllers
                 }
             }
             return false;
+
+            //if (!dbEntities.TBL_ADMIN_USER.Where(x => x.ROLE_ID == id).Any())
+            //{
+            //    TempData["messagealert"] = Status.Delete;
+            //    role = new TBL_ROLE();
+            //    role = dbEntities.TBL_ROLE.Where(x => x.ROLE_ID == id && x.ROLE_NAME != "superadmin").SingleOrDefault();
+            //    if (role != null)
+            //    {
+            //        dbEntities.TBL_ROLE.Remove(role);
+            //        dbEntities.SaveChanges();
+            //        return true;
+            //    }
+            //}
+            //return false;
         }
         #endregion
 
@@ -170,9 +186,9 @@ namespace ExpenseTracker.Controllers
                 }
                 else
                 {
+                    Category.IsActive = true;
                     Category.ModifiedBy = "Dinesh";//Session["UserName"].ToString();
                     Category.ModifiedDate = DateTime.Now;
-                    Category.IsActive = true;
                 }
                 dbEntities.Entry(Category).State = EntityState.Modified;
                 dbEntities.SaveChanges();
