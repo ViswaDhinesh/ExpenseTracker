@@ -2,17 +2,17 @@
 @{
     ViewBag.Title = "Source List";
     Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
-    ViewBag.Menu = "Source";
+    ViewBag.Menu = "Sources";
 }
 <script>
 
     function DeleteSource(Sourceid) {
         if (Sourceid != "") {
             if (confirm("Are You Sure To Delete?") == true) {
-                var url = "/Source/SourceDelete";
+                var url = "/Sources/SourceDelete";
                 $.get(url, { id: Sourceid }, function (data) {
                     if (data == "True") {
-                        window.location.href = "/Source/Index";
+                        window.location.href = "/Sources/Index";
                     }
                     else {
                         alert("Delete the user which refers to this Source.");
@@ -24,7 +24,7 @@
     }
 
     function updateStatus(anchor, cimageid) {
-        var url = "/Source/SourceUpdateStatus";
+        var url = "/Sources/SourceUpdateStatus";
         var img = $(anchor).find("img")[0];
         $.get(url, { status: img.alt, Sourceid: cimageid }, function (data) {
 
@@ -53,7 +53,7 @@
                 <h3 class="page-title text-primary">Source List</h3>
                 <hr>
                 <div class="form-group text-right">
-                    <a href="/Source/Source_add" class="btn btn-primary add-emp" data-toggle="modal" title="Create">Create</a>
+                    <a href="/Sources/Source_add" class="btn btn-primary add-emp" data-toggle="modal" title="Create">Create</a>
                 </div>
             </div>
             <div class="col-lg-12 col-md-12 col-xs-12">
@@ -64,6 +64,9 @@
                         @ViewBag.messagealert
                     </div>
                 }
+                @{ var display = "displaynone"; }
+                @if (@ViewBag.UserPermission == "OWNER")
+                { display = "displayblock"; }
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover text-center" id="client-datatable">
                         <thead>
@@ -72,6 +75,7 @@
                                 <th style="display:none;"></th>
                                 <th class="text-center">Source Name</th>
                                 <th class="text-center">Source Type</th>
+                                <th class="@display text-center">Created User</th>
                                 <th class="text-center no-sort">Status</th>
                                 <th class="text-center no-sort">Action</th>
                             </tr>
@@ -102,6 +106,7 @@
                                     <td style="display:none;"><input type="hidden" value="@item.SourceID" /></td>
                                     <td>@item.SourceName</td>
                                     <td>@item.SourceType</td>
+                                    <td class="@display text-center">@item.UserID</td>
                                     <td>
                                         <a href="javascript:void(0)" id="lnkstatus" onclick="updateStatus(this,'@item.SourceID')">
                                             @if (item.IsActive)
@@ -115,8 +120,8 @@
                                         </a>
                                     </td>
                                     <td class="nowrap">
-                                        <a href="/Source/Source_edit/@item.SourceID" class="report-edit" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
-                                        <a href="/Source/Source_view/@item.SourceID" class="report-edit report-cancel" title="View"><i class="fa fa-eye"></i> View</a>
+                                        <a href="/Sources/Source_edit/@item.SourceID" class="report-edit" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+                                        <a href="/Sources/Source_view/@item.SourceID" class="report-edit report-cancel" title="View"><i class="fa fa-eye"></i> View</a>
                                         <a href="javascript:;" onclick="DeleteSource(@item.SourceID)" class="report-cancel" title="Delete"><i class="fa fa-trash"></i> Delete</a>
                                     </td>
                                 </tr>

@@ -27,13 +27,11 @@ namespace ExpenseTracker
 
         public DateTime? CreatedDate { get; set; }
 
-        [StringLength(100)]
-        public string CreatedBy { get; set; }
+        public long? CreatedBy { get; set; }
 
         public DateTime? ModifiedDate { get; set; }
 
-        [StringLength(100)]
-        public string ModifiedBy { get; set; }
+        public long? ModifiedBy { get; set; }
     }
 
     [Table("ETMenuAccess")]
@@ -52,13 +50,11 @@ namespace ExpenseTracker
 
         public DateTime? CreatedDate { get; set; }
 
-        [StringLength(100)]
-        public string CreatedBy { get; set; }
+        public long? CreatedBy { get; set; }
 
         public DateTime? ModifiedDate { get; set; }
 
-        [StringLength(100)]
-        public string ModifiedBy { get; set; }
+        public long? ModifiedBy { get; set; }
 
         [NotMapped]
         public List<ETSubMenu> lstsubmenu { get; set; }
@@ -85,18 +81,19 @@ namespace ExpenseTracker
         [StringLength(1)]
         public string SourceType { get; set; }
 
+        [Required(ErrorMessage = "The UserID field is required")]
+        public long UserID { get; set; }
+
         [Required(ErrorMessage = "The IsActive field is required")]
         public bool IsActive { get; set; }
 
         public DateTime? CreatedDate { get; set; }
 
-        [StringLength(100)]
-        public string CreatedBy { get; set; }
+        public long? CreatedBy { get; set; }
 
         public DateTime? ModifiedDate { get; set; }
 
-        [StringLength(100)]
-        public string ModifiedBy { get; set; }
+        public long? ModifiedBy { get; set; }
     }
 
     [Table("ETSubMenu")]
@@ -123,13 +120,16 @@ namespace ExpenseTracker
 
         public DateTime? CreatedDate { get; set; }
 
-        [StringLength(100)]
-        public string CreatedBy { get; set; }
+        public long? CreatedBy { get; set; }
 
         public DateTime? ModifiedDate { get; set; }
 
-        [StringLength(100)]
-        public string ModifiedBy { get; set; }
+        public long? ModifiedBy { get; set; }
+
+        public virtual ETMenu ETMenu { get; set; }
+
+        [NotMapped]
+        public string MenuName { get; set; }
     }
 
     [Table("ETExpenseMaster")]
@@ -169,8 +169,8 @@ namespace ExpenseTracker
         [StringLength(250)]
         public string CategoryName { get; set; }
 
-        [Required(ErrorMessage = "The CategoryTypeID field is required")]
-        public long CategoryTypeID { get; set; }
+        [Required(ErrorMessage = "The SourceID field is required")]
+        public long SourceID { get; set; }
 
         [Required(ErrorMessage = "The UserID field is required")]
         public long UserID { get; set; }
@@ -180,13 +180,16 @@ namespace ExpenseTracker
 
         public DateTime? CreatedDate { get; set; }
 
-        [StringLength(100)]
-        public string CreatedBy { get; set; }
+        public long? CreatedBy { get; set; }
 
         public DateTime? ModifiedDate { get; set; }
 
-        [StringLength(100)]
-        public string ModifiedBy { get; set; }
+        public long? ModifiedBy { get; set; }
+
+        public virtual ETSource ETSource { get; set; }
+
+        [NotMapped]
+        public string SourceName { get; set; }
     }
 
     [Table("ETValue")]
@@ -208,21 +211,19 @@ namespace ExpenseTracker
         [StringLength(100)]
         public string ValueType { get; set; }
 
-        [StringLength(20)]
-        public string UserID { get; set; }
+        //[StringLength(20)]
+        public long? UserID { get; set; }
 
         [Required(ErrorMessage = "The IsActive field is required")]
         public bool IsActive { get; set; }
 
         public DateTime? CreatedDate { get; set; }
 
-        [StringLength(100)]
-        public string CreatedBy { get; set; }
+        public long? CreatedBy { get; set; }
 
         public DateTime? ModifiedDate { get; set; }
 
-        [StringLength(100)]
-        public string ModifiedBy { get; set; }
+        public long? ModifiedBy { get; set; }
     }
 
     [Table("ETUser")]
@@ -236,8 +237,8 @@ namespace ExpenseTracker
         [Required(ErrorMessage = "The UserID field is required")]
         public long UserID { get; set; }
 
-        [StringLength(20)]
         [Required(ErrorMessage = "The Title field is required")]
+        [StringLength(20)]
         public string Title { get; set; }
 
         [Required(ErrorMessage = "The FirstName field is required")]
@@ -266,6 +267,7 @@ namespace ExpenseTracker
         [StringLength(1)]
         public string MaritalStatus { get; set; }
 
+        [Required(ErrorMessage = "The DOB field is required")]
         public DateTime DOB { get; set; }
 
         [Required(ErrorMessage = "The Address field is required")]
@@ -282,17 +284,29 @@ namespace ExpenseTracker
         [Required(ErrorMessage = "The Password field is required")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "The IsTwoFactor field is required")]
         public bool IsTwoFactor { get; set; }
 
-        public bool IsOwner { get; set; }
+        [Required(ErrorMessage = "The UserLevel field is required")]
+        [StringLength(20)]
+        public string UserLevel { get; set; }
 
-        public bool IsAdmin { get; set; }
+        //[Required(ErrorMessage = "The SourceOfCreation field is required")]
+        [StringLength(10)]
+        public string SourceOfCreation { get; set; }
 
-        public bool IsManager { get; set; }
+        public long? ReportingUser { get; set; }
 
+        //public bool IsOwner { get; set; }
+
+        //public bool IsAdmin { get; set; }
+
+        //public bool IsManager { get; set; }
+
+        [Required(ErrorMessage = "The IsActive field is required")]
         public bool IsActive { get; set; }
 
-        public long? CreatedUserID { get; set; }
+        //public long? CreatedUserID { get; set; }
 
         [StringLength(10)]
         public string Otp { get; set; }
@@ -307,13 +321,13 @@ namespace ExpenseTracker
 
         public DateTime? CreatedDate { get; set; }
 
-        [StringLength(100)]
-        public string CreatedBy { get; set; }
+        [Required(ErrorMessage = "The CreatedBy field is required")]
+        public long CreatedBy { get; set; }
 
         public DateTime? ModifiedDate { get; set; }
 
-        [StringLength(100)]
-        public string ModifiedBy { get; set; }
+        [Required(ErrorMessage = "The ModifiedBy field is required")]
+        public long ModifiedBy { get; set; }
     }
 
     [Table("ETRole")]
@@ -332,13 +346,11 @@ namespace ExpenseTracker
 
         public DateTime? CreatedDate { get; set; }
 
-        [StringLength(100)]
-        public string CreatedBy { get; set; }
+        public long? CreatedBy { get; set; }
 
         public DateTime? ModifiedDate { get; set; }
 
-        [StringLength(100)]
-        public string ModifiedBy { get; set; }
+        public long? ModifiedBy { get; set; }
     }
 
     [Table("ETUserLog")]

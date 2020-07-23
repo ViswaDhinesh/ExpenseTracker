@@ -64,6 +64,9 @@
                         @ViewBag.messagealert
                     </div>
                 }
+                @{ var display = "displaynone"; }
+                @if (@ViewBag.UserPermission == "OWNER")
+                { display = "displayblock"; }
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover text-center" id="client-datatable">
                         <thead>
@@ -72,6 +75,7 @@
                                 <th style="display:none;"></th>
                                 <th class="text-center">Category Name</th>
                                 <th class="text-center">Source Type</th>
+                                <th class="@display text-center">Created User</th>
                                 <th class="text-center no-sort">Status</th>
                                 <th class="text-center no-sort">Action</th>
                             </tr>
@@ -101,7 +105,8 @@
                                     <td></td>
                                     <td style="display:none;"><input type="hidden" value="@item.CategoryID" /></td>
                                     <td>@item.CategoryName</td>
-                                    <td>@item.CategoryTypeID</td>
+                                    <td>@item.ETSource.SourceName</td>
+                                    <td class="@display text-center">@item.UserID</td>
                                     <td>
                                         <a href="javascript:void(0)" id="lnkstatus" onclick="updateStatus(this,'@item.CategoryID')">
                                             @if (item.IsActive)

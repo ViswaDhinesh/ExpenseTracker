@@ -2,14 +2,14 @@
 @{
     ViewBag.Title = "Source Updation";
     Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
-    ViewBag.Menu = "Source";
+    ViewBag.Menu = "Sources";
 }
 <script>
     function PreviousPage() {
-        window.location = "/Source/Index";
+        window.location = "/Sources/Index";
     }
 </script>
-@using (Html.BeginForm("Source_edit", "Source", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Source_edit", "Sources", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
     @Html.AntiForgeryToken()
@@ -44,7 +44,8 @@
                         </div>
                         <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">Source Type<span class="required"> *</span></label>
-                            @Html.TextBoxFor(m => m.SourceType, new { @class = "form-control", autocomplete = "off", maxlength = 1 })
+                            @Html.DropDownListFor(m => m.SourceType, new SelectList(ViewBag.SourceTypes, "Value", "Text", ViewBag.ValueUniqueID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            @*@Html.TextBoxFor(m => m.SourceType, new { @class = "form-control", autocomplete = "off", maxlength = 1 })*@
                             <span class="error-text">
                                 @Html.ValidationMessageFor(model => model.SourceType)
                             </span>

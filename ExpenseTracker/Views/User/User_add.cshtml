@@ -38,7 +38,7 @@
                         <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">Title<span class="required"> *</span></label>
                             @*@Html.DropDownListFor(x => x.Title, (SelectList)ViewBag.UserTitles, "Choose Title", new { @class = "form-control IsRequiredDropDown singleSelect" })*@
-                            @Html.DropDownListFor(m => m.Title, new SelectList(ViewBag.UserTitles, "Value", "Text", ViewBag.ValueUniqueID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            @Html.DropDownListFor(m => m.Title, new SelectList(ViewBag.UserTitles, "Value", "Text", ViewBag.TitleID), new { @class = "form-control IsRequiredDropDown singleSelect" })
                             <span class="error-text">
                                 @Html.ValidationMessageFor(model => model.Title)
                             </span>
@@ -83,14 +83,14 @@
                     <div class="row">
                         <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">Gender<span class="required"> *</span></label>
-                            @Html.DropDownListFor(m => m.Gender, new SelectList(ViewBag.Gender, "Value", "Text", ViewBag.ValueUniqueID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            @Html.DropDownListFor(m => m.Gender, new SelectList(ViewBag.Gender, "Value", "Text", ViewBag.GenderID), new { @class = "form-control IsRequiredDropDown singleSelect" })
                             <span class="error-text">
                                 @Html.ValidationMessageFor(model => model.Gender)
                             </span>
                         </div>
                         <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">Marital Status<span class="required"> *</span></label>
-                            @Html.DropDownListFor(m => m.MaritalStatus, new SelectList(ViewBag.MaritalStatus, "Value", "Text", ViewBag.ValueUniqueID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            @Html.DropDownListFor(m => m.MaritalStatus, new SelectList(ViewBag.MaritalStatus, "Value", "Text", ViewBag.MaritalStatusID), new { @class = "form-control IsRequiredDropDown singleSelect" })
                             <span class="error-text">
                                 @Html.ValidationMessageFor(model => model.MaritalStatus)
                             </span>
@@ -131,8 +131,8 @@
                     <div class="row">
                         <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">Password<span class="required"> *</span></label>
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control UPassword", @placeholder = "Password" })
-                            @*@Html.TextBoxFor(m => m.Password, new { @class = "form-control", autocomplete = "off", InputType.Password })*@
+                            @*@Html.PasswordFor(m => m.Password, new { @class = "form-control UPassword", @placeholder = "Password" })*@
+                            @Html.TextBoxFor(m => m.Password, new { @class = "form-control", autocomplete = "off", InputType.Password })
                             <span class="error-text">
                                 @Html.ValidationMessageFor(model => model.Password)
                             </span>
@@ -144,7 +144,22 @@
                             @Html.TextBox("ConfirmPassword", null, new { @class = "form-control", autocomplete = "off", InputType.Password })
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">User Level<span class="required"> *</span></label>
+                            @Html.DropDownListFor(m => m.UserLevel, new SelectList(ViewBag.UserLevel, "Value", "Text", ViewBag.UserLevelID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.UserLevel)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Reporting User<span class="required"> *</span></label>
+                            @Html.DropDownListFor(m => m.ReportingUser, new SelectList(ViewBag.ReportingUser, "Value", "Text", ViewBag.ReportingUserID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.ReportingUser)
+                            </span>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">IsTwoFactor</label>
@@ -160,49 +175,6 @@
                             </div>
                         </div>
                         <div class="form-group col-md-4 col-sm-4">
-                            <label style="font-weight:bold">IsOwner</label>
-                            <div class="attr-section">
-                                <label class="radio radio-inline">
-                                    @Html.RadioButtonFor(m => m.IsOwner, true, new { @checked = true }) Enable
-                                    <span class="checkround"></span>
-                                </label>
-                                <label class="radio radio-inline">
-                                    @Html.RadioButtonFor(m => m.IsOwner, false, new { }) Disable
-                                    <span class="checkround"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-4 col-sm-4">
-                            <label style="font-weight:bold">IsAdmin</label>
-                            <div class="attr-section">
-                                <label class="radio radio-inline">
-                                    @Html.RadioButtonFor(m => m.IsAdmin, true, new { @checked = true }) Enable
-                                    <span class="checkround"></span>
-                                </label>
-                                <label class="radio radio-inline">
-                                    @Html.RadioButtonFor(m => m.IsAdmin, false, new { }) Disable
-                                    <span class="checkround"></span>
-                                </label>
-                            </div>
-                        </div>
-                        <div class="form-group col-md-4 col-sm-4">
-                            <label style="font-weight:bold">IsManager</label>
-                            <div class="attr-section">
-                                <label class="radio radio-inline">
-                                    @Html.RadioButtonFor(m => m.IsManager, true, new { @checked = true }) Enable
-                                    <span class="checkround"></span>
-                                </label>
-                                <label class="radio radio-inline">
-                                    @Html.RadioButtonFor(m => m.IsManager, false, new { }) Disable
-                                    <span class="checkround"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">IsActive</label>
                             <div class="attr-section">
                                 <label class="radio radio-inline">
@@ -215,7 +187,63 @@
                                 </label>
                             </div>
                         </div>
+                        @*<div class="form-group col-md-4 col-sm-4">
+                                <label style="font-weight:bold">IsOwner</label>
+                                <div class="attr-section">
+                                    <label class="radio radio-inline">
+                                        @Html.RadioButtonFor(m => m.IsOwner, true, new { @checked = true }) Enable
+                                        <span class="checkround"></span>
+                                    </label>
+                                    <label class="radio radio-inline">
+                                        @Html.RadioButtonFor(m => m.IsOwner, false, new { }) Disable
+                                        <span class="checkround"></span>
+                                    </label>
+                                </div>
+                            </div>*@
                     </div>
+                    @*<div class="row">
+                            <div class="form-group col-md-4 col-sm-4">
+                                <label style="font-weight:bold">IsAdmin</label>
+                                <div class="attr-section">
+                                    <label class="radio radio-inline">
+                                        @Html.RadioButtonFor(m => m.IsAdmin, true, new { @checked = true }) Enable
+                                        <span class="checkround"></span>
+                                    </label>
+                                    <label class="radio radio-inline">
+                                        @Html.RadioButtonFor(m => m.IsAdmin, false, new { }) Disable
+                                        <span class="checkround"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group col-md-4 col-sm-4">
+                                <label style="font-weight:bold">IsManager</label>
+                                <div class="attr-section">
+                                    <label class="radio radio-inline">
+                                        @Html.RadioButtonFor(m => m.IsManager, true, new { @checked = true }) Enable
+                                        <span class="checkround"></span>
+                                    </label>
+                                    <label class="radio radio-inline">
+                                        @Html.RadioButtonFor(m => m.IsManager, false, new { }) Disable
+                                        <span class="checkround"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>*@
+                    @*<div class="row">
+                            <div class="form-group col-md-4 col-sm-4">
+                                <label style="font-weight:bold">IsActive</label>
+                                <div class="attr-section">
+                                    <label class="radio radio-inline">
+                                        @Html.RadioButtonFor(m => m.IsActive, true, new { @checked = true }) Enable
+                                        <span class="checkround"></span>
+                                    </label>
+                                    <label class="radio radio-inline">
+                                        @Html.RadioButtonFor(m => m.IsActive, false, new { }) Disable
+                                        <span class="checkround"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>*@
                     <div class="row">
                         <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">DeviceID</label>

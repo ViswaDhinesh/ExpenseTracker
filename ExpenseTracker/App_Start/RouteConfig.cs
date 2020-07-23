@@ -13,11 +13,17 @@ namespace ExpenseTracker
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.MapRoute(
-                name: "Source",
-                url: "{controller}",
-                defaults: new { controller = "Source", action = "Index", id = UrlParameter.Optional }
-            );
+            //routes.MapRoute(
+            //    name: "Sources",
+            //    url: "{controller}",
+            //    defaults: new { controller = "Sources", action = "Index", id = UrlParameter.Optional }
+            //);
+
+            //routes.MapRoute(
+            //    name: "Profiles",
+            //    url: "{controller}/{id}",
+            //    defaults: new { controller = "CommonUser", action = "Profiles", id = UrlParameter.Optional }
+            //);
 
             routes.MapRoute(
                 name: "Default",

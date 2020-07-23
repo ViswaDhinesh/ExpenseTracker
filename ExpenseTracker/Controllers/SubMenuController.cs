@@ -59,9 +59,9 @@ namespace ExpenseTracker.Controllers
                     }
                     else
                     {
-                        SubMenu.CreatedBy = "Dinesh";//Session["UserName"].ToString();
+                        SubMenu.CreatedBy = Convert.ToInt64(Session["UserID"]);
                         SubMenu.CreatedDate = DateTime.Now;
-                        SubMenu.ModifiedBy = "Pandiyan";//Session["UserName"].ToString();
+                        SubMenu.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                         SubMenu.ModifiedDate = DateTime.Now;
                         dbEntities.ETSubMenus.Add(SubMenu);
                         dbEntities.SaveChanges();
@@ -114,7 +114,7 @@ namespace ExpenseTracker.Controllers
                     SubMenu.SubMenuUrl = updateSubMenu.SubMenuUrl;
                     SubMenu.OrderNo = updateSubMenu.OrderNo;
                     SubMenu.Status = updateSubMenu.Status;
-                    SubMenu.ModifiedBy = "Dinesh"; //Session["UserName"].ToString();
+                    SubMenu.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     SubMenu.ModifiedDate = DateTime.Now;
                     dbEntities.Entry(SubMenu).State = EntityState.Modified;
                     dbEntities.SaveChanges();
@@ -182,13 +182,13 @@ namespace ExpenseTracker.Controllers
                 if (status)
                 {
                     SubMenu.Status = false;
-                    SubMenu.ModifiedBy = "Dinesh";//Session["UserName"].ToString();
+                    SubMenu.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     SubMenu.ModifiedDate = DateTime.Now;
                 }
                 else
                 {
                     SubMenu.Status = true;
-                    SubMenu.ModifiedBy = "Dinesh";//Session["UserName"].ToString();
+                    SubMenu.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     SubMenu.ModifiedDate = DateTime.Now;
                 }
                 dbEntities.Entry(SubMenu).State = EntityState.Modified;

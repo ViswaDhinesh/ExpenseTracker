@@ -130,11 +130,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\CommonUserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
-    <Compile Include="Controllers\SourceController.cs" />
+    <Compile Include="Controllers\SourcesController.cs" />
     <Compile Include="Controllers\SubMenuController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValueController.cs" />
@@ -503,6 +504,7 @@
     <Content Include="Content\Admin\css\responsive.bootstrap.min.css" />
     <Content Include="Content\Admin\css\spectrum.css" />
     <Content Include="Content\Admin\css\style.css" />
+    <Content Include="Content\Admin\css\Styles.css" />
     <Content Include="Content\Admin\css\summernote.css" />
     <Content Include="Content\Admin\css\timepicker.css" />
     <Content Include="Content\Admin\datatableJs\datagridperiority.js" />
@@ -521,6 +523,9 @@
     <Content Include="Content\Admin\icon\x_icon.gif" />
     <Content Include="Content\Admin\images\ajax-loader.gif" />
     <Content Include="Content\Admin\images\avatar.png" />
+    <Content Include="Content\Admin\images\Front.jpg" />
+    <Content Include="Content\Admin\images\Login.jpg" />
+    <Content Include="Content\Admin\images\Stock.jpg" />
     <Content Include="Content\Admin\js\app.js" />
     <Content Include="Content\Admin\js\bootstrap-datepicker.min.js" />
     <Content Include="Content\Admin\js\bootstrap-datetimepicker.js" />
@@ -633,18 +638,6 @@
     <Content Include="Content\Front\js\tagsinput.js" />
     <Content Include="Content\Front\js\wow.min.js" />
     <Content Include="Content\Front\js\zoom-image.js" />
-    <Content Include="Content\TableStyles\css\bootstrap.min.css" />
-    <Content Include="Content\TableStyles\css\color\color-1.css" />
-    <Content Include="Content\TableStyles\css\component.css" />
-    <Content Include="Content\TableStyles\css\font-awesome.min.css" />
-    <Content Include="Content\TableStyles\css\ionicons.css" />
-    <Content Include="Content\TableStyles\css\jquery.mCustomScrollbar.css" />
-    <Content Include="Content\TableStyles\css\linearicons.css" />
-    <Content Include="Content\TableStyles\css\mCSB_buttons.html" />
-    <Content Include="Content\TableStyles\css\pcoded-horizontal.min.css" />
-    <Content Include="Content\TableStyles\css\simple-line-icons.css" />
-    <Content Include="Content\TableStyles\css\style.css" />
-    <Content Include="Content\TableStyles\css\Styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -843,13 +836,13 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutHDesign.cshtml" />
     <Content Include="Views\Shared\_FooterLayout.cshtml" />
-    <Content Include="Views\Source\Index.cshtml" />
+    <Content Include="Views\Sources\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutSDesign.cshtml" />
-    <Content Include="Views\Source\Source.cshtml" />
+    <Content Include="Views\Sources\Source.cshtml" />
     <Content Include="Views\Shared\_LayoutHDesignNew.cshtml" />
-    <Content Include="Views\Source\Source_add.cshtml" />
-    <Content Include="Views\Source\Source_edit.cshtml" />
-    <Content Include="Views\Source\Source_view.cshtml" />
+    <Content Include="Views\Sources\Source_add.cshtml" />
+    <Content Include="Views\Sources\Source_edit.cshtml" />
+    <Content Include="Views\Sources\Source_view.cshtml" />
     <Content Include="Views\Category\Index.cshtml" />
     <Content Include="Views\Category\Category_add.cshtml" />
     <Content Include="Views\Category\Category_view.cshtml" />
@@ -876,6 +869,8 @@
     <Content Include="Views\SubMenu\SubMenu_view.cshtml" />
     <Content Include="Views\Role\Menu_Mapping.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\CommonUser\Profiles.cshtml" />
+    <Content Include="Views\CommonUser\PasswordChange.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

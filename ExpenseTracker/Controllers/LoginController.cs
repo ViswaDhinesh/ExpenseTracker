@@ -54,7 +54,7 @@ namespace ExpenseTracker.Controllers
         {
             if (objLoginDetails != null)
             {
-                if (repUser.IsValidEmail(objLoginDetails.Email))
+                if (Common.IsValidEmail(objLoginDetails.Email))
                 {
                     objLoginDetails.GetTypes = "Email Id";
                 }
@@ -73,10 +73,15 @@ namespace ExpenseTracker.Controllers
                     ETUser loginDetails = checkLogin.loginDetails;
                     if (loginDetails != null)
                     {
+                        List<long> MappedUser = new List<long>();
                         Session["UserID"] = loginDetails.UserID;
                         Session["UserName"] = loginDetails.FirstName;
                         Session["RoleID"] = loginDetails.RoleID;
-                        //Session["RoleName"] = loginDetails.ETRole.RoleName;
+                        Session["RoleName"] = null; //loginDetails.ETRole.RoleName;
+                        Session["UserLevel"] = loginDetails.UserLevel; // New
+                        Session["ReportingUser"] = loginDetails.ReportingUser;
+                        MappedUser = dbEntities.ETUsers.Where(x => x.ReportingUser == loginDetails.UserID || x.UserID == loginDetails.UserID).Select(x => x.UserID).Distinct().ToList();
+                        Session["MappedUser"] = MappedUser;
                         Session.Timeout = 300;
                         repUser.LogForUserLogin(checkLogin, objLoginDetails.Email);
                         List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == loginDetails.RoleID).Select(x => x.SubMenuID).ToList();
@@ -97,7 +102,7 @@ namespace ExpenseTracker.Controllers
                 }
                 else
                 {
-                    repUser.LogForUserLogin(checkLogin, objLoginDetails.Email);
+                    //repUser.LogForUserLogin(checkLogin, objLoginDetails.Email);
                     ViewBag.Error = checkLogin.errorMessage;
                     return View();
                 }

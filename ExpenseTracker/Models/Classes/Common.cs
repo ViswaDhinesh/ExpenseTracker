@@ -24,7 +24,21 @@ namespace ExpenseTracker
             string eNC_str = Convert.ToBase64String(eNC_data);
             return eNC_str;
         }
+        #endregion
 
+        #region IsValidEmail
+        public static bool IsValidEmail(string email)
+        {
+            try
+            {
+                var addr = new System.Net.Mail.MailAddress(email);
+                return true;
+            }
+            catch (FormatException)
+            {
+                return false;
+            }
+        }
         #endregion
     }
     public sealed class Status

@@ -105,6 +105,24 @@
                     </div>
                 </div>
                 <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>User Level</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.UserLevel)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>SourceOfCreation</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.SourceOfCreation)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>ReportingUser</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.ReportingUser)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
                     <label class="col-lg-5 col-md-5 col-xs-5"><b>IsTwoFactor</b></label>
                     <div class="pull-left col-lg-7 col-md-7 col-xs-7">
                         <p>
@@ -112,30 +130,30 @@
                         </p>
                     </div>
                 </div>
-                <div class="row bottom-space">
-                    <label class="col-lg-5 col-md-5 col-xs-5"><b>IsOwner</b></label>
-                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
-                        <p>
-                            @(Model.IsOwner ? "Enabled" : "Disabled")
-                        </p>
-                    </div>
-                </div>
-                <div class="row bottom-space">
-                    <label class="col-lg-5 col-md-5 col-xs-5"><b>IsAdmin</b></label>
-                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
-                        <p>
-                            @(Model.IsAdmin ? "Enabled" : "Disabled")
-                        </p>
-                    </div>
-                </div>
-                <div class="row bottom-space">
-                    <label class="col-lg-5 col-md-5 col-xs-5"><b>IsManager</b></label>
-                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
-                        <p>
-                            @(Model.IsManager ? "Enabled" : "Disabled")
-                        </p>
-                    </div>
-                </div>
+                @*<div class="row bottom-space">
+                        <label class="col-lg-5 col-md-5 col-xs-5"><b>IsOwner</b></label>
+                        <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                            <p>
+                                @(Model.IsOwner ? "Enabled" : "Disabled")
+                            </p>
+                        </div>
+                    </div>*@
+                @*<div class="row bottom-space">
+                        <label class="col-lg-5 col-md-5 col-xs-5"><b>IsAdmin</b></label>
+                        <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                            <p>
+                                @(Model.IsAdmin ? "Enabled" : "Disabled")
+                            </p>
+                        </div>
+                    </div>*@
+                @*<div class="row bottom-space">
+                        <label class="col-lg-5 col-md-5 col-xs-5"><b>IsManager</b></label>
+                        <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                            <p>
+                                @(Model.IsManager ? "Enabled" : "Disabled")
+                            </p>
+                        </div>
+                    </div>*@
                 <div class="row bottom-space">
                     <label class="col-lg-5 col-md-5 col-xs-5"><b>Status</b></label>
                     <div class="pull-left col-lg-7 col-md-7 col-xs-7">

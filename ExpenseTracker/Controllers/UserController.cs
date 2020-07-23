@@ -15,11 +15,12 @@ namespace ExpenseTracker.Controllers
         ETValue Values = new ETValue();
         UserRepository repUsers = new UserRepository();
         List<ETUser> Users = new List<ETUser>();
-        long user = 1; // Need to change
+
         #region User List
         public ActionResult Index()
         {
-            var IsPermission = dbEntities.ETUsers.Where(x => x.IsActive == true && x.UserID == user).SingleOrDefault(); // Need to change
+            long user = Convert.ToInt64(Session["UserID"]); // Need to change
+            ViewBag.UserPermission = Session["UserLevel"].ToString().ToUpper();
             ViewBag.messagealert = string.Empty;
             string messagealert = Convert.ToString(TempData["messagealert"]);
             if (!string.IsNullOrEmpty(messagealert))
@@ -27,12 +28,15 @@ namespace ExpenseTracker.Controllers
                 ViewBag.messagealert = messagealert;
             }
             Users = new List<ETUser>();
-            if (IsPermission == null || (!IsPermission.IsAdmin && !IsPermission.IsOwner))
-                return RedirectToAction("Index", "Home");
-            else if (IsPermission.IsOwner)
-                Users = repUsers.GetAllUser("Owner", 0);
+            if (Session["UserLevel"].ToString().ToUpper() == "OWNER")
+                Users = repUsers.GetAllUser("OWNER", 0, null);
+            else if (Session["UserLevel"].ToString().ToUpper() == "ADMIN")
+            {
+                var UserList = Session["MappedUser"] as List<long>;
+                Users = repUsers.GetAllUser("ADMIN", user, UserList);
+            }
             else
-                Users = repUsers.GetAllUser("", user); // Need to change
+                Users = repUsers.GetAllUser("USER", user, null);
             return View(Users);
         }
         #endregion
@@ -41,18 +45,14 @@ namespace ExpenseTracker.Controllers
         [HttpGet]
         public ActionResult User_add()
         {
-            //var IsPermission = dbEntities.ETUsers.Where(x => x.IsActive == true && x.UserID == user).SingleOrDefault(); // Need to change
-            //if (IsPermission == null || (!IsPermission.IsAdmin && !IsPermission.IsOwner))
-            //    return RedirectToAction("Index", "Home");
-            //else
-            //{
-                ViewBag.messagealert = string.Empty;
-                ViewBag.UserTitles = repUsers.getDataValues("Title");
-                ViewBag.Gender = repUsers.getDataValues("Gender");
-                ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus");
-                ViewBag.Role = repUsers.getRole();
-                return View();
-            //}
+            ViewBag.messagealert = string.Empty; // Need to change the get data values while admin access.
+            ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+            ViewBag.Gender = repUsers.getDataValues("Gender", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+            ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+            ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+            ViewBag.ReportingUser = repUsers.getMappedReportingUser();//getDataValues("ReportingUser", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"])); // Need to change
+            ViewBag.Role = repUsers.getRole();
+            return View();
         }
 
         [HttpPost]
@@ -69,37 +69,47 @@ namespace ExpenseTracker.Controllers
                     if (repUsers.LogInNameIsExist(User.LoginName, 0))
                     {
                         ViewBag.messagealert = "LogInName already exist";
-                        ViewBag.UserTitles = repUsers.getDataValues("Title");
-                        ViewBag.Gender = repUsers.getDataValues("Gender");
-                        ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus");
+                        ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Gender = repUsers.getDataValues("Gender", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.ReportingUser = repUsers.getMappedReportingUser();
                         ViewBag.Role = repUsers.getRole();
                         return View(User);
                     }
-                    else if (repUsers.EmailIsExist(User.Email, 0))
+                    else if (repUsers.EmailIsExist(User.Email, 0) || !Common.IsValidEmail(User.Email))
                     {
-                        ViewBag.messagealert = "Email already exist";
-                        ViewBag.UserTitles = repUsers.getDataValues("Title");
-                        ViewBag.Gender = repUsers.getDataValues("Gender");
-                        ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus");
+                        if (!Common.IsValidEmail(User.Email))
+                            ViewBag.messagealert = "Please Enter Valid Email";
+                        else
+                            ViewBag.messagealert = "Email already exist";
+                        ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Gender = repUsers.getDataValues("Gender", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.ReportingUser = repUsers.getMappedReportingUser();
                         ViewBag.Role = repUsers.getRole();
                         return View(User);
                     }
                     else if (repUsers.PhoneIsExist(User.Phone, 0))
                     {
                         ViewBag.messagealert = "Phone already exist";
-                        ViewBag.UserTitles = repUsers.getDataValues("Title");
-                        ViewBag.Gender = repUsers.getDataValues("Gender");
-                        ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus");
+                        ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Gender = repUsers.getDataValues("Gender", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.ReportingUser = repUsers.getMappedReportingUser();
                         ViewBag.Role = repUsers.getRole();
                         return View(User);
                     }
                     else
                     {
+                        User.SourceOfCreation = "User Form";
                         User.Password = Common.EncryptPassword(User.Password);
                         User.UserID = repUsers.UserIdGeneration();
-                        User.CreatedBy = "Dinesh";//Session["UserName"].ToString();
+                        User.CreatedBy = Convert.ToInt64(Session["UserID"]);
                         User.CreatedDate = DateTime.Now;
-                        User.ModifiedBy = "Pandiyan";//Session["UserName"].ToString();
+                        User.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                         User.ModifiedDate = DateTime.Now;
                         dbEntities.ETUsers.Add(User);
                         dbEntities.SaveChanges();
@@ -120,20 +130,25 @@ namespace ExpenseTracker.Controllers
         [HttpGet]
         public ActionResult User_edit(long Id)
         {
-            //var IsPermission = dbEntities.ETUsers.Where(x => x.IsActive == true && x.UserID == user).SingleOrDefault(); // Need to change
-            //if (IsPermission == null || (!IsPermission.IsAdmin && !IsPermission.IsOwner))
-            //    return RedirectToAction("Index", "Home");
-            //else
-            //{
-                ViewBag.messagealert = string.Empty;
-                User = new ETUser();
-                User = repUsers.GetUser(Id);
-                ViewBag.UserTitles = repUsers.getDataValues("Title");
-                ViewBag.Gender = repUsers.getDataValues("Gender");
-                ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus");
-                ViewBag.Role = repUsers.getRole();
-                return View(User);
-            //}
+            ViewBag.messagealert = string.Empty;
+            User = new ETUser();
+            User = repUsers.GetUser(Id);
+            User.Password = Common.DecryptPassword(User.Password);
+            ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+            //repUsers.getTitle("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+            ViewBag.Gender = repUsers.getDataValues("Gender", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+            ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+            ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+            ViewBag.ReportingUser = repUsers.getMappedReportingUser();
+            ViewBag.Role = repUsers.getRole();
+            
+            //ViewBag.ReportingUserID = User.ReportingUser;
+            //ViewBag.UserLevelID = User.UserLevel;
+            //ViewBag.RoleID = User.RoleID;
+            //ViewBag.MaritalStatusID = User.MaritalStatus;
+            //ViewBag.GenderID = User.Gender;
+            //ViewBag.TitleID = User.Title;
+            return View(User);
         }
 
         [HttpPost]
@@ -141,7 +156,7 @@ namespace ExpenseTracker.Controllers
         public ActionResult User_edit(long id, ETUser updateUser)
         {
             TempData["messagealert"] = string.Empty;
-
+            //var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
                 User = new ETUser();
@@ -150,27 +165,36 @@ namespace ExpenseTracker.Controllers
                 if (repUsers.LogInNameIsExist(updateUser.LoginName, id))
                 {
                     ViewBag.messagealert = "LogInName already exist";
-                    ViewBag.UserTitles = repUsers.getDataValues("Title");
-                    ViewBag.Gender = repUsers.getDataValues("Gender");
-                    ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus");
+                    ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    ViewBag.Gender = repUsers.getDataValues("Gender", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    ViewBag.ReportingUser = repUsers.getMappedReportingUser();
                     ViewBag.Role = repUsers.getRole();
                     return View(User);
                 }
-                else if (repUsers.EmailIsExist(updateUser.Email, id))
+                else if (repUsers.EmailIsExist(updateUser.Email, id) || !Common.IsValidEmail(updateUser.Email))
                 {
-                    ViewBag.messagealert = "Email already exist";
-                    ViewBag.UserTitles = repUsers.getDataValues("Title");
-                    ViewBag.Gender = repUsers.getDataValues("Gender");
-                    ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus");
+                    if (!Common.IsValidEmail(updateUser.Email))
+                        ViewBag.messagealert = "Please Enter Valid Email";
+                    else
+                        ViewBag.messagealert = "Email already exist";
+                    ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    ViewBag.Gender = repUsers.getDataValues("Gender", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    ViewBag.ReportingUser = repUsers.getMappedReportingUser();
                     ViewBag.Role = repUsers.getRole();
                     return View(User);
                 }
                 else if (repUsers.PhoneIsExist(updateUser.Phone, id))
                 {
                     ViewBag.messagealert = "Phone already exist";
-                    ViewBag.UserTitles = repUsers.getDataValues("Title");
-                    ViewBag.Gender = repUsers.getDataValues("Gender");
-                    ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus");
+                    ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    ViewBag.Gender = repUsers.getDataValues("Gender", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    ViewBag.ReportingUser = repUsers.getMappedReportingUser();
                     ViewBag.Role = repUsers.getRole();
                     return View(User);
                 }
@@ -191,15 +215,17 @@ namespace ExpenseTracker.Controllers
                     User.Password = Common.EncryptPassword(updateUser.Password);
                     //User.Password = updateUser.Password;
                     User.IsTwoFactor = updateUser.IsTwoFactor;
-                    User.IsOwner = updateUser.IsOwner;
-                    User.IsAdmin = updateUser.IsAdmin;
-                    User.IsManager = updateUser.IsManager;
+                    User.UserLevel = updateUser.UserLevel;
+                    User.ReportingUser = updateUser.ReportingUser;
+                    //User.IsOwner = updateUser.IsOwner;
+                    //User.IsAdmin = updateUser.IsAdmin;
+                    //User.IsManager = updateUser.IsManager;
                     User.IsActive = updateUser.IsActive;
                     User.DeviceID = updateUser.DeviceID;
                     User.UserField1 = updateUser.UserField1;
                     User.UserField2 = updateUser.UserField2;
                     User.UserField3 = updateUser.UserField3;
-                    User.ModifiedBy = "Dinesh"; //Session["UserName"].ToString();
+                    User.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     User.ModifiedDate = DateTime.Now;
                     dbEntities.Entry(User).State = EntityState.Modified;
                     dbEntities.SaveChanges();
@@ -217,14 +243,9 @@ namespace ExpenseTracker.Controllers
         #region User View
         public ActionResult User_view(long Id)
         {
-            //var IsPermission = dbEntities.ETUsers.Where(x => x.IsActive == true && x.UserID == user).SingleOrDefault(); // Need to change
-            //if (IsPermission == null || (!IsPermission.IsAdmin && !IsPermission.IsOwner))
-            //    return RedirectToAction("Index", "Home");
-            //else
-            //{
-                User = repUsers.GetUser(Id);
-                return View(User);
-            //}
+            User = repUsers.GetUser(Id);
+            User.Password = Common.DecryptPassword(User.Password);
+            return View(User);
         }
         #endregion
 
@@ -272,13 +293,13 @@ namespace ExpenseTracker.Controllers
                 if (status)
                 {
                     User.IsActive = false;
-                    User.ModifiedBy = "Dinesh";//Session["UserName"].ToString();
+                    User.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     User.ModifiedDate = DateTime.Now;
                 }
                 else
                 {
                     User.IsActive = true;
-                    User.ModifiedBy = "Dinesh";//Session["UserName"].ToString();
+                    User.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     User.ModifiedDate = DateTime.Now;
                 }
                 dbEntities.Entry(User).State = EntityState.Modified;

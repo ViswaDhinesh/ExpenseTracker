@@ -31,6 +31,9 @@ namespace ExpenseTracker.Controllers
                     Session["UserName"] = null;
                     Session["RoleID"] = null;
                     Session["RoleName"] = null;
+                    Session["UserLevel"] = null;
+                    Session["ReportingUser"] = null;
+                    Session["MappedUser"] = null;
                     TempData["SessionExpired"] = "You don't have permission to access this page";
                     Response.Redirect("/Login");
                 }
@@ -53,6 +56,9 @@ namespace ExpenseTracker.Controllers
                             Session["UserName"] = null;
                             Session["RoleID"] = null;
                             Session["RoleName"] = null;
+                            Session["UserLevel"] = null;
+                            Session["ReportingUser"] = null;
+                            Session["MappedUser"] = null;
                             TempData["SessionExpired"] = "Sorry, Your account was deactivated";
                             Response.Redirect("/Login");
                         }
@@ -75,6 +81,9 @@ namespace ExpenseTracker.Controllers
                                 Session["UserName"] = null;
                                 Session["RoleID"] = null;
                                 Session["RoleName"] = null;
+                                Session["UserLevel"] = null;
+                                Session["ReportingUser"] = null;
+                                Session["MappedUser"] = null;
                                 TempData["SessionExpired"] = "Sorry, You don't have permission";
                                 Response.Redirect("/Login");
                             }
@@ -86,6 +95,9 @@ namespace ExpenseTracker.Controllers
                         Session["UserName"] = null;
                         Session["RoleID"] = null;
                         Session["RoleName"] = null;
+                        Session["UserLevel"] = null;
+                        Session["ReportingUser"] = null;
+                        Session["MappedUser"] = null;
                         TempData["SessionExpired"] = "Session Expired";
                         Response.Redirect("/Login");
                     }
@@ -97,6 +109,9 @@ namespace ExpenseTracker.Controllers
                 Session["UserName"] = null;
                 Session["RoleID"] = null;
                 Session["RoleName"] = null;
+                Session["UserLevel"] = null;
+                Session["ReportingUser"] = null;
+                Session["MappedUser"] = null;
                 Response.Redirect("/Login");
             }
 

@@ -15,7 +15,8 @@ namespace ExpenseTracker
                 "~/Content/Admin/css/bootstrap.css",
                 "~/Content/Admin/css/font-awesome.min.css",
                 "~/Content/Admin/css/bootstrap-datepicker3.min.css",
-                "~/Content/Admin/css/style.css"
+                "~/Content/Admin/css/style.css",
+                "~/Content/Admin/css/Styles.css" //New
                 ));
 
             bundles.Add(new StyleBundle("~/bundles/Front/css").Include(
@@ -81,11 +82,6 @@ namespace ExpenseTracker
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/site.css"));
-
-            bundles.Add(new StyleBundle("~/bundles/TableStyles/css").Include(
-                "~/Content/TableStyles/css/style.css",
-                "~/Content/TableStyles/css/bootstrap.min.css"
-                ));
         }
     }
 }

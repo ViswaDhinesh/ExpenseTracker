@@ -57,9 +57,9 @@ namespace ExpenseTracker.Controllers
                     }
                     else
                     {
-                        Menu.CreatedBy = "Dinesh";//Session["UserName"].ToString();
+                        Menu.CreatedBy = Convert.ToInt64(Session["UserID"]);
                         Menu.CreatedDate = DateTime.Now;
-                        Menu.ModifiedBy = "Pandiyan";//Session["UserName"].ToString();
+                        Menu.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                         Menu.ModifiedDate = DateTime.Now;
                         dbEntities.ETMenus.Add(Menu);
                         dbEntities.SaveChanges();
@@ -109,7 +109,7 @@ namespace ExpenseTracker.Controllers
                     Menu.MenuUrl = updateMenu.MenuUrl;
                     Menu.OrderNo = updateMenu.OrderNo;
                     Menu.Status = updateMenu.Status;
-                    Menu.ModifiedBy = "Dinesh"; //Session["UserName"].ToString();
+                    Menu.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     Menu.ModifiedDate = DateTime.Now;
                     dbEntities.Entry(Menu).State = EntityState.Modified;
                     dbEntities.SaveChanges();
@@ -178,13 +178,13 @@ namespace ExpenseTracker.Controllers
                 if (status)
                 {
                     Menu.Status = false;
-                    Menu.ModifiedBy = "Dinesh";//Session["UserName"].ToString();
+                    Menu.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     Menu.ModifiedDate = DateTime.Now;
                 }
                 else
                 {
                     Menu.Status = true;
-                    Menu.ModifiedBy = "Dinesh";//Session["UserName"].ToString();
+                    Menu.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     Menu.ModifiedDate = DateTime.Now;
                 }
                 dbEntities.Entry(Menu).State = EntityState.Modified;

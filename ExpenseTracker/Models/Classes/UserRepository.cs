@@ -20,13 +20,15 @@ namespace ExpenseTracker
 
         // User
         #region Get All User
-        public List<ETUser> GetAllUser(string ValueType, long UserID)
+        public List<ETUser> GetAllUser(string UserType, long UserID, List<long> MappedUser)
         {
             Users = new List<ETUser>();
-            if (ValueType == "Owner")
+            if (UserType.ToUpper() == "OWNER")
                 Users = dbEntities.ETUsers.OrderByDescending(x => x.UserID).ToList();
+            else if (UserType.ToUpper() == "ADMIN")
+                Users = dbEntities.ETUsers.Where(x => MappedUser.Contains(UserID)).OrderByDescending(x => x.UserID).ToList();
             else
-                Users = dbEntities.ETUsers.Where(x => x.CreatedUserID == UserID).OrderByDescending(x => x.UserID).ToList();
+                Users = dbEntities.ETUsers.Where(x => x.UserID == UserID).OrderByDescending(x => x.UserID).ToList();
             return Users;
         }
         #endregion
@@ -101,18 +103,50 @@ namespace ExpenseTracker
         #endregion
 
         #region getDataValues
-        public SelectList getDataValues(string Valuetype)
+        public SelectList getDataValues(string Valuetype, string UserType, long UserID, long ReportingUserID)
         {
-            IEnumerable<SelectListItem> DataLst = (from m in dbEntities.ETValues where (m.IsActive == true && m.ValueType == Valuetype) select m).OrderBy(m => m.ValueID).AsEnumerable().Select(m => new SelectListItem() { Text = m.ValueName, Value = m.ValueUniqueID.ToString() });
-            return new SelectList(DataLst, "Value", "Text");
-        }
-        public SelectList getRole()
-        {
-            IEnumerable<SelectListItem> StateLst = (from m in dbEntities.ETRoles where m.IsActive == true select m).OrderBy(m => m.RoleID).AsEnumerable().Select(m => new SelectListItem() { Text = m.RoleName, Value = m.RoleID.ToString() });
-            return new SelectList(StateLst, "Value", "Text");
+            IEnumerable<SelectListItem> DataValLst;
+            if (UserType.ToUpper() == "OWNER")
+                DataValLst = (from m in dbEntities.ETValues where (m.IsActive == true && m.ValueType == Valuetype) select m).OrderBy(m => m.ValueID).AsEnumerable().Select(m => new SelectListItem() { Text = m.ValueName, Value = m.ValueUniqueID.ToString() });
+            //(from m in dbEntities.ETValues where (m.IsActive == true && m.ValueType == Valuetype) select m).OrderBy(m => m.ValueID).AsEnumerable().Select(m => new SelectListItem() { Text = m.ValueName, Value = m.ValueUniqueID.ToString() });
+            //else if (UserType.ToUpper() == "ADMIN")
+            //    DataLst = (from m in dbEntities.ETValues where (m.IsActive == true && m.ValueType == Valuetype) select m).OrderBy(m => m.ValueID).AsEnumerable().Select(m => new SelectListItem() { Text = m.ValueName, Value = m.ValueUniqueID.ToString() });
+            else
+                DataValLst = (from m in dbEntities.ETValues where (m.IsActive == true && m.ValueType == Valuetype && (m.UserID == null || m.UserID == 0 || m.UserID == UserID || m.UserID == ReportingUserID)) select m).OrderBy(m => m.ValueID).AsEnumerable().Select(m => new SelectListItem() { Text = m.ValueName, Value = m.ValueUniqueID.ToString() });
+            return new SelectList(DataValLst, "Value", "Text");
         }
         #endregion
 
+        #region getTitle
+        public SelectList getTitle(string Valuetype, string UserType, long UserID, long ReportingUserID)
+        {
+            IEnumerable<SelectListItem> RoleValLst;
+            if (UserType.ToUpper() == "OWNER")
+                RoleValLst = (from m in dbEntities.ETValues where (m.IsActive == true && m.ValueType == Valuetype) select m).OrderBy(m => m.ValueID).AsEnumerable().Select(m => new SelectListItem() { Text = m.ValueName, Value = m.ValueUniqueID.ToString() });
+            //(from m in dbEntities.ETValues where (m.IsActive == true && m.ValueType == Valuetype) select m).OrderBy(m => m.ValueID).AsEnumerable().Select(m => new SelectListItem() { Text = m.ValueName, Value = m.ValueUniqueID.ToString() });
+            //else if (UserType.ToUpper() == "ADMIN")
+            //    DataLst = (from m in dbEntities.ETValues where (m.IsActive == true && m.ValueType == Valuetype) select m).OrderBy(m => m.ValueID).AsEnumerable().Select(m => new SelectListItem() { Text = m.ValueName, Value = m.ValueUniqueID.ToString() });
+            else
+                RoleValLst = (from m in dbEntities.ETValues where (m.IsActive == true && m.ValueType == Valuetype && (m.UserID == null || m.UserID == 0 || m.UserID == UserID || m.UserID == ReportingUserID)) select m).OrderBy(m => m.ValueID).AsEnumerable().Select(m => new SelectListItem() { Text = m.ValueName, Value = m.ValueUniqueID.ToString() });
+            return new SelectList(RoleValLst, "Value", "Text");
+        }
+        #endregion
+
+        #region getRole
+        public SelectList getRole()
+        {
+            IEnumerable<SelectListItem> RoleLst = (from m in dbEntities.ETRoles where m.IsActive == true select m).OrderBy(m => m.RoleID).AsEnumerable().Select(m => new SelectListItem() { Text = m.RoleName, Value = m.RoleID.ToString() });
+            return new SelectList(RoleLst, "Value", "Text");
+        }
+        #endregion
+
+        #region getMappedReportingUser
+        public SelectList getMappedReportingUser()
+        {
+            IEnumerable<SelectListItem> MUserLst = (from m in dbEntities.ETUsers where (m.IsActive == true && (m.UserLevel == "ADMIN" || m.UserLevel == "OWNER")) select m).OrderBy(m => m.UserID).AsEnumerable().Select(m => new SelectListItem() { Text = m.FirstName, Value = m.UserID.ToString() });
+            return new SelectList(MUserLst, "Value", "Text");
+        }
+        #endregion
         // Role
         #region GetRole
         public ETRole GetRole(long RoleId)
@@ -228,20 +262,6 @@ namespace ExpenseTracker
         #endregion
 
         // Login
-        #region IsValidEmail
-        public bool IsValidEmail(string email)
-        {
-            try
-            {
-                var addr = new System.Net.Mail.MailAddress(email);
-                return true;
-            }
-            catch (FormatException)
-            {
-                return false;
-            }
-        }
-        #endregion
 
         #region GetUserEmail
         public ETUser GetUserEmail(string EmailId)

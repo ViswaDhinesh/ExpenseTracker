@@ -18,6 +18,7 @@ namespace ExpenseTracker.Controllers
         #region Category List
         public ActionResult Index()
         {
+            ViewBag.UserPermission = Session["UserLevel"].ToString().ToUpper();
             ViewBag.messagealert = string.Empty;
             string messagealert = Convert.ToString(TempData["messagealert"]);
             if (!string.IsNullOrEmpty(messagealert))
@@ -25,7 +26,7 @@ namespace ExpenseTracker.Controllers
                 ViewBag.messagealert = messagealert;
             }
             Categories = new List<ETCategory>();
-            Categories = repCategory.GetAllCategory(1); // Need to change
+            Categories = repCategory.GetAllCategory(Convert.ToInt64(Session["UserID"]), Session["UserLevel"].ToString());
             return View(Categories);
         }
         #endregion
@@ -59,10 +60,10 @@ namespace ExpenseTracker.Controllers
                     }
                     else
                     {
-                        Category.UserID = 1; // Need to change
-                        Category.CreatedBy = "Dinesh";//Session["UserName"].ToString();
+                        Category.UserID = Convert.ToInt64(Session["UserID"]);
+                        Category.CreatedBy = Convert.ToInt64(Session["UserID"]);
                         Category.CreatedDate = DateTime.Now;
-                        Category.ModifiedBy = "Pandiyan";//Session["UserName"].ToString();
+                        Category.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                         Category.ModifiedDate = DateTime.Now;
                         dbEntities.ETCategories.Add(Category);
                         dbEntities.SaveChanges();
@@ -111,9 +112,9 @@ namespace ExpenseTracker.Controllers
                 else
                 {
                     Category.CategoryName = updateCategory.CategoryName;
-                    Category.CategoryTypeID = updateCategory.CategoryTypeID;
+                    Category.SourceID = updateCategory.SourceID;
                     Category.IsActive = updateCategory.IsActive;
-                    Category.ModifiedBy = "Dinesh"; //Session["UserName"].ToString();
+                    Category.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     Category.ModifiedDate = DateTime.Now;
                     dbEntities.Entry(Category).State = EntityState.Modified;
                     dbEntities.SaveChanges();
@@ -181,13 +182,13 @@ namespace ExpenseTracker.Controllers
                 if (status)
                 {
                     Category.IsActive = false;
-                    Category.ModifiedBy = "Dinesh";//Session["UserName"].ToString();
+                    Category.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     Category.ModifiedDate = DateTime.Now;
                 }
                 else
                 {
                     Category.IsActive = true;
-                    Category.ModifiedBy = "Dinesh";//Session["UserName"].ToString();
+                    Category.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     Category.ModifiedDate = DateTime.Now;
                 }
                 dbEntities.Entry(Category).State = EntityState.Modified;

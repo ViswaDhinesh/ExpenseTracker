@@ -41,14 +41,32 @@ namespace ExpenseTracker
         #endregion
 
         #region Get All Source
-        public List<ETSource> GetAllSource()
+        public List<ETSource> GetAllSource(long UserID, string UserLevel)
         {
             Sources = new List<ETSource>();
-            Sources = dbEntities.ETSources.OrderByDescending(x => x.SourceID).ToList();
+            if (UserLevel.ToUpper() == "OWNER")
+                Sources = dbEntities.ETSources.OrderByDescending(x => x.SourceID).ToList();
+            else
+                Sources = dbEntities.ETSources.Where(x => x.UserID == UserID).OrderByDescending(x => x.SourceID).ToList();
             //Sources = dbEntities.ETSources.Where(x => x.SourceID == 1).OrderByDescending(x => x.SourceID).ToList();
             return Sources;
         }
 
+        #endregion
+
+        #region getDataValues
+        public SelectList getDataValues(string Valuetype, string UserType, long UserID, long ReportingUserID)
+        {
+            IEnumerable<SelectListItem> DataValLst;
+            if (UserType.ToUpper() == "OWNER")
+                DataValLst = (from m in dbEntities.ETValues where (m.IsActive == true && m.ValueType == Valuetype) select m).OrderBy(m => m.ValueID).AsEnumerable().Select(m => new SelectListItem() { Text = m.ValueName, Value = m.ValueUniqueID.ToString() });
+            //(from m in dbEntities.ETValues where (m.IsActive == true && m.ValueType == Valuetype) select m).OrderBy(m => m.ValueID).AsEnumerable().Select(m => new SelectListItem() { Text = m.ValueName, Value = m.ValueUniqueID.ToString() });
+            //else if (UserType.ToUpper() == "ADMIN")
+            //    DataLst = (from m in dbEntities.ETValues where (m.IsActive == true && m.ValueType == Valuetype) select m).OrderBy(m => m.ValueID).AsEnumerable().Select(m => new SelectListItem() { Text = m.ValueName, Value = m.ValueUniqueID.ToString() });
+            else
+                DataValLst = (from m in dbEntities.ETValues where (m.IsActive == true && m.ValueType == Valuetype && (m.UserID == null || m.UserID == 0 || m.UserID == UserID || m.UserID == ReportingUserID)) select m).OrderBy(m => m.ValueID).AsEnumerable().Select(m => new SelectListItem() { Text = m.ValueName, Value = m.ValueUniqueID.ToString() });
+            return new SelectList(DataValLst, "Value", "Text");
+        }
         #endregion
 
         // Category
@@ -78,10 +96,13 @@ namespace ExpenseTracker
         #endregion
 
         #region Get All Category
-        public List<ETCategory> GetAllCategory(long UserID)
+        public List<ETCategory> GetAllCategory(long UserID, string UserLevel)
         {
             Categories = new List<ETCategory>();
-            Categories = dbEntities.ETCategories.Where(x=> x.UserID == UserID).OrderByDescending(x => x.CategoryID).ToList();
+            if (UserLevel.ToUpper() == "OWNER")
+                Categories = dbEntities.ETCategories.OrderByDescending(x => x.CategoryID).ToList();
+            else
+                Categories = dbEntities.ETCategories.Where(x => x.UserID == UserID).OrderByDescending(x => x.CategoryID).ToList();
             //Categories = dbEntities.ETCategories.OrderByDescending(x => x.CategoryID).ToList();
             return Categories;
         }

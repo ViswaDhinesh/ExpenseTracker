@@ -62,6 +62,9 @@
                         @ViewBag.messagealert
                     </div>
                 }
+                @{ var display = "displaynone"; }
+                @if (@ViewBag.UserPermission == "ADMIN" || @ViewBag.UserPermission == "OWNER")
+                { display = "displayblock"; }
                 <div class="table-responsive">
                     <table class="table table-bordered table-hover text-center" id="client-datatable">
                         <thead>
@@ -72,6 +75,7 @@
                                 <th class="text-center">Email</th>
                                 <th class="text-center">Phone</th>
                                 <th class="text-center">Login Name</th>
+                                <th class="@display text-center">Reporting User</th>
                                 <th class="text-center no-sort">Status</th>
                                 <th class="text-center no-sort">Action</th>
                             </tr>
@@ -104,6 +108,7 @@
                                     <td>@item.Email</td>
                                     <td>@item.Phone</td>
                                     <td>@item.LoginName</td>
+                                    <td class="@display text-center">@item.ReportingUser</td>
                                     <td>
                                         <a href="javascript:void(0)" id="lnkstatus" onclick="updateStatus(this,'@item.UserID')">
                                             @if (item.IsActive)

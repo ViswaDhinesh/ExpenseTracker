@@ -72,7 +72,7 @@
                                 <th style="display:none;"></th>
                                 <th class="text-center">SubMenu Name</th>
                                 <th class="text-center">SubMenu Page URL</th>
-                                <th class="text-center">Menu ID</th>
+                                <th class="text-center">Menu Name</th>
                                 <th class="text-center">Order No.</th>
                                 <th class="text-center no-sort">Status</th>
                                 <th class="text-center no-sort">Action</th>
@@ -104,7 +104,7 @@
                                     <td style="display:none;"><input type="hidden" value="@item.SubMenuID" /></td>
                                     <td>@item.SubMenuName</td>
                                     <td>@item.SubMenuUrl</td>
-                                    <td>@item.MenuID</td>
+                                    <td>@item.ETMenu.MenuName</td>
                                     <td>@item.OrderNo</td>
                                     <td>
                                         <a href="javascript:void(0)" id="lnkstatus" onclick="updateStatus(this,'@item.SubMenuID')">

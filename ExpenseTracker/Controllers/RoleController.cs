@@ -57,9 +57,9 @@ namespace ExpenseTracker.Controllers
                     }
                     else
                     {
-                        Role.CreatedBy = "Dinesh";//Session["UserName"].ToString();
+                        Role.CreatedBy = Convert.ToInt64(Session["UserID"]);
                         Role.CreatedDate = DateTime.Now;
-                        Role.ModifiedBy = "Pandiyan";//Session["UserName"].ToString();
+                        Role.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                         Role.ModifiedDate = DateTime.Now;
                         dbEntities.ETRoles.Add(Role);
                         dbEntities.SaveChanges();
@@ -107,7 +107,7 @@ namespace ExpenseTracker.Controllers
                 {
                     Role.RoleName = updateRole.RoleName;
                     Role.IsActive = updateRole.IsActive;
-                    Role.ModifiedBy = "Dinesh"; //Session["UserName"].ToString();
+                    Role.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     Role.ModifiedDate = DateTime.Now;
                     dbEntities.Entry(Role).State = EntityState.Modified;
                     dbEntities.SaveChanges();
@@ -176,12 +176,12 @@ namespace ExpenseTracker.Controllers
                 if (status)
                 {
                     Role.IsActive = false;
-                    Role.ModifiedBy = "Dinesh";//Session["UserName"].ToString();
+                    Role.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     Role.ModifiedDate = DateTime.Now;
                 }
                 else
                 {
-                    Role.ModifiedBy = "Dinesh";//Session["UserName"].ToString();
+                    Role.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     Role.ModifiedDate = DateTime.Now;
                     Role.IsActive = true;
                 }
@@ -245,9 +245,9 @@ namespace ExpenseTracker.Controllers
                     objmenu.SubMenuID = item.SubMenuID;
                     objmenu.RoleID = id;
                     objmenu.Status = item.Status;
-                    objmenu.CreatedBy = "Dinesh"; //Session["UserName"].ToString();
+                    objmenu.CreatedBy = Convert.ToInt64(Session["UserID"]);
                     objmenu.CreatedDate = Convert.ToDateTime(DateTime.Now.ToString());
-                    objmenu.ModifiedBy = "Dinesh"; //Session["UserName"].ToString();
+                    objmenu.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     objmenu.ModifiedDate = Convert.ToDateTime(DateTime.Now.ToString());
                     dbEntities.ETMenuAccesses.Add(objmenu);
                     dbEntities.SaveChanges();
