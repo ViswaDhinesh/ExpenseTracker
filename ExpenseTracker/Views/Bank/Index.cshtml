@@ -1,0 +1,140 @@
+﻿@model IEnumerable<ExpenseTracker.ETBank>
+@{
+    ViewBag.Title = "Bank List";
+    Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
+    ViewBag.Menu = "Bank";
+}
+<script>
+
+    function DeleteBank(Bankid) {
+        if (Bankid != "") {
+            if (confirm("Are You Sure To Delete?") == true) {
+                var url = "/Bank/BankDelete";
+                $.get(url, { id: Bankid }, function (data) {
+                    if (data == "True") {
+                        window.location.href = "/Bank/Index";
+                    }
+                    else {
+                        alert("Delete the user which refers to this Bank.");
+                        event.preventDefault();
+                    }
+                });
+            }
+        }
+    }
+
+    function updateStatus(anchor, cimageid) {
+        var url = "/Bank/BankUpdateStatus";
+        var img = $(anchor).find("img")[0];
+        $.get(url, { status: img.alt, Bankid: cimageid }, function (data) {
+
+            if (data == "True") {
+                if (img.alt == "true") {
+                    img.src = "../../Content/Admin/icon/x_icon.gif";
+                    img.alt = "false";
+                    img.title = "Disable";
+                }
+                else {
+                    img.src = "../../Content/Admin/icon/tick_icon.gif";
+                    img.alt = "true";
+                    img.title = "Active";
+                }
+                document.getElementById('msShowstatus').style.display = 'block';
+                document.getElementById('msShow1').style.display = 'none';
+            }
+        });
+    }
+
+</script>
+<div class="main-container">
+    <div class="container-fluid">
+        <div class="col-lg-12">
+            <div class="pageheader col-lg-12">
+                <h3 class="page-title text-primary">Bank List</h3>
+                <hr>
+                <div class="form-group text-right">
+                    <a href="/Bank/Bank_add" class="btn btn-primary add-emp" data-toggle="modal" title="Create">Create</a>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-xs-12">
+                @if (ViewBag.messagealert != string.Empty)
+                {
+                    <div class="alert alert-dismissible alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        @ViewBag.messagealert
+                    </div>
+                }
+                @{ var display = "displaynone"; }
+                @if (@ViewBag.UserPermission == "OWNER")
+                { display = "displayblock"; }
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover text-center" id="client-datatable">
+                        <thead>
+                            <tr class="success">
+                                <th class="text-center no-sort">SNo</th>
+                                <th style="display:none;"></th>
+                                <th class="text-center">Account Holder</th>
+                                <th class="text-center">IFSC Code</th>
+                                <th class="text-center">Bank Name</th>
+                                <th class="text-center">Account Type</th>
+                                <th class="@display text-center">Created User</th>
+                                <th class="text-center no-sort">Status</th>
+                                <th class="text-center no-sort">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{ var rowColor = "table-active"; }
+                            @{ int i = 0; }
+                            @foreach (var item in Model)
+                            {
+                                if (i == 10)
+                                { i = 0; }
+
+                                if (i == 0)
+                                { rowColor = "table-active"; }
+                                else if (i == 2)
+                                { rowColor = "table-success"; }
+                                else if (i == 4)
+                                { rowColor = "table-warning"; }
+                                else if (i == 6)
+                                { rowColor = "table-danger"; }
+                                else if (i == 8)
+                                { rowColor = "table-info"; }
+                                else
+                                { rowColor = ""; }
+
+                                <tr class="@rowColor">
+                                    <td></td>
+                                    <td style="display:none;"><input type="hidden" value="@item.BankID" /></td>
+                                    <td>@item.AccountHolder</td>
+                                    <td>@item.IFSCCode</td>
+                                    <td>@item.BankName</td>
+                                    <td>@item.AccountType</td>
+                                    <td class="@display text-center">@item.UserID</td>
+                                    <td>
+                                        <a href="javascript:void(0)" id="lnkstatus" onclick="updateStatus(this,'@item.BankID')">
+                                            @if (item.IsActive)
+                                            {
+                                                <img src="../../Content/Admin/icon/tick_icon.gif" title="Enable" alt="true" border="0" />
+                                            }
+                                            else
+                                            {
+                                                <img src="../../Content/Admin/icon/x_icon.gif" title="Disable" alt="false" border="0" />
+                                            }
+                                        </a>
+                                    </td>
+                                    <td class="nowrap">
+                                        <a href="/Bank/Bank_edit/@item.BankID" class="report-edit" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+                                        <a href="/Bank/Bank_view/@item.BankID" class="report-edit report-cancel" title="View"><i class="fa fa-eye"></i> View</a>
+                                        <a href="javascript:;" onclick="DeleteBank(@item.BankID)" class="report-cancel" title="Delete"><i class="fa fa-trash"></i> Delete</a>
+                                    </td>
+                                </tr>
+                                i = i + 1;
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

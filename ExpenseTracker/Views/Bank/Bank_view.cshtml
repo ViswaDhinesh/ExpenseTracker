@@ -1,0 +1,156 @@
+﻿@model ExpenseTracker.ETBank
+@{
+    ViewBag.Title = "Bank View";
+    Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
+    ViewBag.Menu = "Bank";
+}
+
+<script>
+    function PreviousPage() {
+        window.location = "/Bank/Index";
+    }
+
+</script>
+
+<div class="container-fluid">
+    <div class="pageheader col-lg-12">
+        <h3 class="page-title text-primary">Bank View</h3>
+        <hr>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Bank Details</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Account Holder</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.AccountHolder)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Account Number</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.AccountNumber)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>IFSC Code</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.IFSCCode)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Bank Name</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.BankName)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Branch Name</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.BranchName)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Account Type</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.AccountType)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Minimum Balance</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.MinimumBalance)</p>
+                    </div>
+                </div>
+
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Account Opening Date</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.AccountOpeningDate)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Customer ID</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.CustomerID)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Password</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.Password)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Email</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.Email)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Phone</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.Phone)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>ATM Number</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.ATMNumber)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>PIN Number</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.PINNumber)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Expired Date</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.ExpiredDate)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Phone</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.CVV)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>User ID</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.UserID)</p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>IsActive</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>
+                            @(Model.IsActive ? "Enabled" : "Disabled")
+                        </p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>IsCreditCard</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>
+                            @(Model.IsCreditCard ? "Enabled" : "Disabled")
+                        </p>
+                    </div>
+                </div>
+                <div class="row save-button-section">
+                    <div class="form-group col-md-6 col-sm-6 pull-left text-left">
+                        <input type="button" value="Back" title="Back" class="btn btn-secondary" onclick="PreviousPage();" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

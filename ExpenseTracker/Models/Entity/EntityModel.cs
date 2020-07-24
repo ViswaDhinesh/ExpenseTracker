@@ -413,4 +413,81 @@ namespace ExpenseTracker
 
         public ETUser loginDetails { get; set; }
     }
+
+    // Bank
+
+    [Table("ETBank")]
+    public partial class ETBank
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public long BankID { get; set; }
+
+        [Required(ErrorMessage = "The AccountHolder field is required")]
+        [StringLength(100)]
+        public string AccountHolder { get; set; }
+
+        [Required(ErrorMessage = "The AccountNumber field is required")]
+        [StringLength(100)]
+        public string AccountNumber { get; set; }
+
+        [Required(ErrorMessage = "The IFSCCode field is required")]
+        [StringLength(50)]
+        public string IFSCCode { get; set; }
+
+        [Required(ErrorMessage = "The BankName field is required")]
+        [StringLength(100)]
+        public string BankName { get; set; }
+
+        [Required(ErrorMessage = "The BranchName field is required")]
+        [StringLength(100)]
+        public string BranchName { get; set; }
+
+        [Required(ErrorMessage = "The AccountType field is required")] //dropdown
+        [StringLength(20)]
+        public string AccountType { get; set; }
+
+        [Required(ErrorMessage = "The MinimumBalance field is required")]
+        public decimal MinimumBalance { get; set; }
+
+        public DateTime? AccountOpeningDate { get; set; }
+
+        [StringLength(50)]
+        public string CustomerID { get; set; }
+
+        public string Password { get; set; }
+
+        [StringLength(100)]
+        public string Email { get; set; }
+
+        [StringLength(20)]
+        public string Phone { get; set; }
+
+        [StringLength(25)]
+        public string ATMNumber { get; set; }
+
+        [StringLength(10)]
+        public string PINNumber { get; set; }
+
+        public DateTime? ExpiredDate { get; set; }
+
+        [StringLength(5)]
+        public string CVV { get; set; }
+
+        public bool IsCreditCard { get; set; }
+
+        [Required(ErrorMessage = "The UserID field is required")]
+        public long UserID { get; set; }
+
+        [Required(ErrorMessage = "The IsActive field is required")]
+        public bool IsActive { get; set; }
+
+        public DateTime? CreatedDate { get; set; }
+
+        public long? CreatedBy { get; set; }
+
+        public DateTime? ModifiedDate { get; set; }
+
+        public long? ModifiedBy { get; set; }
+    }
 }
