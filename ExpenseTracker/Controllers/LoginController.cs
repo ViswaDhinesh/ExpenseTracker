@@ -78,7 +78,12 @@ namespace ExpenseTracker.Controllers
                         Session["UserName"] = loginDetails.FirstName;
                         Session["RoleID"] = loginDetails.RoleID;
                         Session["RoleName"] = null; //loginDetails.ETRole.RoleName;
-                        Session["UserLevel"] = loginDetails.UserLevel; // New
+                        Session["LoginName"] = loginDetails.LoginName;  // New
+                        Session["Email"] = loginDetails.Email;
+                        Session["Phone"] = loginDetails.Phone;
+                        Session["LastName"] = loginDetails.LastName;
+                        Session["IsTwoFactor"] = loginDetails.IsTwoFactor;
+                        Session["UserLevel"] = loginDetails.UserLevel;
                         Session["ReportingUser"] = loginDetails.ReportingUser;
                         MappedUser = dbEntities.ETUsers.Where(x => x.ReportingUser == loginDetails.UserID || x.UserID == loginDetails.UserID).Select(x => x.UserID).Distinct().ToList();
                         Session["MappedUser"] = MappedUser;
@@ -120,6 +125,14 @@ namespace ExpenseTracker.Controllers
             Session["UserName"] = null;
             Session["RoleID"] = null;
             Session["RoleName"] = null;
+            Session["LoginName"] = null;
+            Session["Email"] = null;
+            Session["Phone"] = null;
+            Session["LastName"] = null;
+            Session["IsTwoFactor"] = null;
+            Session["UserLevel"] = null;
+            Session["ReportingUser"] = null;
+            Session["MappedUser"] = null;
             Response.Redirect("/Login");
         }
 
@@ -176,83 +189,7 @@ namespace ExpenseTracker.Controllers
             return View();
         }
 
-        #endregion
-
-        //#region Change Password
-
-        //[HttpGet]
-        //public JsonResult Checkpassword(string Oldpassword)
-        //{
-        //    var isDuplicate = false;
-
-        //    long userId = Convert.ToInt64(Session["UserID"]);
-        //    user = replogin.GetUser(userId);
-        //    byte[] oldpassword = repcommon.Encrypt(Oldpassword.Trim(), user.PASSWORD_KEY, user.PASSWORD_IV);
-        //    if (repcommon.Equality(user.PASSWORD, oldpassword))
-        //    {
-        //        isDuplicate = true;
-        //    }
-        //    var jsonData = new { isDuplicate };
-
-        //    return Json(jsonData, JsonRequestBehavior.AllowGet);
-        //}
-
-        //[HttpGet]
-        //public ActionResult Changepassword()
-        //{
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //[OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
-        //public ActionResult ChangePassword(ChangePasswordModel changePassword)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        long id = 0;
-        //        byte[] encrypted;
-        //        byte[] KEY;
-        //        byte[] IV;
-        //        ViewBag.messagealert = string.Empty;
-        //        long userId = Convert.ToInt64(Session["UserID"]);
-        //        user = replogin.GetUser(userId);
-        //        byte[] oldpassword = repcommon.Encrypt(changePassword.OldPassword.Trim(), user.PASSWORD_KEY, user.PASSWORD_IV);
-        //        if (repcommon.Equality(user.PASSWORD, oldpassword))
-        //        {
-        //            using (AesManaged aes = new AesManaged())
-        //            {
-        //                KEY = aes.Key;
-        //                IV = aes.IV;
-        //                encrypted = repcommon.Encrypt(changePassword.NewPassword, KEY, IV);
-        //            }
-        //            TBL_ADMIN_USER updateuser = dbEntities.TBL_ADMIN_USER.Where(x => x.ADMIN_USER_ID == userId).Single();
-        //            updateuser.PASSWORD = encrypted;
-        //            updateuser.PASSWORD_KEY = KEY;
-        //            updateuser.PASSWORD_IV = IV;
-        //            updateuser.MODIFIED_BY = Convert.ToString(Session["UserName"]);
-        //            updateuser.MODIFIED_DATE = DateTime.Now;
-        //            dbEntities.SaveChanges();
-        //            id = updateuser.ADMIN_USER_ID;
-        //            bool mail = mailing.PasswordChanged(updateuser.EMAIL_ID, updateuser.NAME, "Your Password Changed", updateuser.LOGIN_NAME, "password");
-        //            if (id != 0)
-        //            {
-        //                Session["UserID"] = null;
-        //                Session["UserName"] = null;
-        //                Session["RoleID"] = null;
-        //                Session["RoleName"] = null;
-        //                TempData["SessionExpired"] = "Password changed successfully";
-        //                return RedirectToAction("Login");
-        //            }
-        //        }
-        //        else
-        //        {
-        //            ModelState.AddModelError("OldPassword", "The old password is incorrect");
-        //        }
-        //    }
-        //    return View(changePassword);
-        //}
-
-        //#endregion  Change Password
+        #endregion        
 
     }
 }

@@ -328,6 +328,41 @@ namespace ExpenseTracker
 
         [Required(ErrorMessage = "The ModifiedBy field is required")]
         public long ModifiedBy { get; set; }
+
+        //[NotMapped]
+        //[Required(ErrorMessage = "Old Password is required.")]
+        //public string OldPassword { get; set; }
+
+        [NotMapped]
+        [Required(ErrorMessage = "Confirmation Password is required.")]
+        [Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
+        public string ConfirmPassword { get; set; }
+    }
+
+    [NotMapped]
+    public class PasswordChange
+    {
+        //public string FirstName { get; set; }
+        //public string LastName { get; set; }
+        //public string Email { get; set; }
+        //public string LoginName { get; set; }
+
+        [Required(ErrorMessage = "The old password field is required")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Current password")]
+        public string OldPassword { get; set; }
+
+        [Required(ErrorMessage = "The new password field is required")]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "new password")]
+        public string NewPassword { get; set; }
+
+        [Required(ErrorMessage = "The confirm password field is required")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
     }
 
     [Table("ETRole")]

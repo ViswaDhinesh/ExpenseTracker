@@ -104,8 +104,11 @@ namespace ExpenseTracker.Controllers
                     }
                     else
                     {
+                        //try
+                        //{
                         User.SourceOfCreation = "User Form";
                         User.Password = Common.EncryptPassword(User.Password);
+                        User.ConfirmPassword = Common.EncryptPassword(User.ConfirmPassword);
                         User.UserID = repUsers.UserIdGeneration();
                         User.CreatedBy = Convert.ToInt64(Session["UserID"]);
                         User.CreatedDate = DateTime.Now;
@@ -117,6 +120,24 @@ namespace ExpenseTracker.Controllers
                         {
                             TempData["messagealert"] = Status.Save;
                         }
+                        //}
+                        //catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                        //{
+                        //    Exception raise = dbEx;
+                        //    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                        //    {
+                        //        foreach (var validationError in validationErrors.ValidationErrors)
+                        //        {
+                        //            string message = string.Format("{0}:{1}",
+                        //                validationErrors.Entry.Entity.ToString(),
+                        //                validationError.ErrorMessage);
+                        //            // raise a new exception nesting
+                        //            // the current instance as InnerException
+                        //            raise = new InvalidOperationException(message, raise);
+                        //        }
+                        //    }
+                        //    throw raise;
+                        //}
                     }
                 }
                 return RedirectToAction("Index", "User");
@@ -213,6 +234,7 @@ namespace ExpenseTracker.Controllers
                     User.RoleID = updateUser.RoleID;
                     User.LoginName = updateUser.LoginName;
                     User.Password = Common.EncryptPassword(updateUser.Password);
+                    User.ConfirmPassword = Common.EncryptPassword(updateUser.ConfirmPassword);
                     //User.Password = updateUser.Password;
                     User.IsTwoFactor = updateUser.IsTwoFactor;
                     User.UserLevel = updateUser.UserLevel;

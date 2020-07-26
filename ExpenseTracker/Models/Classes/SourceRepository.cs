@@ -177,5 +177,20 @@ namespace ExpenseTracker
             return Bank;
         }
         #endregion
+
+        #region BankEmailIsExist
+        public bool BankEmailIsExist(string Email, long UserId)
+        {
+            if (UserId != 0 && !string.IsNullOrEmpty(Email))
+            {
+                return dbEntities.ETBanks.Any(x => x.Email.ToLower().Trim().Equals(Email.ToLower().Trim()) && x.UserID != UserId);
+            }
+            else if (!string.IsNullOrEmpty(Email))
+            {
+                return dbEntities.ETBanks.Any(x => x.Email.ToLower().Trim().Equals(Email.ToLower().Trim()));
+            }
+            return false;
+        }
+        #endregion
     }
 }

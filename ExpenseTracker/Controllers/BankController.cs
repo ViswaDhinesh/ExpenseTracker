@@ -64,6 +64,15 @@ namespace ExpenseTracker.Controllers
                         ViewBag.AccountTypes = repBank.getDataValues("AccountType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         return View(Bank);
                     }
+                    else if (repBank.BankEmailIsExist(Bank.Email, Convert.ToInt64(Session["UserID"])) || !Common.IsValidEmail(Bank.Email))
+                    {
+                        if (!Common.IsValidEmail(Bank.Email))
+                            ViewBag.messagealert = "Please Enter Valid Email";
+                        else
+                            ViewBag.messagealert = "Email already exist";
+                        ViewBag.AccountTypes = repBank.getDataValues("AccountType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        return View(Bank);
+                    }
                     else
                     {
                         Bank.UserID = Convert.ToInt64(Session["UserID"]);
@@ -109,15 +118,24 @@ namespace ExpenseTracker.Controllers
                 Bank = new ETBank();
                 Bank = repBank.GetBank(id);
 
-                if (repBank.AccountNumberIsExist(Bank.AccountNumber, id))
+                if (repBank.AccountNumberIsExist(updateBank.AccountNumber, id))
                 {
                     ViewBag.messagealert = "Account Number already exist";
                     ViewBag.AccountTypes = repBank.getDataValues("AccountType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     return View(Bank);
                 }
-                else if (Bank.CustomerID != null && Bank.CustomerID != "" && repBank.CustomerIDIsExist(Bank.CustomerID, id))
+                else if (updateBank.CustomerID != null && updateBank.CustomerID != "" && repBank.CustomerIDIsExist(updateBank.CustomerID, id))
                 {
                     ViewBag.messagealert = "Customer ID already exist";
+                    ViewBag.AccountTypes = repBank.getDataValues("AccountType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    return View(Bank);
+                }
+                else if (repBank.BankEmailIsExist(updateBank.Email, Convert.ToInt64(Session["UserID"])) || !Common.IsValidEmail(updateBank.Email))
+                {
+                    if (!Common.IsValidEmail(updateBank.Email))
+                        ViewBag.messagealert = "Please Enter Valid Email";
+                    else
+                        ViewBag.messagealert = "Email already exist";
                     ViewBag.AccountTypes = repBank.getDataValues("AccountType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     return View(Bank);
                 }

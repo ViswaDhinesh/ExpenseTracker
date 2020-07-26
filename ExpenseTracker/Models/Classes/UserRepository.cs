@@ -92,6 +92,7 @@ namespace ExpenseTracker
         #endregion
 
         // User Common
+
         #region Common
         // Instantiate random number generator. 
         private readonly Random _random = new Random();
@@ -372,6 +373,41 @@ namespace ExpenseTracker
         {
             string currentIpAddress = (HttpContext.Current.Request.ServerVariables["HTTP_X_FORWARDED_FOR"] ?? HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"]).Split(',')[0].Trim();
             return currentIpAddress;
+        }
+        #endregion
+
+        // Common User
+
+        #region Get User Password Exits
+        public bool GetUserPasswordExits (long UserId, string Password)
+        {
+            if (UserId != 0 && !string.IsNullOrEmpty(Password))
+            {
+                return dbEntities.ETUsers.Any(x => x.Password.Equals(Password) && x.UserID == UserId);
+            }
+            return false;
+        }
+        #endregion
+
+        #region GetUserForPasswordChange
+        public ETUser GetUserForPasswordChange(long UserId)
+        {
+            User = new ETUser();
+            User = dbEntities.ETUsers.Where(x => x.UserID == UserId).Single();
+
+            //    .Select(item => new ETUser
+            //{
+            //    FirstName = item.FirstName,
+            //    LastName = item.LastName,
+            //    Email = item.Email,
+            //    LoginName = item.LoginName,
+            //    OldPassword = item.OldPassword,
+            //    Password = item.Password,
+            //    ConfirmPassword = item.ConfirmPassword,
+            //    ModifiedBy = item.ModifiedBy,
+            //    ModifiedDate = item.ModifiedDate,
+            //}).ToList().Where(x => x.UserID == UserId).Single();
+            return User;
         }
         #endregion
     }

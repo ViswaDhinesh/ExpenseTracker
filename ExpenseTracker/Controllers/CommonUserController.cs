@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace ExpenseTracker.Controllers
 {
-    public class CommonUserController : Controller
+    public class CommonUserController : BaseController
     {
         // GET: CommonUser
         ExpenseTrackerEntites dbEntities = new ExpenseTrackerEntites();
@@ -103,8 +103,54 @@ namespace ExpenseTracker.Controllers
         #endregion
 
         #region PasswordChange
-        public ActionResult PasswordChange()
+        [HttpGet]
+        public ActionResult PasswordChange()//(long Id)
         {
+            //ViewBag.messagealert = string.Empty;
+            //User = new ETUser();
+            //User = repUsers.GetUserForPasswordChange(Id);
+            //User.Password = string.Empty;
+            return View();
+        }
+
+        [HttpPost]
+        [OutputCache(NoStore = true, Duration = 0, VaryByParam = "None")]
+        public ActionResult PasswordChange(PasswordChange updateUser)
+        {
+            TempData["messagealert"] = string.Empty;
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+                long userId = Convert.ToInt64(Session["UserID"]);
+                User = new ETUser();
+                User = repUsers.GetUserForPasswordChange(userId);
+
+                if (!repUsers.GetUserPasswordExits(userId, Common.EncryptPassword(updateUser.OldPassword)))
+                {
+                    ViewBag.messagealert = "Please check your Old Password";
+                    return View(updateUser);
+                }
+                else if (!updateUser.NewPassword.Equals(updateUser.ConfirmPassword))
+                {
+                    ViewBag.messagealert = "Please New and confirm password not match";
+                    return View(updateUser);
+                }
+                else
+                {
+                    User.Password = Common.EncryptPassword(updateUser.NewPassword);
+                    User.ConfirmPassword = Common.EncryptPassword(updateUser.ConfirmPassword);
+                    User.ModifiedBy = Convert.ToInt64(Session["UserID"]);
+                    User.ModifiedDate = DateTime.Now;
+                    dbEntities.Entry(User).State = EntityState.Modified;
+                    dbEntities.SaveChanges();
+                    //bool mail = mailing.PasswordChanged(updateuser.EMAIL_ID, updateuser.NAME, "Your Password Changed", updateuser.LOGIN_NAME, "password");
+                    if (User.UserID != 0)
+                    {
+                        TempData["messagealert"] = Status.Update;
+                    }
+                }
+                return RedirectToAction("Index", "User");
+            }
             return View();
         }
         #endregion
