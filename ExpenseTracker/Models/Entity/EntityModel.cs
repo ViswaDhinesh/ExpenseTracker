@@ -281,8 +281,21 @@ namespace ExpenseTracker
         [StringLength(10)]
         public string LoginName { get; set; }
 
+        //[Required(ErrorMessage = "The Password field is required")]
+        //public string Password { get; set; }
+
         [Required(ErrorMessage = "The Password field is required")]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
         public string Password { get; set; }
+
+        [NotMapped]
+        [Required(ErrorMessage = "The confirm password field is required")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The Password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
 
         [Required(ErrorMessage = "The IsTwoFactor field is required")]
         public bool IsTwoFactor { get; set; }
@@ -333,10 +346,10 @@ namespace ExpenseTracker
         //[Required(ErrorMessage = "Old Password is required.")]
         //public string OldPassword { get; set; }
 
-        [NotMapped]
-        [Required(ErrorMessage = "Confirmation Password is required.")]
-        [Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
-        public string ConfirmPassword { get; set; }
+        //[NotMapped]
+        //[Required(ErrorMessage = "Confirmation Password is required.")]
+        //[Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
+        //public string ConfirmPassword { get; set; }
     }
 
     [NotMapped]
@@ -363,6 +376,72 @@ namespace ExpenseTracker
         [Display(Name = "Confirm password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    [NotMapped]
+    public partial class ProfileChange
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Required(ErrorMessage = "The UserID field is required")]
+        public long UserID { get; set; }
+
+        [Required(ErrorMessage = "The Title field is required")]
+        [StringLength(20)]
+        public string Title { get; set; }
+
+        [Required(ErrorMessage = "The FirstName field is required")]
+        [StringLength(100)]
+        public string FirstName { get; set; }
+
+        [StringLength(100)]
+        public string MiddleName { get; set; }
+
+        [Required(ErrorMessage = "The LastName field is required")]
+        [StringLength(100)]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "The Email field is required")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "The Phone field is required")]
+        [StringLength(20)]
+        public string Phone { get; set; }
+
+        [Required(ErrorMessage = "The Gender field is required")]
+        [StringLength(1)]
+        public string Gender { get; set; }
+
+        [Required(ErrorMessage = "The MaritalStatus field is required")]
+        [StringLength(1)]
+        public string MaritalStatus { get; set; }
+
+        [Required(ErrorMessage = "The DOB field is required")]
+        public DateTime DOB { get; set; }
+
+        [Required(ErrorMessage = "The Address field is required")]
+        [StringLength(250)]
+        public string Address { get; set; }
+
+        [Required(ErrorMessage = "The LoginName field is required")]
+        [StringLength(10)]
+        public string LoginName { get; set; }
+
+        [Required(ErrorMessage = "The IsTwoFactor field is required")]
+        public bool IsTwoFactor { get; set; }
+
+        public string DeviceID { get; set; }
+
+        public string UserField1 { get; set; }
+
+        public string UserField2 { get; set; }
+
+        public string UserField3 { get; set; }
+
+        public DateTime? ModifiedDate { get; set; }
+
+        [Required(ErrorMessage = "The ModifiedBy field is required")]
+        public long ModifiedBy { get; set; }
     }
 
     [Table("ETRole")]

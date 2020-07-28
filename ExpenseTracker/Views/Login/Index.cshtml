@@ -75,14 +75,11 @@
                                     @Html.ValidationMessageFor(model => model.Password)
                                 </span>
                             </div>
-                            <div class="form-group text-center frt-pw">
-                                <a href="/login/forgotpassword" class="forget-pw" tabindex=4 title="Forgot your Password">Forgot your Password ?</a>
+                            <div class="form-group frt-pw" style="padding-top:20px;">
+                                <a href="/login/forgotpassword" class="forget-pw col-lg-6 col-md-6 col-xs-6 text-left" tabindex=4 title="Forgot your Password">Forgot your Password ?</a>
+                                <a href="/login/SignUp" class="forget-pw col-lg-6 col-md-6 col-xs-6 text-right" tabindex=4 title="Forgot your Password">SignUp</a>
                             </div>
-                            <div class="form-group text-right frt-pw">
-                                <a href="/login/SignUp" class="forget-pw" tabindex=4 title="Forgot your Password">SignUp</a>
-                            </div>
-
-                            <div class="form-group text-center">
+                            <div class="form-group text-center" style="padding-top:35px;">
                                 <button class="btn btn-primary btnlogin" type="submit" title="Sign In">Sign In</button>
                             </div>
                         }

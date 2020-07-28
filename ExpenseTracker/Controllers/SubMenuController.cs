@@ -109,18 +109,39 @@ namespace ExpenseTracker.Controllers
                 }
                 else
                 {
-                    SubMenu.MenuID = updateSubMenu.MenuID;
-                    SubMenu.SubMenuName = updateSubMenu.SubMenuName;
-                    SubMenu.SubMenuUrl = updateSubMenu.SubMenuUrl;
-                    SubMenu.OrderNo = updateSubMenu.OrderNo;
-                    SubMenu.Status = updateSubMenu.Status;
-                    SubMenu.ModifiedBy = Convert.ToInt64(Session["UserID"]);
-                    SubMenu.ModifiedDate = DateTime.Now;
-                    dbEntities.Entry(SubMenu).State = EntityState.Modified;
-                    dbEntities.SaveChanges();
-                    if (SubMenu.SubMenuID != 0)
+                    try
                     {
-                        TempData["messagealert"] = Status.Update;
+                        //SubMenu.MenuName = string.Empty;
+                        SubMenu.MenuID = updateSubMenu.MenuID;
+                        SubMenu.SubMenuName = updateSubMenu.SubMenuName;
+                        SubMenu.SubMenuUrl = updateSubMenu.SubMenuUrl;
+                        SubMenu.OrderNo = updateSubMenu.OrderNo;
+                        SubMenu.Status = updateSubMenu.Status;
+                        SubMenu.ModifiedBy = Convert.ToInt64(Session["UserID"]);
+                        SubMenu.ModifiedDate = DateTime.Now;
+                        dbEntities.Entry(SubMenu).State = EntityState.Modified;
+                        dbEntities.SaveChanges();
+                        if (SubMenu.SubMenuID != 0)
+                        {
+                            TempData["messagealert"] = Status.Update;
+                        }
+                    }
+                    catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    {
+                        Exception raise = dbEx;
+                        foreach (var validationErrors in dbEx.EntityValidationErrors)
+                        {
+                            foreach (var validationError in validationErrors.ValidationErrors)
+                            {
+                                string message = string.Format("{0}:{1}",
+                                    validationErrors.Entry.Entity.ToString(),
+                                    validationError.ErrorMessage);
+                                // raise a new exception nesting
+                                // the current instance as InnerException
+                                raise = new InvalidOperationException(message, raise);
+                            }
+                        }
+                        throw raise;
                     }
                 }
                 return RedirectToAction("Index", "SubMenu");

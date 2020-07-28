@@ -89,7 +89,7 @@ namespace ExpenseTracker.Controllers
                         Session["MappedUser"] = MappedUser;
                         Session.Timeout = 300;
                         repUser.LogForUserLogin(checkLogin, objLoginDetails.Email);
-                        List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == loginDetails.RoleID).Select(x => x.SubMenuID).ToList();
+                        List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == loginDetails.RoleID && n.Status).Select(x => x.SubMenuID).ToList();
                         if (lstSubmenuId.Count > 0)
                         {
                             ETSubMenu objSubMenu = dbEntities.ETSubMenus.Where(n => lstSubmenuId.Contains(n.SubMenuID)).OrderBy(x => x.OrderNo).FirstOrDefault();

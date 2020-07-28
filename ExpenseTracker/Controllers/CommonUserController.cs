@@ -20,11 +20,12 @@ namespace ExpenseTracker.Controllers
 
         #region Profiles
         [HttpGet]
-        public ActionResult Profiles(long Id)
+        public ActionResult Profiles()
         {
             ViewBag.messagealert = string.Empty;
+            long userId = Convert.ToInt64(Session["UserID"]);
             User = new ETUser();
-            User = repUsers.GetUser(Id);
+            User = repUsers.GetUser(userId);
             ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.Gender = repUsers.getDataValues("Gender", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
@@ -33,16 +34,17 @@ namespace ExpenseTracker.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Profiles(long id, ETUser updateUser)
+        public ActionResult Profiles(ProfileChange updateUser)
         {
             TempData["messagealert"] = string.Empty;
-            //var errors = ModelState.Values.SelectMany(v => v.Errors);
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
+                long userId = Convert.ToInt64(Session["UserID"]);
                 User = new ETUser();
-                User = repUsers.GetUser(id);
+                User = repUsers.GetUser(userId);
 
-                if (repUsers.LogInNameIsExist(updateUser.LoginName, id))
+                if (repUsers.LogInNameIsExist(updateUser.LoginName, userId))
                 {
                     ViewBag.messagealert = "LogInName already exist";
                     ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
@@ -50,7 +52,7 @@ namespace ExpenseTracker.Controllers
                     ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     return View(User);
                 }
-                else if (repUsers.EmailIsExist(updateUser.Email, id) || !Common.IsValidEmail(updateUser.Email))
+                else if (repUsers.EmailIsExist(updateUser.Email, userId) || !Common.IsValidEmail(updateUser.Email))
                 {
                     if (!Common.IsValidEmail(updateUser.Email))
                         ViewBag.messagealert = "Please Enter Valid Email";
@@ -61,7 +63,7 @@ namespace ExpenseTracker.Controllers
                     ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     return View(User);
                 }
-                else if (repUsers.PhoneIsExist(updateUser.Phone, id))
+                else if (repUsers.PhoneIsExist(updateUser.Phone, userId))
                 {
                     ViewBag.messagealert = "Phone already exist";
                     ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
@@ -71,6 +73,8 @@ namespace ExpenseTracker.Controllers
                 }
                 else
                 {
+                    //try
+                    //{
                     User.Title = updateUser.Title;
                     User.FirstName = updateUser.FirstName;
                     User.MiddleName = updateUser.MiddleName;
@@ -82,6 +86,9 @@ namespace ExpenseTracker.Controllers
                     User.DOB = updateUser.DOB;
                     User.Address = updateUser.Address;
                     User.LoginName = updateUser.LoginName;
+                    User.Password = User.Password;
+                    User.ConfirmPassword = User.Password;
+                    //User.UserLevel = User.UserLevel;
                     User.IsTwoFactor = updateUser.IsTwoFactor;
                     User.DeviceID = updateUser.DeviceID;
                     User.UserField1 = updateUser.UserField1;
@@ -95,6 +102,24 @@ namespace ExpenseTracker.Controllers
                     {
                         TempData["messagealert"] = Status.Update;
                     }
+                    //}
+                    //catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    //{
+                    //    Exception raise = dbEx;
+                    //    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    //    {
+                    //        foreach (var validationError in validationErrors.ValidationErrors)
+                    //        {
+                    //            string message = string.Format("{0}:{1}",
+                    //                validationErrors.Entry.Entity.ToString(),
+                    //                validationError.ErrorMessage);
+                    //            // raise a new exception nesting
+                    //            // the current instance as InnerException
+                    //            raise = new InvalidOperationException(message, raise);
+                    //        }
+                    //    }
+                    //    throw raise;
+                    //}
                 }
                 return RedirectToAction("Index", "Home");
             }
