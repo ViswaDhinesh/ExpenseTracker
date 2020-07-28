@@ -1,20 +1,20 @@
-﻿@model ExpenseTracker.ETCategory
+﻿@model ExpenseTracker.ETSource
 @{
-    ViewBag.Title = "Category View";
+    ViewBag.Title = "Source View";
     Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
-    ViewBag.Menu = "Category";
+    ViewBag.Menu = "Sources";
 }
 
 <script>
     function PreviousPage() {
-        window.location = "/Category/Index";
+        window.location = "/Sources/Index";
     }
 
 </script>
 
 <div class="container-fluid">
     <div class="pageheader col-lg-12">
-        <h3 class="page-title text-primary">Category View</h3>
+        <h3 class="page-title text-primary">Source View</h3>
         <hr>
     </div>
 </div>
@@ -23,21 +23,22 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="panel panel-success">
             <div class="panel-heading">
-                <h3 class="panel-title">Category Details</h3>
+                <h3 class="panel-title">Source Details</h3>
             </div>
             <div class="panel-body">
                 <div class="row bottom-space">
-                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Source Type</b></label>
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Source Name</b></label>
                     <div class="pull-left col-lg-7 col-md-7 col-xs-7">
-                        <p>@Html.DisplayFor(m => m.ETSource.SourceName)</p>
+                        <p>@Html.DisplayFor(m => m.SourceName)</p>
                     </div>
                 </div>
                 <div class="row bottom-space">
-                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Category Name</b></label>
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Source Type</b></label>
                     <div class="pull-left col-lg-7 col-md-7 col-xs-7">
-                        <p>@Html.DisplayFor(m => m.CategoryName)</p>
+                        <p>@Html.DisplayFor(m => m.SourceType)</p>
                     </div>
                 </div>
+
                 <div class="row bottom-space">
                     <label class="col-lg-5 col-md-5 col-xs-5"><b>Status</b></label>
                     <div class="pull-left col-lg-7 col-md-7 col-xs-7">
@@ -55,3 +56,4 @@
         </div>
     </div>
 </div>
+

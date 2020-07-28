@@ -1,21 +1,21 @@
-﻿@model  ExpenseTracker.ETCategory
+﻿@model  ExpenseTracker.ETSource
 @{
-    ViewBag.Title = "Category Creation";
+    ViewBag.Title = "Source Updation";
     Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
-    ViewBag.Menu = "Category";
+    ViewBag.Menu = "Sources";
 }
 <script>
     function PreviousPage() {
-        window.location = "/Category/Index";
+        window.location = "/Sources/Index";
     }
 </script>
-@using (Html.BeginForm("Category_add", "Category", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Source_edit", "Sources", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
     @Html.AntiForgeryToken()
     <div class="container-fluid">
         <div class="pageheader col-lg-12">
-            <h3 class="page-title text-primary">Category Creation</h3>
+            <h3 class="page-title text-primary">Source Updation</h3>
             <hr>
         </div>
     </div>
@@ -31,23 +31,23 @@
             }
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Category Details</h3>
+                    <h3 class="panel-title">Source Details</h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="form-group col-md-4 col-sm-4">
-                            <label style="font-weight:bold">Source Type<span class="required"> *</span></label>
-                            @*@Html.TextBoxFor(m => m.CategoryTypeID, new { @class = "form-control", autocomplete = "off", maxlength = 1 })*@
-                            @Html.DropDownListFor(m => m.SourceID, new SelectList(ViewBag.Source, "Value", "Text", ViewBag.SourceId), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <label style="font-weight:bold">Source Name<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.SourceName, new { @class = "form-control", autocomplete = "off", maxlength = 500 })
                             <span class="error-text">
-                                @Html.ValidationMessageFor(model => model.SourceID)
+                                @Html.ValidationMessageFor(model => model.SourceName)
                             </span>
                         </div>
                         <div class="form-group col-md-4 col-sm-4">
-                            <label style="font-weight:bold">Category Name<span class="required"> *</span></label>
-                            @Html.TextBoxFor(m => m.CategoryName, new { @class = "form-control", autocomplete = "off", maxlength = 250 })
+                            <label style="font-weight:bold">Source Type<span class="required"> *</span></label>
+                            @Html.DropDownListFor(m => m.SourceType, new SelectList(ViewBag.SourceTypes, "Value", "Text", ViewBag.ValueUniqueID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            @*@Html.TextBoxFor(m => m.SourceType, new { @class = "form-control", autocomplete = "off", maxlength = 1 })*@
                             <span class="error-text">
-                                @Html.ValidationMessageFor(model => model.CategoryName)
+                                @Html.ValidationMessageFor(model => model.SourceType)
                             </span>
                         </div>
                     </div>

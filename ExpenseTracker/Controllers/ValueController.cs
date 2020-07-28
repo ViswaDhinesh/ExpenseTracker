@@ -6,24 +6,26 @@ using System.Web.Mvc;
 
 namespace ExpenseTracker.Controllers
 {
-    public class HomeController : BaseController
+    public class ValueController : BaseController
     {
+        // GET: Value
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Value_add()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
-        public ActionResult Contact()
+        public ActionResult Value_edit()
         {
-            ViewBag.Message = "Your contact page.";
+            return View();
+        }
 
+        public ActionResult Value_view()
+        {
             return View();
         }
     }

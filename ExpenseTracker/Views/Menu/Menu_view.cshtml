@@ -1,20 +1,20 @@
-﻿@model ExpenseTracker.ETSource
+﻿@model ExpenseTracker.ETMenu
 @{
-    ViewBag.Title = "Source View";
+    ViewBag.Title = "Menu View";
     Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
-    ViewBag.Menu = "Source";
+    ViewBag.Menu = "Menu";
 }
 
 <script>
     function PreviousPage() {
-        window.location = "/Source/Index";
+        window.location = "/Menu/Index";
     }
 
 </script>
 
 <div class="container-fluid">
     <div class="pageheader col-lg-12">
-        <h3 class="page-title text-primary">Source View</h3>
+        <h3 class="page-title text-primary">Menu View</h3>
         <hr>
     </div>
 </div>
@@ -23,27 +23,32 @@
     <div class="col-lg-12 col-md-12 col-sm-12">
         <div class="panel panel-success">
             <div class="panel-heading">
-                <h3 class="panel-title">Source Details</h3>
+                <h3 class="panel-title">Menu Details</h3>
             </div>
             <div class="panel-body">
                 <div class="row bottom-space">
-                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Source Name</b></label>
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Menu Name</b></label>
                     <div class="pull-left col-lg-7 col-md-7 col-xs-7">
-                        <p>@Html.DisplayFor(m => m.SourceName)</p>
+                        <p>@Html.DisplayFor(m => m.MenuName)</p>
                     </div>
                 </div>
                 <div class="row bottom-space">
-                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Source Type</b></label>
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Page URL</b></label>
                     <div class="pull-left col-lg-7 col-md-7 col-xs-7">
-                        <p>@Html.DisplayFor(m => m.SourceType)</p>
+                        <p>@Html.DisplayFor(m => m.MenuUrl)</p>
                     </div>
                 </div>
-
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>Order No.</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>@Html.DisplayFor(m => m.OrderNo)</p>
+                    </div>
+                </div>
                 <div class="row bottom-space">
                     <label class="col-lg-5 col-md-5 col-xs-5"><b>Status</b></label>
                     <div class="pull-left col-lg-7 col-md-7 col-xs-7">
                         <p>
-                            @(Model.IsActive ? "Enabled" : "Disabled")
+                            @(Model.Status ? "Enabled" : "Disabled")
                         </p>
                     </div>
                 </div>
@@ -56,4 +61,3 @@
         </div>
     </div>
 </div>
-

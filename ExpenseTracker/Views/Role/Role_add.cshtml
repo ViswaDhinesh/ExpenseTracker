@@ -1,21 +1,21 @@
-﻿@model  ExpenseTracker.ETSource
+﻿@model  ExpenseTracker.ETRole
 @{
-    ViewBag.Title = "Source Edit";
+    ViewBag.Title = "Role Creation";
     Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
-    ViewBag.Menu = "Source";
+    ViewBag.Menu = "Role";
 }
 <script>
     function PreviousPage() {
-        window.location = "/Source/Index";
+        window.location = "/Role/Index";
     }
 </script>
-@using (Html.BeginForm("Source_edit", "Source", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Role_add", "Role", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
     @Html.AntiForgeryToken()
     <div class="container-fluid">
         <div class="pageheader col-lg-12">
-            <h3 class="page-title text-primary">Source Edit</h3>
+            <h3 class="page-title text-primary">Role Creation</h3>
             <hr>
         </div>
     </div>
@@ -31,28 +31,19 @@
             }
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Source Details</h3>
+                    <h3 class="panel-title">Role Details</h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
                         <div class="form-group col-md-4 col-sm-4">
-                            <label style="font-weight:bold">Source Name<span class="required"> *</span></label>
-                            @Html.TextBoxFor(m => m.SourceName, new { @class = "form-control", autocomplete = "off", maxlength = 500 })
+                            <label style="font-weight:bold">Role Name<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.RoleName, new { @class = "form-control", autocomplete = "off", maxlength = 100 })
                             <span class="error-text">
-                                @Html.ValidationMessageFor(model => model.SourceName)
+                                @Html.ValidationMessageFor(model => model.RoleName)
                             </span>
                         </div>
                         <div class="form-group col-md-4 col-sm-4">
-                            <label style="font-weight:bold">Source Type<span class="required"> *</span></label>
-                            @Html.TextBoxFor(m => m.SourceType, new { @class = "form-control", autocomplete = "off", maxlength = 1 })
-                            <span class="error-text">
-                                @Html.ValidationMessageFor(model => model.SourceType)
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-4 col-sm-4">
-                            <label style="font-weight:bold">Status</label>
+                            <label style="font-weight:bold">IsActive</label>
                             <div class="attr-section">
                                 <label class="radio radio-inline">
                                     @Html.RadioButtonFor(m => m.IsActive, true, new { @checked = true }) Enable

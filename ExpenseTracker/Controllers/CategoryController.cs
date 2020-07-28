@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace ExpenseTracker.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoryController : BaseController
     {
         // GET: Category
         ExpenseTrackerEntites dbEntities = new ExpenseTrackerEntites();
@@ -18,6 +18,7 @@ namespace ExpenseTracker.Controllers
         #region Category List
         public ActionResult Index()
         {
+            ViewBag.UserPermission = Session["UserLevel"].ToString().ToUpper();
             ViewBag.messagealert = string.Empty;
             string messagealert = Convert.ToString(TempData["messagealert"]);
             if (!string.IsNullOrEmpty(messagealert))
@@ -25,7 +26,7 @@ namespace ExpenseTracker.Controllers
                 ViewBag.messagealert = messagealert;
             }
             Categories = new List<ETCategory>();
-            Categories = repCategory.GetAllCategory(1); // Need to change
+            Categories = repCategory.GetAllCategory(Convert.ToInt64(Session["UserID"]), Session["UserLevel"].ToString());
             return View(Categories);
         }
         #endregion
@@ -54,14 +55,15 @@ namespace ExpenseTracker.Controllers
                     if (repCategory.CategoryIsExist(Category.CategoryName, 0))
                     {
                         ViewBag.messagealert = "Category already exist";
+                        ViewBag.Source = repCategory.getSourceType();
                         return View(Category);
                     }
                     else
                     {
-                        Category.UserID = 1; // Need to change
-                        Category.CreatedBy = "Dinesh";//Session["UserName"].ToString();
+                        Category.UserID = Convert.ToInt64(Session["UserID"]);
+                        Category.CreatedBy = Convert.ToInt64(Session["UserID"]);
                         Category.CreatedDate = DateTime.Now;
-                        Category.ModifiedBy = "Pandiyan";//Session["UserName"].ToString();
+                        Category.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                         Category.ModifiedDate = DateTime.Now;
                         dbEntities.ETCategories.Add(Category);
                         dbEntities.SaveChanges();
@@ -104,14 +106,15 @@ namespace ExpenseTracker.Controllers
                 if (repCategory.CategoryIsExist(updateCategory.CategoryName, id))
                 {
                     ViewBag.messagealert = "Category already exist";
+                    ViewBag.Source = repCategory.getSourceType();
                     return View(Category);
                 }
                 else
                 {
                     Category.CategoryName = updateCategory.CategoryName;
-                    Category.CategoryTypeID = updateCategory.CategoryTypeID;
+                    Category.SourceID = updateCategory.SourceID;
                     Category.IsActive = updateCategory.IsActive;
-                    Category.ModifiedBy = "Dinesh"; //Session["UserName"].ToString();
+                    Category.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     Category.ModifiedDate = DateTime.Now;
                     dbEntities.Entry(Category).State = EntityState.Modified;
                     dbEntities.SaveChanges();
@@ -138,7 +141,7 @@ namespace ExpenseTracker.Controllers
         #region Category Delete
         public bool CategoryDelete(long id)
         {
-            if (!dbEntities.ETUsers.Where(x => x.UserID == 1).Any())
+            if (!dbEntities.ETUsers.Where(x => x.UserID == 1).Any()) // Need to change
             {
                 TempData["messagealert"] = Status.Delete;
                 Category = new ETCategory();
@@ -151,6 +154,20 @@ namespace ExpenseTracker.Controllers
                 }
             }
             return false;
+
+            //if (!dbEntities.TBL_ADMIN_USER.Where(x => x.ROLE_ID == id).Any())
+            //{
+            //    TempData["messagealert"] = Status.Delete;
+            //    role = new TBL_ROLE();
+            //    role = dbEntities.TBL_ROLE.Where(x => x.ROLE_ID == id && x.ROLE_NAME != "superadmin").SingleOrDefault();
+            //    if (role != null)
+            //    {
+            //        dbEntities.TBL_ROLE.Remove(role);
+            //        dbEntities.SaveChanges();
+            //        return true;
+            //    }
+            //}
+            //return false;
         }
         #endregion
 
@@ -165,14 +182,14 @@ namespace ExpenseTracker.Controllers
                 if (status)
                 {
                     Category.IsActive = false;
-                    Category.ModifiedBy = "Dinesh";//Session["UserName"].ToString();
+                    Category.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     Category.ModifiedDate = DateTime.Now;
                 }
                 else
                 {
-                    Category.ModifiedBy = "Dinesh";//Session["UserName"].ToString();
-                    Category.ModifiedDate = DateTime.Now;
                     Category.IsActive = true;
+                    Category.ModifiedBy = Convert.ToInt64(Session["UserID"]);
+                    Category.ModifiedDate = DateTime.Now;
                 }
                 dbEntities.Entry(Category).State = EntityState.Modified;
                 dbEntities.SaveChanges();

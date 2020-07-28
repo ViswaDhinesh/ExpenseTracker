@@ -111,14 +111,8 @@ body {
 }
 
 .frontLogin {
-    width: 200px;
-    height: 200px;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    background-image: url(../images/ajax-loader.jpg);
+    background-image: url(../images/Stock.jpg);
     background-repeat: no-repeat;
     background-position: center;
-    margin: -100px 0 0 -100px;
     overflow: hidden;
 }

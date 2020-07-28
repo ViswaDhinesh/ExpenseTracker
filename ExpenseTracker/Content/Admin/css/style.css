@@ -2163,8 +2163,8 @@ span.spanQty {
 
 .selectmenu-accordion .panel-heading a, .btn-success, .btn-secondary, .panel-success > .panel-heading, .btn-default,
 .btn-info {
-    background-color: #eee;
-    border-color: #ccc;
+    background-color: #F99375;
+    border-color: #FBEF33;
     color: #333333;
     background-image: none;
 }
@@ -2902,7 +2902,7 @@ textarea {
     height: 17px;
     width: 17px;
     background-color: #fff;
-    border-color: #ed037d;
+    border-color: #2BBCF4;
     border-style: solid;
     border-width: 1px;
     border-radius: 50%;
@@ -2933,7 +2933,7 @@ textarea {
     width: 9px;
     height: 9px;
     border-radius: 50%;
-    background: #f8204f;
+    background: #2BBCF4;
 }
 
 .crt-vendor {
@@ -3071,7 +3071,7 @@ textarea {
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	background-image: url(../images/loader.gif);
+	background-image: url(../images/ajax-loader.gif);
 	background-repeat: no-repeat;
 	background-position: center;
 	margin: -100px 0 0 -100px;

@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace ExpenseTracker.Controllers
 {
-    public class SourceController : Controller
+    public class SourcesController : BaseController
     {
 
         ExpenseTrackerEntites dbEntities = new ExpenseTrackerEntites();
@@ -18,6 +18,7 @@ namespace ExpenseTracker.Controllers
         #region Source List
         public ActionResult Index()
         {
+            ViewBag.UserPermission = Session["UserLevel"].ToString().ToUpper();
             ViewBag.messagealert = string.Empty;
             string messagealert = Convert.ToString(TempData["messagealert"]);
             if (!string.IsNullOrEmpty(messagealert))
@@ -25,7 +26,7 @@ namespace ExpenseTracker.Controllers
                 ViewBag.messagealert = messagealert;
             }
             Sources = new List<ETSource>();
-            Sources = repSource.GetAllSource();
+            Sources = repSource.GetAllSource(Convert.ToInt64(Session["UserID"]), Session["UserLevel"].ToString());
             return View(Sources);
         }
 
@@ -37,6 +38,7 @@ namespace ExpenseTracker.Controllers
         public ActionResult Source_add()
         {
             ViewBag.messagealert = string.Empty;
+            ViewBag.SourceTypes = repSource.getDataValues("SourceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             return View();
         }
 
@@ -54,13 +56,15 @@ namespace ExpenseTracker.Controllers
                     if (repSource.SourceIsExist(Source.SourceName, 0))
                     {
                         ViewBag.messagealert = "Source already exist";
+                        ViewBag.SourceTypes = repSource.getDataValues("SourceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         return View(Source);
                     }
                     else
                     {
-                        Source.CreatedBy = "Dinesh";//Session["UserName"].ToString();
+                        Source.UserID = Convert.ToInt64(Session["UserID"]);
+                        Source.CreatedBy = Convert.ToInt64(Session["UserID"]);
                         Source.CreatedDate = DateTime.Now;
-                        Source.ModifiedBy = "Pandiyan";//Session["UserName"].ToString();
+                        Source.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                         Source.ModifiedDate = DateTime.Now;
                         dbEntities.ETSources.Add(Source);
                         dbEntities.SaveChanges();
@@ -70,7 +74,7 @@ namespace ExpenseTracker.Controllers
                         }
                     }
                 }
-                return RedirectToAction("Index", "Source");
+                return RedirectToAction("Index", "Sources");
             }
             return View();
         }
@@ -85,6 +89,7 @@ namespace ExpenseTracker.Controllers
             ViewBag.messagealert = string.Empty;
             Sourcee = new ETSource();
             Sourcee = repSource.GetSource(Id);
+            ViewBag.SourceTypes = repSource.getDataValues("SourceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             return View(Sourcee);
         }
 
@@ -102,6 +107,7 @@ namespace ExpenseTracker.Controllers
                 if (repSource.SourceIsExist(updateSource.SourceName, id))
                 {
                     ViewBag.messagealert = "Source already exist";
+                    ViewBag.SourceTypes = repSource.getDataValues("SourceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     return View(Sourcee);
                 }
                 else
@@ -109,7 +115,7 @@ namespace ExpenseTracker.Controllers
                     Sourcee.SourceName = updateSource.SourceName;
                     Sourcee.SourceType = updateSource.SourceType;
                     Sourcee.IsActive = updateSource.IsActive;
-                    Sourcee.ModifiedBy = "Dinesh"; //Session["UserName"].ToString();
+                    Sourcee.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     Sourcee.ModifiedDate = DateTime.Now;
                     dbEntities.Entry(Sourcee).State = EntityState.Modified;
                     dbEntities.SaveChanges();
@@ -118,7 +124,7 @@ namespace ExpenseTracker.Controllers
                         TempData["messagealert"] = Status.Update;
                     }
                 }
-                return RedirectToAction("Index", "Source");
+                return RedirectToAction("Index", "Sources");
             }
             return View();
         }
@@ -136,7 +142,7 @@ namespace ExpenseTracker.Controllers
         #region Source Delete
         public bool SourceDelete(long id)
         {
-            if (!dbEntities.ETUsers.Where(x => x.UserID == 1).Any())
+            if (!dbEntities.ETUsers.Where(x => x.UserID == 1).Any()) // Need to change
             {
                 TempData["messagealert"] = Status.Delete;
                 Sourcee = new ETSource();
@@ -149,6 +155,20 @@ namespace ExpenseTracker.Controllers
                 }
             }
             return false;
+
+            //if (!dbEntities.TBL_ADMIN_USER.Where(x => x.ROLE_ID == id).Any())
+            //{
+            //    TempData["messagealert"] = Status.Delete;
+            //    role = new TBL_ROLE();
+            //    role = dbEntities.TBL_ROLE.Where(x => x.ROLE_ID == id && x.ROLE_NAME != "superadmin").SingleOrDefault();
+            //    if (role != null)
+            //    {
+            //        dbEntities.TBL_ROLE.Remove(role);
+            //        dbEntities.SaveChanges();
+            //        return true;
+            //    }
+            //}
+            //return false;
         }
 
         #endregion
@@ -164,12 +184,12 @@ namespace ExpenseTracker.Controllers
                 if (status)
                 {
                     Sourcee.IsActive = false;
-                    Sourcee.ModifiedBy = "Dinesh";//Session["UserName"].ToString();
+                    Sourcee.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     Sourcee.ModifiedDate = DateTime.Now;
                 }
                 else
                 {
-                    Sourcee.ModifiedBy = "Dinesh";//Session["UserName"].ToString();
+                    Sourcee.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                     Sourcee.ModifiedDate = DateTime.Now;
                     Sourcee.IsActive = true;
                 }

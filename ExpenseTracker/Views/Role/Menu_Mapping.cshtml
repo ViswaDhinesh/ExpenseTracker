@@ -1,0 +1,206 @@
+﻿@model ExpenseTracker.ETMenuAccess
+
+@{
+    ViewBag.Title = "Menu Mapping";
+    Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
+    ViewBag.Menu = "Role";
+}
+<script type="text/javascript">
+    function PreviousPage() {
+        window.location = "/Role/Index";
+    }
+    $(document).ready(function () {
+        $("#notificationalert").hide();
+        //Page load Header Tick
+
+        $('.menulist').each(function (i, e) {
+            var menuclass = $(this).attr('class');
+            var id = menuclass.replace('col-md-3 menulist list_', '');
+            count = 0;
+            var checkboxcount = $(this).find('.chksubmenu_' + id + ' input[type=checkbox]').length;
+            $(this).find('.chksubmenu_' + id + ' input[type=checkbox]').each(function (j, w) {
+                if ($(this).prop("checked")) {
+                    count++;
+                }
+            });
+
+            if (count == checkboxcount) {
+                $(this).find('#chkmenustatusid_' + id).prop("checked", true);
+            }
+        });
+
+        //Page load Header Tick
+
+        // Header check
+
+        $('.chkmenu').change(function () {
+            $("#notificationalert").hide();
+            var headerstatus = $(this).prop("checked");
+            var id = $(this).attr('id');
+            id = id.replace('chkmenustatusid_', '');
+            if (headerstatus == true) {
+                $('.chksubmenu_' + id + ' input[type=checkbox]').each(function (i, e) {
+                    $(this).prop("checked", true);
+                });
+            }
+            else {
+                $('.chksubmenu_' + id + ' input[type=checkbox]').each(function (i, e) {
+                    $(this).prop("checked", false);
+                });
+            }
+
+
+        });
+
+        // Header check
+
+        //Child check
+
+        $('.chksubmenu').change(function () {
+            var subchecked = $(this).prop("checked");
+            var subclass = $(this).parent().parent().attr('class');
+            var id = subclass.replace('chklist chksubmenu_', '');
+            count = 0;
+            var checkboxcount = $('.chksubmenu_' + id + ' input[type=checkbox]').length;
+            $('.chksubmenu_' + id + ' input[type=checkbox]').each(function (i, e) {
+                var headerstatus = $(this).prop("checked");
+                if ($(this).prop("checked")) {
+                    count++;
+                    $('#chkmenustatusid_' + id).prop("checked", false);
+                }
+            });
+            if (count == checkboxcount) {
+                $('#chkmenustatusid_' + id).prop("checked", true);
+            }
+
+        });
+
+        //Child check
+
+        $('input[type=submit]').click(function () {
+            var count = 0
+            $('#Newmenu input[type=checkbox]').each(function (i, e) {
+                if ($(this).prop('checked')) {
+                    count++;
+                }
+            });
+            if (parseInt(count) == 0) {
+                $("#notificationalert").show();
+                return false;
+            }
+        });
+    });
+
+</script>
+
+@using (Html.BeginForm("Menu_Mapping", "Role", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    <div class="container-fluid">
+        <div class="pageheader col-lg-12">
+            <h3 class="page-title text-primary">Menu Mapping</h3>
+            <hr>
+        </div>
+    </div>
+
+
+
+    <div class="container-fluid">
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            @*@if (ViewBag.messagealert != string.Empty)
+                {
+
+                }*@
+            <div class="alert alert-dismissible alert-danger" id="notificationalert">
+                Please select atleast one menu names
+            </div>
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Menu Mapping Details</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="sec">
+                        <div class="row checkbox-sec" id="Newmenu">
+                            @if (Model.lstmenu.Count > 0)
+                            {
+                                int p = 0;
+                                var lstsubmenu = new List<ExpenseTracker.ETSubMenu>();
+
+                                for (int i = 0; i < Model.lstmenu.Count; i++)
+                                {
+                                    lstsubmenu = Model.lstsubmenu.Where(n => n.MenuID == Model.lstmenu[i].MenuID).ToList();
+                                    var chkmenustatus = "objrolemenumap[" + i + "].Status";
+                                    var chkmenustatusid = "chkmenustatusid_" + i;
+                                    <div class="col-md-3 menulist list_@i">
+                                        <label class="settings-check">
+                                            <b>@Model.lstmenu[i].MenuName</b>
+                                            @if (Model.Status == true)
+                                            {
+                                                <input type="checkbox" name="@chkmenustatus" id="@chkmenustatusid" class="chk-value chkmenu" value="true" checked="checked" />
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" name="@chkmenustatus" id="@chkmenustatusid" class="chk-value chkmenu" value="true" />
+                                            }
+                                            <span class="checkmark">
+
+                                            </span>
+                                        </label>
+                                        @for (int j = 0; j < lstsubmenu.Count; j++)
+                                        {
+
+                                            var chksubmenustatus = "lstrolemenumap[" + p + "].Status";
+                                            var chksubmenustatusid = "chksubmenustatus_" + p;
+
+                                            var hdnmenuidname = "lstrolemenumap[" + p + "].MenuID";
+                                            var hdnmenuid = "hdnmenuid_" + p;
+                                            var hdnsubmenuidname = "lstrolemenumap[" + p + "].SubMenuID";
+                                            var hdnsubmenuid = "hdnsubmenuid_" + p;
+                                            List<ExpenseTracker.ETMenuAccess> lstrolemenumapnew = new List<ExpenseTracker.ETMenuAccess>();
+                                            lstrolemenumapnew = Model.lstrolemenumap.Where(n => n.SubMenuID == lstsubmenu[j].SubMenuID).ToList();
+                                            <div class="chklist chksubmenu_@i">
+                                                <label class="settings-check">
+                                                    @lstsubmenu[j].SubMenuName
+                                                    @if (lstrolemenumapnew.Count > 0)
+                                                    {
+                                                        foreach (var roleitem in lstrolemenumapnew)
+                                                        {
+                                                            if (lstsubmenu[j].SubMenuID == roleitem.SubMenuID && roleitem.Status == true)
+                                                            {
+                                                                <input type="checkbox" class="chk-value chksubmenu" name="@chksubmenustatus" id="@chksubmenustatusid" value="true" checked="checked" />
+                                                            }
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="checkbox" class="chk-value chksubmenu" name="@chksubmenustatus" id="@chksubmenustatusid" value="true" />
+                                                    }
+                                                    <span class="checkmark"></span>
+
+                                                </label>
+                                                <input type="hidden" name="@hdnmenuidname" id="@hdnmenuid" value="@Model.lstmenu[i].MenuID" />
+                                                <input type="hidden" name="@hdnsubmenuidname" id="@hdnsubmenuid" value="@lstsubmenu[j].SubMenuID" />
+                                            </div>
+                                            p = p + 1;
+                                        }
+                                    </div>
+                                }
+
+                            }
+                        </div>
+
+                        <div class="row save-button-section">
+                            <div class="form-group col-md-6 col-sm-6 pull-left text-left">
+                                <input type="submit" class="btn btn-primary" title="Save" value="Save">
+                                <input type="button" class="btn btn-secondary close-space" title="Back" value="Back" onclick="PreviousPage();" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}

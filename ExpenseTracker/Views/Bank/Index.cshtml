@@ -1,21 +1,21 @@
-﻿@model IEnumerable<ExpenseTracker.ETCategory>
+﻿@model IEnumerable<ExpenseTracker.ETBank>
 @{
-    ViewBag.Title = "Category List";
+    ViewBag.Title = "Bank List";
     Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
-    ViewBag.Menu = "Category";
+    ViewBag.Menu = "Bank";
 }
 <script>
 
-    function DeleteCategory(Categoryid) {
-        if (Categoryid != "") {
+    function DeleteBank(Bankid) {
+        if (Bankid != "") {
             if (confirm("Are You Sure To Delete?") == true) {
-                var url = "/Category/CategoryDelete";
-                $.get(url, { id: Categoryid }, function (data) {
+                var url = "/Bank/BankDelete";
+                $.get(url, { id: Bankid }, function (data) {
                     if (data == "True") {
-                        window.location.href = "/Category/Index";
+                        window.location.href = "/Bank/Index";
                     }
                     else {
-                        alert("Delete the user which refers to this Category.");
+                        alert("Delete the user which refers to this Bank.");
                         event.preventDefault();
                     }
                 });
@@ -24,9 +24,9 @@
     }
 
     function updateStatus(anchor, cimageid) {
-        var url = "/Category/CategoryUpdateStatus";
+        var url = "/Bank/BankUpdateStatus";
         var img = $(anchor).find("img")[0];
-        $.get(url, { status: img.alt, Categoryid: cimageid }, function (data) {
+        $.get(url, { status: img.alt, Bankid: cimageid }, function (data) {
 
             if (data == "True") {
                 if (img.alt == "true") {
@@ -50,10 +50,10 @@
     <div class="container-fluid">
         <div class="col-lg-12">
             <div class="pageheader col-lg-12">
-                <h3 class="page-title text-primary">Category List</h3>
+                <h3 class="page-title text-primary">Bank List</h3>
                 <hr>
                 <div class="form-group text-right">
-                    <a href="/Category/Category_add" class="btn btn-primary add-emp" data-toggle="modal" title="Create">Create</a>
+                    <a href="/Bank/Bank_add" class="btn btn-primary add-emp" data-toggle="modal" title="Create">Create</a>
                 </div>
             </div>
             <div class="col-lg-12 col-md-12 col-xs-12">
@@ -73,8 +73,10 @@
                             <tr class="success">
                                 <th class="text-center no-sort">SNo</th>
                                 <th style="display:none;"></th>
-                                <th class="text-center">Category Name</th>
-                                <th class="text-center">Source Type</th>
+                                <th class="text-center">Account Holder</th>
+                                <th class="text-center">IFSC Code</th>
+                                <th class="text-center">Bank Name</th>
+                                <th class="text-center">Account Type</th>
                                 <th class="@display text-center">Created User</th>
                                 <th class="text-center no-sort">Status</th>
                                 <th class="text-center no-sort">Action</th>
@@ -103,12 +105,14 @@
 
                                 <tr class="@rowColor">
                                     <td></td>
-                                    <td style="display:none;"><input type="hidden" value="@item.CategoryID" /></td>
-                                    <td>@item.CategoryName</td>
-                                    <td>@item.ETSource.SourceName</td>
+                                    <td style="display:none;"><input type="hidden" value="@item.BankID" /></td>
+                                    <td>@item.AccountHolder</td>
+                                    <td>@item.IFSCCode</td>
+                                    <td>@item.BankName</td>
+                                    <td>@item.AccountType</td>
                                     <td class="@display text-center">@item.UserID</td>
                                     <td>
-                                        <a href="javascript:void(0)" id="lnkstatus" onclick="updateStatus(this,'@item.CategoryID')">
+                                        <a href="javascript:void(0)" id="lnkstatus" onclick="updateStatus(this,'@item.BankID')">
                                             @if (item.IsActive)
                                             {
                                                 <img src="../../Content/Admin/icon/tick_icon.gif" title="Enable" alt="true" border="0" />
@@ -120,9 +124,9 @@
                                         </a>
                                     </td>
                                     <td class="nowrap">
-                                        <a href="/Category/Category_edit/@item.CategoryID" class="report-edit" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
-                                        <a href="/Category/Category_view/@item.CategoryID" class="report-edit report-cancel" title="View"><i class="fa fa-eye"></i> View</a>
-                                        <a href="javascript:;" onclick="DeleteCategory(@item.CategoryID)" class="report-cancel" title="Delete"><i class="fa fa-trash"></i> Delete</a>
+                                        <a href="/Bank/Bank_edit/@item.BankID" class="report-edit" title="Edit"><i class="fa fa-pencil"></i> Edit</a>
+                                        <a href="/Bank/Bank_view/@item.BankID" class="report-edit report-cancel" title="View"><i class="fa fa-eye"></i> View</a>
+                                        <a href="javascript:;" onclick="DeleteBank(@item.BankID)" class="report-cancel" title="Delete"><i class="fa fa-trash"></i> Delete</a>
                                     </td>
                                 </tr>
                                 i = i + 1;
