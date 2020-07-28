@@ -26,6 +26,11 @@ namespace ExpenseTracker.Controllers
             }
             SubMenus = new List<ETSubMenu>();
             SubMenus = repSubMenu.GetAllSubMenu();
+            foreach (var item in SubMenus)
+            {
+                ETMenu MenuNames = dbEntities.ETMenus.Where(x => x.MenuID == item.MenuID).Single();
+                item.MenuName = MenuNames.MenuName;
+            }
             return View(SubMenus);
         }
         #endregion
@@ -117,6 +122,7 @@ namespace ExpenseTracker.Controllers
                         SubMenu.SubMenuUrl = updateSubMenu.SubMenuUrl;
                         SubMenu.OrderNo = updateSubMenu.OrderNo;
                         SubMenu.Status = updateSubMenu.Status;
+                        SubMenu.IsMainMenu = updateSubMenu.IsMainMenu;
                         SubMenu.ModifiedBy = Convert.ToInt64(Session["UserID"]);
                         SubMenu.ModifiedDate = DateTime.Now;
                         dbEntities.Entry(SubMenu).State = EntityState.Modified;
@@ -155,6 +161,8 @@ namespace ExpenseTracker.Controllers
         public ActionResult SubMenu_view(long Id)
         {
             SubMenu = repSubMenu.GetSubMenu(Id);
+            ETMenu MenuNames = dbEntities.ETMenus.Where(x => x.MenuID == SubMenu.MenuID).Single();
+            SubMenu.MenuName = MenuNames.MenuName;
             return View(SubMenu);
         }
         #endregion

@@ -29,7 +29,7 @@
                 <div class="row bottom-space">
                     <label class="col-lg-5 col-md-5 col-xs-5"><b>Menu Name</b></label>
                     <div class="pull-left col-lg-7 col-md-7 col-xs-7">
-                        <p>@Html.DisplayFor(m => m.ETMenu.MenuName)</p>
+                        <p>@Html.DisplayFor(m => m.MenuName)</p>
                     </div>
                 </div>
                 <div class="row bottom-space">
@@ -55,6 +55,14 @@
                     <div class="pull-left col-lg-7 col-md-7 col-xs-7">
                         <p>
                             @(Model.Status ? "Enabled" : "Disabled")
+                        </p>
+                    </div>
+                </div>
+                <div class="row bottom-space">
+                    <label class="col-lg-5 col-md-5 col-xs-5"><b>IsMainMenu</b></label>
+                    <div class="pull-left col-lg-7 col-md-7 col-xs-7">
+                        <p>
+                            @(Model.IsMainMenu ? "Enabled" : "Disabled")
                         </p>
                     </div>
                 </div>

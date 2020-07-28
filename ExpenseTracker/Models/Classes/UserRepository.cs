@@ -80,6 +80,12 @@ namespace ExpenseTracker
                 UserIdGeneration();
             return UserId;
         }
+
+        public long OtpGeneration()
+        {
+            long otp = RandomNumber(0, 999999);
+            return otp;
+        }
         #endregion
 
         #region GetUser

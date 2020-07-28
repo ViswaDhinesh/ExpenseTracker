@@ -526,6 +526,7 @@
     <Content Include="Content\Admin\images\avatar.png" />
     <Content Include="Content\Admin\images\Front.jpg" />
     <Content Include="Content\Admin\images\Login.jpg" />
+    <Content Include="Content\Admin\images\Logo.jpg" />
     <Content Include="Content\Admin\images\Stock.jpg" />
     <Content Include="Content\Admin\js\app.js" />
     <Content Include="Content\Admin\js\bootstrap-datepicker.min.js" />
@@ -876,6 +877,11 @@
     <Content Include="Views\Bank\Bank_add.cshtml" />
     <Content Include="Views\Bank\Bank_edit.cshtml" />
     <Content Include="Views\Bank\Bank_view.cshtml" />
+    <Content Include="Views\Login\SignUp.cshtml" />
+    <Content Include="Views\CommonUser\Twofactor.cshtml" />
+    <Content Include="Views\CommonUser\TwofactorEmailVerification.cshtml" />
+    <Content Include="Views\CommonUser\TwofactorPhoneVerification.cshtml" />
+    <Content Include="Views\CommonUser\TwofactorPhoneTabVerification.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

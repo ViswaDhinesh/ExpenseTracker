@@ -1,21 +1,21 @@
 ﻿@model  ExpenseTracker.ETUser
 @{
-    ViewBag.Title = "User Profile";
-    Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
-    ViewBag.Menu = "CommonUser";
+    ViewBag.Title = "Sign Up";
+    //Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
+    ViewBag.Menu = "Login";
 }
 <script>
     function PreviousPage() {
-        window.location = "/Home/Index";
+        window.location = "/Login/Index";
     }
 </script>
-@using (Html.BeginForm("Profiles", "CommonUser", FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("SignUp", "Login", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.ValidationSummary(true)
     @Html.AntiForgeryToken()
     <div class="container-fluid">
         <div class="pageheader col-lg-12">
-            <h3 class="page-title text-primary">User Profile Updation</h3>
+            <h3 class="page-title text-primary">Welcome to New User Creation Portal</h3>
             <hr>
         </div>
     </div>
@@ -31,7 +31,7 @@
             }
             <div class="panel panel-success">
                 <div class="panel-heading">
-                    <h3 class="panel-title">User Profile Details</h3>
+                    <h3 class="panel-title">User Creation</h3>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -122,6 +122,22 @@
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Password<span class="required"> *</span></label>
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control UPassword", @placeholder = "Password" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.Password)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Confirm Password<span class="required"> *</span></label>
+                            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control UPassword", @placeholder = "Confirm Password" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                            </span>
+                        </div>
+                    </div>
+                    @*<div class="row">
+                        <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">IsTwoFactor</label>
                             <div class="attr-section">
                                 <label class="radio radio-inline">
@@ -134,7 +150,7 @@
                                 </label>
                             </div>
                         </div>
-                    </div>
+                    </div>*@
                     <div class="row">
                         <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">DeviceID</label>

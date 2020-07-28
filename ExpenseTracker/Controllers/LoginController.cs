@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -10,7 +11,7 @@ namespace ExpenseTracker.Controllers
     {
         ExpenseTrackerEntites dbEntities = new ExpenseTrackerEntites();
         //LoginRepository replogin = new LoginRepository();
-        ETUser user = new ETUser();
+        ETUser UserVal = new ETUser();
         UserRepository repUser = new UserRepository();
 
         //Mailing mailing = new Mailing();
@@ -30,7 +31,7 @@ namespace ExpenseTracker.Controllers
                 List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == roleId).Select(x => x.SubMenuID).ToList();
                 if (lstSubmenuId.Count > 0)
                 {
-                    ETSubMenu objSubMenu = dbEntities.ETSubMenus.Where(n => lstSubmenuId.Contains(n.SubMenuID)).OrderBy(x => x.OrderNo).FirstOrDefault();
+                    ETSubMenu objSubMenu = dbEntities.ETSubMenus.Where(n => lstSubmenuId.Contains(n.SubMenuID) && n.Status && n.IsMainMenu).OrderBy(x => x.OrderNo).FirstOrDefault();
                     string Url = objSubMenu.SubMenuUrl;
                     if (!string.IsNullOrEmpty(Url))
                     {
@@ -89,17 +90,28 @@ namespace ExpenseTracker.Controllers
                         Session["MappedUser"] = MappedUser;
                         Session.Timeout = 300;
                         repUser.LogForUserLogin(checkLogin, objLoginDetails.Email);
-                        List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == loginDetails.RoleID && n.Status).Select(x => x.SubMenuID).ToList();
-                        if (lstSubmenuId.Count > 0)
+                        if (loginDetails.IsTwoFactor) 
                         {
-                            ETSubMenu objSubMenu = dbEntities.ETSubMenus.Where(n => lstSubmenuId.Contains(n.SubMenuID)).OrderBy(x => x.OrderNo).FirstOrDefault();
-                            string Url = objSubMenu.SubMenuUrl;
-                            if (!string.IsNullOrEmpty(Url))
+                            return RedirectToAction("Twofactor", "CommonUser");
+                        }
+                        //else if (loginDetails.IsEmailVerified || loginDetails.IsPhoneVerified) // Need to change
+                        //{
+
+                        //}
+                        else
+                        {
+                            List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == loginDetails.RoleID && n.Status).Select(x => x.SubMenuID).ToList();
+                            if (lstSubmenuId.Count > 0)
                             {
-                                string[] urls = Url.Split('/');
-                                if (urls[1] != "" && urls[2] != "")
+                                ETSubMenu objSubMenu = dbEntities.ETSubMenus.Where(n => lstSubmenuId.Contains(n.SubMenuID) && n.Status && n.IsMainMenu).OrderBy(x => x.OrderNo).FirstOrDefault();
+                                string Url = objSubMenu.SubMenuUrl;
+                                if (!string.IsNullOrEmpty(Url))
                                 {
-                                    return RedirectToAction(urls[2], urls[1]);
+                                    string[] urls = Url.Split('/');
+                                    if (urls[1] != "" && urls[2] != "")
+                                    {
+                                        return RedirectToAction(urls[2], urls[1]);
+                                    }
                                 }
                             }
                         }
@@ -115,6 +127,139 @@ namespace ExpenseTracker.Controllers
             return View();
         }
 
+        #endregion
+
+        #region SignUp
+        [HttpGet]
+        public ActionResult SignUp()
+        {
+            ViewBag.messagealert = string.Empty;
+            ViewBag.UserTitles = repUser.getDataValues("Title", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+            ViewBag.Gender = repUser.getDataValues("Gender", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+            ViewBag.MaritalStatus = repUser.getDataValues("MaritalStatus", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SignUp(SignUp updateUser)
+        {
+            TempData["messagealert"] = string.Empty;
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
+            {
+                UserVal = new ETUser();
+
+                if (repUser.LogInNameIsExist(updateUser.LoginName, 0))
+                {
+                    ViewBag.messagealert = "LogInName already exist";
+                    ViewBag.UserTitles = repUser.getDataValues("Title", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+                    ViewBag.Gender = repUser.getDataValues("Gender", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+                    ViewBag.MaritalStatus = repUser.getDataValues("MaritalStatus", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+                    return View(UserVal);
+                }
+                else if (repUser.EmailIsExist(updateUser.Email, 0) || !Common.IsValidEmail(updateUser.Email))
+                {
+                    if (!Common.IsValidEmail(updateUser.Email))
+                        ViewBag.messagealert = "Please Enter Valid Email";
+                    else
+                        ViewBag.messagealert = "Email already exist";
+                    ViewBag.UserTitles = repUser.getDataValues("Title", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+                    ViewBag.Gender = repUser.getDataValues("Gender", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+                    ViewBag.MaritalStatus = repUser.getDataValues("MaritalStatus", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+                    return View(UserVal);
+                }
+                else if (repUser.PhoneIsExist(updateUser.Phone, 0))
+                {
+                    ViewBag.messagealert = "Phone already exist";
+                    ViewBag.UserTitles = repUser.getDataValues("Title", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+                    ViewBag.Gender = repUser.getDataValues("Gender", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+                    ViewBag.MaritalStatus = repUser.getDataValues("MaritalStatus", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+                    return View(UserVal);
+                }
+                else
+                {
+                    //try
+                    //{
+                    UserVal.UserID = repUser.UserIdGeneration();
+                    UserVal.Password = Common.EncryptPassword(updateUser.Password);
+                    UserVal.ConfirmPassword = Common.EncryptPassword(updateUser.ConfirmPassword);
+                    UserVal.UserLevel = "USER";
+                    UserVal.IsActive = true;
+                    UserVal.IsTwoFactor = true;
+                    UserVal.ReportingUser = 1; // Need to change
+                    UserVal.RoleID = 3; // Need to change
+                    UserVal.SourceOfCreation = "Sign Up";
+
+
+                    UserVal.Title = updateUser.Title;
+                    UserVal.FirstName = updateUser.FirstName;
+                    UserVal.MiddleName = updateUser.MiddleName;
+                    UserVal.LastName = updateUser.LastName;
+                    UserVal.Email = updateUser.Email;
+                    UserVal.Phone = updateUser.Phone;
+                    UserVal.Gender = updateUser.Gender;
+                    UserVal.MaritalStatus = updateUser.MaritalStatus;
+                    UserVal.DOB = updateUser.DOB;
+                    UserVal.Address = updateUser.Address;
+                    UserVal.LoginName = updateUser.LoginName;
+                    //UserVal.IsTwoFactor = updateUser.IsTwoFactor;
+                    UserVal.DeviceID = updateUser.DeviceID;
+                    UserVal.UserField1 = updateUser.UserField1;
+                    UserVal.UserField2 = updateUser.UserField2;
+                    UserVal.UserField3 = updateUser.UserField3;
+                    UserVal.CreatedBy = UserVal.UserID;
+                    UserVal.CreatedDate = DateTime.Now;
+                    UserVal.ModifiedBy = UserVal.UserID;
+                    UserVal.ModifiedDate = DateTime.Now;
+                    dbEntities.ETUsers.Add(UserVal);
+                    dbEntities.SaveChanges();
+                    //dbEntities.Entry(UserVal).State = EntityState.Modified;
+                    //dbEntities.SaveChanges();
+
+                    ETUserVerified userVerified = new ETUserVerified();
+                    userVerified.UserID = UserVal.UserID;
+                    userVerified.IsEmailVefified = false;
+                    userVerified.IsPhoneVerified = false;
+                    userVerified.IsOtherVerified = false;
+                    userVerified.IsOtherVerified1 = false;
+                    userVerified.IsOtherVerified2 = false;
+                    userVerified.IsOtherVerified3 = false;
+                    userVerified.IsActive = true;
+                    userVerified.CreatedBy = UserVal.UserID;
+                    userVerified.CreatedDate = DateTime.Now;
+                    userVerified.ModifiedBy = UserVal.UserID;
+                    userVerified.ModifiedDate = DateTime.Now;
+                    dbEntities.ETUserVerifieds.Add(userVerified);
+                    dbEntities.SaveChanges();
+
+                    if (UserVal.UserID != 0)
+                    {
+                        TempData["messagealert"] = Status.Save;
+                    }
+                    //}
+                    //catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                    //{
+                    //    Exception raise = dbEx;
+                    //    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    //    {
+                    //        foreach (var validationError in validationErrors.ValidationErrors)
+                    //        {
+                    //            string message = string.Format("{0}:{1}",
+                    //                validationErrors.Entry.Entity.ToString(),
+                    //                validationError.ErrorMessage);
+                    //            // raise a new exception nesting
+                    //            // the current instance as InnerException
+                    //            raise = new InvalidOperationException(message, raise);
+                    //        }
+                    //    }
+                    //    throw raise;
+                    //}
+                }
+                return RedirectToAction("Index", "Login");
+            }
+            return View();
+        }
         #endregion
 
         #region Logout
@@ -149,9 +294,9 @@ namespace ExpenseTracker.Controllers
         [HttpPost]
         public string ForgotPassword(string mailId)
         {
-            user = new ETUser();
-            user = dbEntities.ETUsers.Where(x => x.Email == mailId || x.LoginName == mailId).SingleOrDefault();
-            if (user != null)
+            UserVal = new ETUser();
+            UserVal = dbEntities.ETUsers.Where(x => x.Email == mailId || x.LoginName == mailId).SingleOrDefault();
+            if (UserVal != null)
             {
                 //user.IS_CREATED = false;
                 //user.RANDOM_ID = user.RANDOM_ID + 1;

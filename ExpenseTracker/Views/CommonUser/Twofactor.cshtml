@@ -1,0 +1,73 @@
+﻿@*@model  ExpenseTracker.ETUser*@
+@{
+    ViewBag.Title = "Two Factor";
+    Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
+    ViewBag.Menu = "CommonUser";
+}
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#Phone').click(function () {
+            window.location = "/CommonUser/TwofactorPhoneVerification";
+        });
+        $('#PhoneTab').click(function () {
+            window.location = "/CommonUser/TwofactorPhoneTabVerification";
+        });
+        $('#Email').click(function () {
+            window.location = "/CommonUser/TwofactorEmailVerification";
+        });
+    });
+</script>
+<script>
+    function PreviousPage() {
+        window.location = "/Login/LogOut";
+    }
+</script>
+<div class="container-fluid">
+    <div class="pageheader col-lg-12">
+        <h3 class="page-title text-primary">Welcome to Two Factor</h3>
+        <hr>
+    </div>
+</div>
+<div class="container-fluid">
+
+    <div class="col-lg-12 col-md-12 col-sm-12">
+        @if (ViewBag.messagealert != string.Empty)
+        {
+            <div class="alert alert-dismissible alert-danger">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                @ViewBag.messagealert
+            </div>
+        }
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                <h3 class="panel-title">Two Factor</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row" id="Email">
+                    <div class="form-group col-md-4 col-sm-4">
+                        <img src="images/email.png">
+                        <p>Authenticate through <span>Email Authentication Code</span></p>
+                    </div>
+                </div>
+                <div class="row" id="Phone">
+                    <div class="form-group col-md-4 col-sm-4">
+                        <img src="images/Phone.png">
+                        <p>Authenticate through <span>Phone Authentication Code</span></p>
+                    </div>
+                </div>
+                <div class="row" id="PhoneTab">
+                    <div class="form-group col-md-4 col-sm-4">
+                        <img src="images/mobile.png"><p>Tap <span>Yes</span> on your phone</p>
+                    </div>
+                </div>
+                <div class="row save-button-section">
+                    <div class="form-group col-md-6 col-sm-6 pull-left text-left">
+                        @*<input type="submit" class="btn btn-primary" title="Save" value="Save">*@
+                        <input type="button" class="btn btn-secondary close-space" title="Back" value="Back" onclick="PreviousPage();" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

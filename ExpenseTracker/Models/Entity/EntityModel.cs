@@ -118,6 +118,8 @@ namespace ExpenseTracker
 
         public bool Status { get; set; }
 
+        public bool IsMainMenu { get; set; }
+
         public DateTime? CreatedDate { get; set; }
 
         public long? CreatedBy { get; set; }
@@ -126,7 +128,7 @@ namespace ExpenseTracker
 
         public long? ModifiedBy { get; set; }
 
-        public virtual ETMenu ETMenu { get; set; }
+        //public virtual ETMenu ETMenu { get; set; }
 
         [NotMapped]
         public string MenuName { get; set; }
@@ -186,7 +188,7 @@ namespace ExpenseTracker
 
         public long? ModifiedBy { get; set; }
 
-        public virtual ETSource ETSource { get; set; }
+        //public virtual ETSource ETSource { get; set; }
 
         [NotMapped]
         public string SourceName { get; set; }
@@ -352,6 +354,46 @@ namespace ExpenseTracker
         //public string ConfirmPassword { get; set; }
     }
 
+    [Table("ETUserVerified")]
+    public partial class ETUserVerified
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public long UserVerifyID { get; set; }
+
+        [Required(ErrorMessage = "The UserID field is required")]
+        public long UserID { get; set; }
+
+        [Required(ErrorMessage = "The IsEmailVefified field is required")]
+        public bool IsEmailVefified { get; set; }
+
+        [Required(ErrorMessage = "The IsPhoneVerified field is required")]
+        public bool IsPhoneVerified { get; set; }
+
+        [Required(ErrorMessage = "The IsOtherVerified field is required")]
+        public bool IsOtherVerified { get; set; }
+
+        [Required(ErrorMessage = "The IsOtherVerified1 field is required")]
+        public bool IsOtherVerified1 { get; set; }
+
+        [Required(ErrorMessage = "The IsOtherVerified2 field is required")]
+        public bool IsOtherVerified2 { get; set; }
+
+        [Required(ErrorMessage = "The IsOtherVerified3 field is required")]
+        public bool IsOtherVerified3 { get; set; }
+
+        [Required(ErrorMessage = "The IsActive field is required")]
+        public bool IsActive { get; set; }
+
+        public DateTime CreatedDate { get; set; }
+
+        public long CreatedBy { get; set; }
+
+        public DateTime ModifiedDate { get; set; }
+
+        public long ModifiedBy { get; set; }
+    }
+
     [NotMapped]
     public class PasswordChange
     {
@@ -376,6 +418,14 @@ namespace ExpenseTracker
         [Display(Name = "Confirm password")]
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+    }
+
+    [NotMapped]
+    public class TwoFactorVerification
+    {
+        [Required(ErrorMessage = "The Otp field is required")]
+        [StringLength(20)]
+        public string Otp { get; set; }
     }
 
     [NotMapped]
@@ -429,6 +479,85 @@ namespace ExpenseTracker
 
         [Required(ErrorMessage = "The IsTwoFactor field is required")]
         public bool IsTwoFactor { get; set; }
+
+        public string DeviceID { get; set; }
+
+        public string UserField1 { get; set; }
+
+        public string UserField2 { get; set; }
+
+        public string UserField3 { get; set; }
+
+        public DateTime? ModifiedDate { get; set; }
+
+        [Required(ErrorMessage = "The ModifiedBy field is required")]
+        public long ModifiedBy { get; set; }
+    }
+
+    [NotMapped]
+    public partial class SignUp
+    {
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Required(ErrorMessage = "The UserID field is required")]
+        public long UserID { get; set; }
+
+        [Required(ErrorMessage = "The Title field is required")]
+        [StringLength(20)]
+        public string Title { get; set; }
+
+        [Required(ErrorMessage = "The FirstName field is required")]
+        [StringLength(100)]
+        public string FirstName { get; set; }
+
+        [StringLength(100)]
+        public string MiddleName { get; set; }
+
+        [Required(ErrorMessage = "The LastName field is required")]
+        [StringLength(100)]
+        public string LastName { get; set; }
+
+        [Required(ErrorMessage = "The Email field is required")]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "The Phone field is required")]
+        [StringLength(20)]
+        public string Phone { get; set; }
+
+        [Required(ErrorMessage = "The Gender field is required")]
+        [StringLength(1)]
+        public string Gender { get; set; }
+
+        [Required(ErrorMessage = "The MaritalStatus field is required")]
+        [StringLength(1)]
+        public string MaritalStatus { get; set; }
+
+        [Required(ErrorMessage = "The DOB field is required")]
+        public DateTime DOB { get; set; }
+
+        [Required(ErrorMessage = "The Address field is required")]
+        [StringLength(250)]
+        public string Address { get; set; }
+
+        [Required(ErrorMessage = "The LoginName field is required")]
+        [StringLength(10)]
+        public string LoginName { get; set; }
+
+        [Required(ErrorMessage = "The Password field is required")]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Display(Name = "Password")]
+        public string Password { get; set; }
+
+        [NotMapped]
+        [Required(ErrorMessage = "The confirm password field is required")]
+        [DataType(DataType.Password)]
+        [Display(Name = "Confirm password")]
+        [Compare("Password", ErrorMessage = "The Password and confirmation password do not match.")]
+        public string ConfirmPassword { get; set; }
+
+        //[Required(ErrorMessage = "The IsTwoFactor field is required")]
+        //public bool IsTwoFactor { get; set; }
 
         public string DeviceID { get; set; }
 
