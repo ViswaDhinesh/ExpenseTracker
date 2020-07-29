@@ -8,6 +8,9 @@
     function PreviousPage() {
         window.location = "/CommonUser/Twofactor";
     }
+    function PreviousLoginPage() {
+        window.location = "/Login/Logout";
+    }
 </script>
 @using (Html.BeginForm("TwofactorEmailVerification", "CommonUser", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
@@ -42,20 +45,49 @@
                             </span>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="pull-left col-lg-3 col-md-3 col-xs-3">
-                            <p id="resend" style="padding: 0px 50px;"><a href="/CommonUser/TwofactorEmailVerification?OtpMode=Resend" id="ResendOTP" title="Resend OTP" style="float: right;text-transform: uppercase;text-decoration: none;font-size: 13px;font-weight: bold;"><span style="color:#eeff41;">Didn't get the code? </span>Resend It</a> </p>
+                    @if (ViewBag.EnableSkip == null)
+                    {
+                        <div class="row">
+                            <div class="pull-left col-lg-3 col-md-3 col-xs-3">
+                                <p id="resend" style="padding: 0px 50px;"><a href="/CommonUser/TwofactorEmailVerification?OtpMode=Resend" id="ResendOTP" title="Resend OTP" style="float: right;text-transform: uppercase;text-decoration: none;font-size: 13px;font-weight: bold;"><span style="color:#eeff41;">Didn't get the code? </span>Resend It</a> </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="pull-left col-lg-5 col-md-5 col-xs-5">
-                            <p class="other-way auth-link"><a href="/CommonUser/Twofactor" title="Other ways to Authenticate" style="float: right;text-transform: uppercase;text-decoration: none;font-size: 13px;font-weight: bold;">Other ways to Authenticate</a></p>
+                    }
+                    @if (ViewBag.EnableSkip != null)
+                    {
+                        <div class="row">
+                            <div class="pull-left col-lg-3 col-md-3 col-xs-3">
+                                <p id="resend" style="padding: 0px 50px;"><a href="/CommonUser/TwofactorEmailVerification?OtpMode=Resend&&VerifyMode=Email" id="ResendOTP" title="Resend OTP" style="float: right;text-transform: uppercase;text-decoration: none;font-size: 13px;font-weight: bold;"><span style="color:#eeff41;">Didn't get the code? </span>Resend It</a> </p>
+                            </div>
                         </div>
-                    </div>
+                    }
+                    @if (ViewBag.EnableSkip == null)
+                    {
+                        <div class="row">
+                            <div class="pull-left col-lg-5 col-md-5 col-xs-5">
+                                <p class="other-way auth-link"><a href="/CommonUser/Twofactor" title="Other ways to Authenticate" style="float: right;text-transform: uppercase;text-decoration: none;font-size: 13px;font-weight: bold;">Other ways to Authenticate</a></p>
+                            </div>
+                        </div>
+                    }
+                    @if (ViewBag.EnableSkip != null)
+                    {
+                        <div class="row">
+                            <div class="pull-left col-lg-5 col-md-5 col-xs-5">
+                                <p class="other-way auth-link"><a href="/CommonUser/SkipVerification" title="Skip" style="float: right;text-transform: uppercase;text-decoration: none;font-size: 13px;font-weight: bold;">Skip Now. Verify after some times</a></p>
+                            </div>
+                        </div>
+                    }
                     <div class="row save-button-section">
                         <div class="form-group col-md-6 col-sm-6 pull-left text-left">
                             <input type="submit" class="btn btn-primary" title="Save" value="Save">
-                            <input type="button" class="btn btn-secondary close-space" title="Back" value="Back" onclick="PreviousPage();" />
+                            @if (ViewBag.EnableSkip == null)
+                            {
+                                <input type="button" class="btn btn-secondary close-space" title="Back" value="Back" onclick="PreviousPage();" />
+                            }
+                            @if (ViewBag.EnableSkip != null)
+                            {
+                                <input type="button" class="btn btn-secondary close-space" title="Back" value="Back" onclick="PreviousLoginPage();" />
+                            }
                         </div>
                     </div>
                 </div>

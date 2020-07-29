@@ -51,6 +51,7 @@ namespace ExpenseTracker.Controllers
             ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.ReportingUser = repUsers.getMappedReportingUser();//getDataValues("ReportingUser", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"])); // Need to change
+            ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.Role = repUsers.getRole();
             return View();
         }
@@ -74,6 +75,7 @@ namespace ExpenseTracker.Controllers
                         ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.ReportingUser = repUsers.getMappedReportingUser();
+                        ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.Role = repUsers.getRole();
                         return View(addUser);
                     }
@@ -88,6 +90,7 @@ namespace ExpenseTracker.Controllers
                         ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.ReportingUser = repUsers.getMappedReportingUser();
+                        ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.Role = repUsers.getRole();
                         return View(addUser);
                     }
@@ -99,6 +102,7 @@ namespace ExpenseTracker.Controllers
                         ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.ReportingUser = repUsers.getMappedReportingUser();
+                        ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.Role = repUsers.getRole();
                         return View(addUser);
                     }
@@ -178,6 +182,7 @@ namespace ExpenseTracker.Controllers
             ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.ReportingUser = repUsers.getMappedReportingUser();
+            ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.Role = repUsers.getRole();
 
             //ViewBag.ReportingUserID = Userval.ReportingUser;
@@ -208,6 +213,7 @@ namespace ExpenseTracker.Controllers
                     ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.ReportingUser = repUsers.getMappedReportingUser();
+                    ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.Role = repUsers.getRole();
                     return View(Userval);
                 }
@@ -222,6 +228,7 @@ namespace ExpenseTracker.Controllers
                     ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.ReportingUser = repUsers.getMappedReportingUser();
+                    ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.Role = repUsers.getRole();
                     return View(Userval);
                 }
@@ -233,6 +240,7 @@ namespace ExpenseTracker.Controllers
                     ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.ReportingUser = repUsers.getMappedReportingUser();
+                    ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.Role = repUsers.getRole();
                     return View(Userval);
                 }
@@ -262,6 +270,7 @@ namespace ExpenseTracker.Controllers
                     //Userval.IsManager = updateUser.IsManager;
                     Userval.IsActive = updateUser.IsActive;
                     Userval.DeviceID = updateUser.DeviceID;
+                    Userval.DeviceType = updateUser.DeviceType;
                     Userval.UserField1 = updateUser.UserField1;
                     Userval.UserField2 = updateUser.UserField2;
                     Userval.UserField3 = updateUser.UserField3;
@@ -270,7 +279,7 @@ namespace ExpenseTracker.Controllers
                     dbEntities.Entry(Userval).State = EntityState.Modified;
                     dbEntities.SaveChanges();
 
-                    var userVerify = dbEntities.ETUserVerifieds.Where(x => x.UserID == Userval.UserID && x.IsActive).SingleOrDefault();
+                    var userVerify = dbEntities.ETUserVerifieds.Where(x => x.UserID == Userval.UserID && x.IsActive).FirstOrDefault();
                     if (userVerify == null)
                     {
                         ETUserVerified userVerified = new ETUserVerified();

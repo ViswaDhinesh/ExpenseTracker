@@ -344,6 +344,9 @@ namespace ExpenseTracker
         [Required(ErrorMessage = "The ModifiedBy field is required")]
         public long ModifiedBy { get; set; }
 
+        [StringLength(10)]
+        public string DeviceType { get; set; }
+
         //[NotMapped]
         //[Required(ErrorMessage = "Old Password is required.")]
         //public string OldPassword { get; set; }
@@ -492,6 +495,9 @@ namespace ExpenseTracker
 
         [Required(ErrorMessage = "The ModifiedBy field is required")]
         public long ModifiedBy { get; set; }
+
+        [StringLength(10)]
+        public string DeviceType { get; set; }
     }
 
     [NotMapped]
@@ -571,6 +577,9 @@ namespace ExpenseTracker
 
         [Required(ErrorMessage = "The ModifiedBy field is required")]
         public long ModifiedBy { get; set; }
+
+        [StringLength(10)]
+        public string DeviceType { get; set; }
     }
 
     [Table("ETRole")]

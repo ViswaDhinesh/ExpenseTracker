@@ -28,7 +28,7 @@ namespace ExpenseTracker.Controllers
             {
                 string roleName = Convert.ToString(Session["RoleName"]);
                 long roleId = Convert.ToInt64(Session["RoleID"]);
-                List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == roleId).Select(x => x.SubMenuID).ToList();
+                List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == roleId && n.Status).Select(x => x.SubMenuID).ToList();
                 if (lstSubmenuId.Count > 0)
                 {
                     ETSubMenu objSubMenu = dbEntities.ETSubMenus.Where(n => lstSubmenuId.Contains(n.SubMenuID) && n.Status && n.IsMainMenu).OrderBy(x => x.OrderNo).FirstOrDefault();
@@ -76,7 +76,7 @@ namespace ExpenseTracker.Controllers
                     {
                         List<long> MappedUser = new List<long>();
                         Session["UserID"] = loginDetails.UserID;
-                        Session["UserName"] = loginDetails.FirstName;
+                        Session["UserName"] = loginDetails.FirstName + " " + loginDetails.MiddleName + " " + loginDetails.LastName;
                         Session["RoleID"] = loginDetails.RoleID;
                         Session["RoleName"] = null; //loginDetails.ETRole.RoleName;
                         Session["LoginName"] = loginDetails.LoginName;  // New
@@ -90,14 +90,22 @@ namespace ExpenseTracker.Controllers
                         Session["MappedUser"] = MappedUser;
                         Session.Timeout = 300;
                         repUser.LogForUserLogin(checkLogin, objLoginDetails.Email);
-                        if (loginDetails.IsTwoFactor) 
+                        var userVerify = dbEntities.ETUserVerifieds.Where(x => x.UserID == loginDetails.UserID && x.IsActive).FirstOrDefault();
+                        if (loginDetails.IsTwoFactor)
                         {
                             return RedirectToAction("Twofactor", "CommonUser");
                         }
-                        //else if (loginDetails.IsEmailVerified || loginDetails.IsPhoneVerified) // Need to change
-                        //{
+                        else if (userVerify != null && (!userVerify.IsEmailVefified || !userVerify.IsPhoneVerified)) // || !userVerify.IsOtherVerified))
+                        {
+                            if (!userVerify.IsEmailVefified)
+                                //return RedirectToAction("TwofactorEmailVerification?VerifyMode=Email", "CommonUser");
+                                return RedirectToAction("TwofactorEmailVerification", "CommonUser", new { VerifyMode = "Email" });
+                            else if (!userVerify.IsPhoneVerified)
+                                return RedirectToAction("TwofactorPhoneVerification", "CommonUser", new { VerifyMode = "Phone" });
 
-                        //}
+                            //else if (!userVerify.IsOtherVerified) // Maybe verify this in future
+                            //    return RedirectToAction("TwofactorPhoneTabVerification", "CommonUser", new { VerifyMode = "PhoneTab" });
+                        }
                         else
                         {
                             List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == loginDetails.RoleID && n.Status).Select(x => x.SubMenuID).ToList();
@@ -129,6 +137,94 @@ namespace ExpenseTracker.Controllers
 
         #endregion
 
+        #region DirectLogin
+        public ActionResult DirectLogin()
+        {
+            if (Request.QueryString["RandomID"] != null)
+            {
+                LoginDetail objLoginDetails = new LoginDetail();
+                objLoginDetails.Email = Common.DecryptPassword(Request.QueryString["RandomID"]);
+                objLoginDetails.Password = Common.DecryptPassword(Request.QueryString["RandomValue"]);
+                if (Common.IsValidEmail(objLoginDetails.Email))
+                {
+                    objLoginDetails.GetTypes = "Email Id";
+                }
+                else
+                {
+                    objLoginDetails.GetTypes = "Usename";
+                    if (dbEntities.ETUsers.Any(x => x.LoginName == objLoginDetails.Email))
+                    {
+                        objLoginDetails.Email = dbEntities.ETUsers.Where(x => x.LoginName == objLoginDetails.Email).Select(x => x.Email).First();
+                    }
+                }
+
+                LoginDetailCheck checkLogin = repUser.CheckLoginUserUsingOtp(objLoginDetails);
+                if (checkLogin.isSuccess)
+                {
+                    ETUser loginDetails = checkLogin.loginDetails;
+                    if (loginDetails != null)
+                    {
+                        List<long> MappedUser = new List<long>();
+                        Session["UserID"] = loginDetails.UserID;
+                        Session["UserName"] = loginDetails.FirstName + " " + loginDetails.MiddleName + " " + loginDetails.LastName;
+                        Session["RoleID"] = loginDetails.RoleID;
+                        Session["RoleName"] = null; //loginDetails.ETRole.RoleName;
+                        Session["LoginName"] = loginDetails.LoginName;  // New
+                        Session["Email"] = loginDetails.Email;
+                        Session["Phone"] = loginDetails.Phone;
+                        Session["LastName"] = loginDetails.LastName;
+                        Session["IsTwoFactor"] = loginDetails.IsTwoFactor;
+                        Session["UserLevel"] = loginDetails.UserLevel;
+                        Session["ReportingUser"] = loginDetails.ReportingUser;
+                        MappedUser = dbEntities.ETUsers.Where(x => x.ReportingUser == loginDetails.UserID || x.UserID == loginDetails.UserID).Select(x => x.UserID).Distinct().ToList();
+                        Session["MappedUser"] = MappedUser;
+                        Session.Timeout = 300;
+                        repUser.LogForUserLogin(checkLogin, objLoginDetails.Email);
+                        long UserId = Convert.ToInt64(Session["UserID"]);
+                        var userVerify = dbEntities.ETUserVerifieds.Where(x => x.UserID == UserId && x.IsActive).FirstOrDefault();
+                        if (userVerify != null && (!userVerify.IsEmailVefified || !userVerify.IsPhoneVerified))
+                        {
+                            if (Request.QueryString["VerifyMode"].ToString().Trim() == "Email")
+                            {
+                                userVerify.IsEmailVefified = true;
+                            }
+                            else if (Request.QueryString["VerifyMode"].ToString().Trim() == "Phone")
+                            {
+                                userVerify.IsPhoneVerified = true;
+                            }
+                            userVerify.ModifiedBy = Convert.ToInt64(Session["UserID"]);
+                            userVerify.ModifiedDate = DateTime.Now;
+                            dbEntities.Entry(userVerify).State = EntityState.Modified;
+                            dbEntities.SaveChanges();
+                        }
+
+                        List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == loginDetails.RoleID && n.Status).Select(x => x.SubMenuID).ToList();
+                        if (lstSubmenuId.Count > 0)
+                        {
+                            ETSubMenu objSubMenu = dbEntities.ETSubMenus.Where(n => lstSubmenuId.Contains(n.SubMenuID) && n.Status && n.IsMainMenu).OrderBy(x => x.OrderNo).FirstOrDefault();
+                            string Url = objSubMenu.SubMenuUrl;
+                            if (!string.IsNullOrEmpty(Url))
+                            {
+                                string[] urls = Url.Split('/');
+                                if (urls[1] != "" && urls[2] != "")
+                                {
+                                    return RedirectToAction(urls[2], urls[1]);
+                                }
+                            }
+                        }
+
+                    }
+                }
+                else
+                {
+                    ViewBag.Error = checkLogin.errorMessage;
+                    return View();
+                }
+            }
+            return View();
+        }
+        #endregion
+
         #region SignUp
         [HttpGet]
         public ActionResult SignUp()
@@ -137,6 +233,7 @@ namespace ExpenseTracker.Controllers
             ViewBag.UserTitles = repUser.getDataValues("Title", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
             ViewBag.Gender = repUser.getDataValues("Gender", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
             ViewBag.MaritalStatus = repUser.getDataValues("MaritalStatus", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+            ViewBag.DeviceType = repUser.getDataValues("DeviceType", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
             return View();
         }
 
@@ -156,6 +253,7 @@ namespace ExpenseTracker.Controllers
                     ViewBag.UserTitles = repUser.getDataValues("Title", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
                     ViewBag.Gender = repUser.getDataValues("Gender", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
                     ViewBag.MaritalStatus = repUser.getDataValues("MaritalStatus", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+                    ViewBag.DeviceType = repUser.getDataValues("DeviceType", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
                     return View(UserVal);
                 }
                 else if (repUser.EmailIsExist(updateUser.Email, 0) || !Common.IsValidEmail(updateUser.Email))
@@ -167,6 +265,7 @@ namespace ExpenseTracker.Controllers
                     ViewBag.UserTitles = repUser.getDataValues("Title", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
                     ViewBag.Gender = repUser.getDataValues("Gender", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
                     ViewBag.MaritalStatus = repUser.getDataValues("MaritalStatus", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+                    ViewBag.DeviceType = repUser.getDataValues("DeviceType", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
                     return View(UserVal);
                 }
                 else if (repUser.PhoneIsExist(updateUser.Phone, 0))
@@ -175,6 +274,7 @@ namespace ExpenseTracker.Controllers
                     ViewBag.UserTitles = repUser.getDataValues("Title", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
                     ViewBag.Gender = repUser.getDataValues("Gender", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
                     ViewBag.MaritalStatus = repUser.getDataValues("MaritalStatus", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
+                    ViewBag.DeviceType = repUser.getDataValues("DeviceType", "0", Convert.ToInt64(Session["UserID"]), 1); // Need to change
                     return View(UserVal);
                 }
                 else
@@ -205,6 +305,7 @@ namespace ExpenseTracker.Controllers
                     UserVal.LoginName = updateUser.LoginName;
                     //UserVal.IsTwoFactor = updateUser.IsTwoFactor;
                     UserVal.DeviceID = updateUser.DeviceID;
+                    UserVal.DeviceType = updateUser.DeviceType;
                     UserVal.UserField1 = updateUser.UserField1;
                     UserVal.UserField2 = updateUser.UserField2;
                     UserVal.UserField3 = updateUser.UserField3;

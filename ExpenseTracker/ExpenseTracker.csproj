@@ -570,6 +570,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Emails\ChangePassword.html" />
+    <Content Include="Content\Emails\EmailVerification.html" />
     <Content Include="Content\Front\css\animate.css" />
     <Content Include="Content\Front\css\bootstrap-grid.css" />
     <Content Include="Content\Front\css\bootstrap-grid.min.css" />

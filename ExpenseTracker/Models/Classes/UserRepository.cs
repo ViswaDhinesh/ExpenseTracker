@@ -303,6 +303,11 @@ namespace ExpenseTracker
             password = Common.EncryptPassword(password);
             return dbEntities.ETUsers.Any(x => x.Email.Trim().Equals(email.Trim()) && x.Password == password && x.IsActive == true);
         }
+
+        public bool CheckOtpIsValid(string email, string OneTimePassword)
+        {
+            return dbEntities.ETUsers.Any(x => x.Email.Trim().Equals(email.Trim()) && x.Otp == OneTimePassword && x.IsActive == true);
+        }
         #endregion
 
         #region CheckLoginUser
@@ -337,6 +342,29 @@ namespace ExpenseTracker
             }
             logincheck.isSuccess = false;
             logincheck.errorMessage = objLoginDetails.GetTypes + " or password incorrect.";
+            logincheck.loginDetails = null;
+            return logincheck;
+        }
+
+        #endregion
+
+        #region CheckLoginUserUsingOtp
+        public LoginDetailCheck CheckLoginUserUsingOtp(LoginDetail objLoginDetails)
+        {
+            LoginDetailCheck logincheck = new LoginDetailCheck();
+            if (dbEntities.ETUsers.Any(x => x.Email.Trim().Equals(objLoginDetails.Email.Trim()) && x.Otp != null))
+            {
+                User = GetUserEmail(objLoginDetails.Email);
+                if (CheckOtpIsValid(objLoginDetails.Email, objLoginDetails.Password))
+                {
+                    logincheck.loginDetails = GetUserEmail(objLoginDetails.Email);
+                    logincheck.isSuccess = true;
+                    logincheck.errorMessage = "";
+                    return logincheck;
+                }
+            }
+            logincheck.isSuccess = false;
+            logincheck.errorMessage = objLoginDetails.GetTypes + " or Otp incorrect.";
             logincheck.loginDetails = null;
             return logincheck;
         }

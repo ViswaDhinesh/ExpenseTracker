@@ -29,6 +29,7 @@ namespace ExpenseTracker.Controllers
             ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.Gender = repUsers.getDataValues("Gender", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+            ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             return View(UserVal);
         }
 
@@ -50,6 +51,7 @@ namespace ExpenseTracker.Controllers
                     ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.Gender = repUsers.getDataValues("Gender", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     return View(UserVal);
                 }
                 else if (repUsers.EmailIsExist(updateUser.Email, userId) || !Common.IsValidEmail(updateUser.Email))
@@ -61,6 +63,7 @@ namespace ExpenseTracker.Controllers
                     ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.Gender = repUsers.getDataValues("Gender", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     return View(UserVal);
                 }
                 else if (repUsers.PhoneIsExist(updateUser.Phone, userId))
@@ -69,6 +72,7 @@ namespace ExpenseTracker.Controllers
                     ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.Gender = repUsers.getDataValues("Gender", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                    ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     return View(UserVal);
                 }
                 else
@@ -91,6 +95,7 @@ namespace ExpenseTracker.Controllers
                     //UserVal.UserLevel = UserVal.UserLevel;
                     UserVal.IsTwoFactor = updateUser.IsTwoFactor;
                     UserVal.DeviceID = updateUser.DeviceID;
+                    UserVal.DeviceType = updateUser.DeviceType;
                     UserVal.UserField1 = updateUser.UserField1;
                     UserVal.UserField2 = updateUser.UserField2;
                     UserVal.UserField3 = updateUser.UserField3;
@@ -193,12 +198,21 @@ namespace ExpenseTracker.Controllers
         public ActionResult TwofactorEmailVerification()
         {
             long OneTimePassword = repUsers.OtpGeneration();
-            string EmailId = Session["Email"].ToString();
-            bool IsOtpUpdate = OtpUpdateStatus(Convert.ToInt64(Session["UserID"]), OneTimePassword);
+            long UserID = Convert.ToInt64(Session["UserID"]);
+            bool IsOtpUpdate = OtpUpdateStatus(UserID, OneTimePassword);
             bool IsEmailSent = false;
             if (IsOtpUpdate)
             {
-                IsEmailSent = true; // Need to change
+                string Title = "Two factor verification";
+                if (Request.QueryString["VerifyMode"] != null)
+                    Title = "Email verification";
+                string LoginName = Session["LoginName"].ToString();
+                var UserDet = dbEntities.ETUsers.Where(x => x.UserID == UserID && x.LoginName.Equals(LoginName)).SingleOrDefault();
+                if (UserDet != null)
+                {
+                    //IsEmailSent = Common.EmailVerification(EmailId, UserName, LoginName, Otp, Title);
+                    IsEmailSent = Common.EmailVerification(Title, UserDet);
+                }
             }
             if (!IsEmailSent)
             {
@@ -209,6 +223,10 @@ namespace ExpenseTracker.Controllers
             {
                 ViewBag.messagealert = "OTP send it your Registered Email ID";
                 if (Request.QueryString["OtpMode"] != null) { ViewBag.messagealert = "OTP again send it your Registered Email ID"; }
+                if (Request.QueryString["VerifyMode"] != null)
+                {
+                    ViewBag.EnableSkip = "Enable";
+                }
                 return View();
             }
         }
@@ -222,7 +240,7 @@ namespace ExpenseTracker.Controllers
             if (IsSuccess)
             {
                 long UserId = Convert.ToInt64(Session["UserID"]);
-                var userVerify = dbEntities.ETUserVerifieds.Where(x => x.UserID == UserId && x.IsActive && !x.IsEmailVefified).SingleOrDefault();
+                var userVerify = dbEntities.ETUserVerifieds.Where(x => x.UserID == UserId && x.IsActive && !x.IsEmailVefified).FirstOrDefault();
                 if (userVerify != null)
                 {
                     userVerify.IsEmailVefified = true;
@@ -308,6 +326,32 @@ namespace ExpenseTracker.Controllers
                 return true;
             }
             return false;
+        }
+        #endregion
+
+        #region SkipVerification
+        //[HttpPost]
+        //public ActionResult SkipVerification()
+        public ActionResult SkipVerification()
+        {
+            long RoleID = Convert.ToInt64(Session["RoleID"]);
+            List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == RoleID && n.Status).Select(x => x.SubMenuID).ToList();
+            if (lstSubmenuId.Count > 0)
+            {
+                ETSubMenu objSubMenu = dbEntities.ETSubMenus.Where(n => lstSubmenuId.Contains(n.SubMenuID) && n.Status && n.IsMainMenu).OrderBy(x => x.OrderNo).FirstOrDefault();
+                string Url = objSubMenu.SubMenuUrl;
+                if (!string.IsNullOrEmpty(Url))
+                {
+                    string[] urls = Url.Split('/');
+                    if (urls[1] != "" && urls[2] != "")
+                    {
+                        return RedirectToAction(urls[2], urls[1]);
+                        //return Response.Redirect("/Login");
+                    }
+                }
+            }
+            ViewBag.messagealert = "You don't have access!.";
+            return RedirectToAction("Logout", "Login");
         }
         #endregion
     }

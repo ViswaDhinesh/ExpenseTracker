@@ -136,36 +136,27 @@
                             </span>
                         </div>
                     </div>
-                    @*<div class="row">
-                        <div class="form-group col-md-4 col-sm-4">
-                            <label style="font-weight:bold">IsTwoFactor</label>
-                            <div class="attr-section">
-                                <label class="radio radio-inline">
-                                    @Html.RadioButtonFor(m => m.IsTwoFactor, true, new { @checked = true }) Enable
-                                    <span class="checkround"></span>
-                                </label>
-                                <label class="radio radio-inline">
-                                    @Html.RadioButtonFor(m => m.IsTwoFactor, false, new { }) Disable
-                                    <span class="checkround"></span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>*@
                     <div class="row">
                         <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">DeviceID</label>
                             @Html.TextBoxFor(m => m.DeviceID, new { @class = "form-control", autocomplete = "off" })
                         </div>
                         <div class="form-group col-md-4 col-sm-4">
-                            <label style="font-weight:bold">Additional Fields 1</label>
-                            @Html.TextBoxFor(m => m.UserField1, new { @class = "form-control", autocomplete = "off" })
+                            <label style="font-weight:bold">Device Type</label>
+                            @Html.DropDownListFor(m => m.DeviceType, new SelectList(ViewBag.DeviceType, "Value", "Text", ViewBag.DeviceTypeID), new { @class = "form-control IsRequiredDropDown singleSelect" })
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Additional Fields 1</label>
+                            @Html.TextBoxFor(m => m.UserField1, new { @class = "form-control", autocomplete = "off" })
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">Additional Fields 2</label>
                             @Html.TextBoxFor(m => m.UserField2, new { @class = "form-control", autocomplete = "off" })
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">Additional Fields 3</label>
                             @Html.TextBoxFor(m => m.UserField3, new { @class = "form-control", autocomplete = "off" })

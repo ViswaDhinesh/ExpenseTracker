@@ -35,3 +35,5 @@ alter table ETValue alter column ModifiedBy bigint NULL
 alter table ETMenuAccess alter column CreatedBy bigint NULL
 
 alter table ETMenuAccess alter column ModifiedBy bigint NULL
+
+alter table ETUser add DeviceType nvarchar(10) NULL
