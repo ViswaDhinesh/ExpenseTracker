@@ -108,6 +108,7 @@ namespace ExpenseTracker.Controllers
                         }
                         else
                         {
+                            Session["IsVerifyTwofactor"] = "Y";
                             List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == loginDetails.RoleID && n.Status).Select(x => x.SubMenuID).ToList();
                             if (lstSubmenuId.Count > 0)
                             {
@@ -143,8 +144,9 @@ namespace ExpenseTracker.Controllers
             if (Request.QueryString["RandomID"] != null)
             {
                 LoginDetail objLoginDetails = new LoginDetail();
-                objLoginDetails.Email = Common.DecryptPassword(Request.QueryString["RandomID"]);
-                objLoginDetails.Password = Common.DecryptPassword(Request.QueryString["RandomValue"]);
+                objLoginDetails.Email = Common.DecryptPassword(Request.QueryString["RandomID"].ToString().Trim());
+                objLoginDetails.Password = Common.DecryptPassword(Request.QueryString["RandomValue"].ToString().Trim());
+                string VerifyMode = Common.DecryptPassword(Request.QueryString["VerifyMode"].ToString().Trim());
                 if (Common.IsValidEmail(objLoginDetails.Email))
                 {
                     objLoginDetails.GetTypes = "Email Id";
@@ -158,8 +160,14 @@ namespace ExpenseTracker.Controllers
                     }
                 }
 
-                LoginDetailCheck checkLogin = repUser.CheckLoginUserUsingOtp(objLoginDetails);
-                if (checkLogin.isSuccess)
+                string DeviceType = "";
+                if (VerifyMode == "Phone")
+                    DeviceType = "P";
+                else if (VerifyMode == "Email")
+                    DeviceType = "E";
+
+                LoginDetailCheck checkLogin = repUser.CheckLoginUserUsingOtp(objLoginDetails, DeviceType);
+                if (checkLogin.isSuccess && checkLogin.errorMessage == "Valid")
                 {
                     ETUser loginDetails = checkLogin.loginDetails;
                     if (loginDetails != null)
@@ -184,11 +192,11 @@ namespace ExpenseTracker.Controllers
                         var userVerify = dbEntities.ETUserVerifieds.Where(x => x.UserID == UserId && x.IsActive).FirstOrDefault();
                         if (userVerify != null && (!userVerify.IsEmailVefified || !userVerify.IsPhoneVerified))
                         {
-                            if (Request.QueryString["VerifyMode"].ToString().Trim() == "Email")
+                            if (VerifyMode == "Email")
                             {
                                 userVerify.IsEmailVefified = true;
                             }
-                            else if (Request.QueryString["VerifyMode"].ToString().Trim() == "Phone")
+                            else if (VerifyMode == "Phone")
                             {
                                 userVerify.IsPhoneVerified = true;
                             }
@@ -201,6 +209,7 @@ namespace ExpenseTracker.Controllers
                         List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == loginDetails.RoleID && n.Status).Select(x => x.SubMenuID).ToList();
                         if (lstSubmenuId.Count > 0)
                         {
+                            Session["IsVerifyTwofactor"] = "Y";
                             ETSubMenu objSubMenu = dbEntities.ETSubMenus.Where(n => lstSubmenuId.Contains(n.SubMenuID) && n.Status && n.IsMainMenu).OrderBy(x => x.OrderNo).FirstOrDefault();
                             string Url = objSubMenu.SubMenuUrl;
                             if (!string.IsNullOrEmpty(Url))
@@ -215,13 +224,30 @@ namespace ExpenseTracker.Controllers
 
                     }
                 }
+                else if (checkLogin.errorMessage == "Otp")
+                {
+                    ViewBag.messagealert = "Otp Expired. Please try again.!";
+                    return RedirectToAction("Logout", "Login");
+                }
+                else if (checkLogin.errorMessage == "Device")
+                {
+                    ViewBag.messagealert = "Your Device type is Invalid. Please try latest Device Link";
+                    return RedirectToAction("Logout", "Login");
+                }
+                else if (checkLogin.errorMessage == "Invalid")
+                {
+                    ViewBag.messagealert = "Invalid OTP. Please Enter correct OTP and try again.!";
+                    return RedirectToAction("Logout", "Login");
+                }
                 else
                 {
                     ViewBag.Error = checkLogin.errorMessage;
-                    return View();
+                    ViewBag.messagealert = checkLogin.errorMessage;
+                    return RedirectToAction("Logout", "Login");
                 }
             }
-            return View();
+            ViewBag.messagealert = "Invalid Direct Login Url.";
+            return RedirectToAction("Logout", "Login");
         }
         #endregion
 
@@ -379,6 +405,7 @@ namespace ExpenseTracker.Controllers
             Session["UserLevel"] = null;
             Session["ReportingUser"] = null;
             Session["MappedUser"] = null;
+            Session["IsVerifyTwofactor"] = null;
             Response.Redirect("/Login");
         }
 

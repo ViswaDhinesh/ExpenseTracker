@@ -1,8 +1,98 @@
-﻿
+﻿@model  ExpenseTracker.TwoFactorVerification
 @{
     ViewBag.Title = "TwofactorPhoneVerification";
-    Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
+    Layout = "~/Views/Shared/_LayoutHideMenuDesign.cshtml";
+    ViewBag.Menu = "CommonUser";
 }
+<script>
+    function PreviousPage() {
+        window.location = "/CommonUser/Twofactor";
+    }
+    function PreviousLoginPage() {
+        window.location = "/Login/Logout";
+    }
+</script>
+@using (Html.BeginForm("TwofactorPhoneVerification", "CommonUser", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    <div class="container-fluid">
+        <div class="pageheader col-lg-12">
+            <h3 class="page-title text-primary">Phone Verification</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="container-fluid">
 
-<h2>TwofactorPhoneVerification</h2>
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            @if (ViewBag.messagealert != string.Empty)
+            {
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    @ViewBag.messagealert
+                </div>
+            }
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Phone Verification</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <label class="col-lg-2 col-md-2 col-xs-2"><b>OTP</b></label>
+                        <div class="pull-left col-lg-3 col-md-3 col-xs-3">
+                            @Html.TextBoxFor(m => m.Otp, new { @class = "form-control", autocomplete = "off", maxlength = 6 })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.Otp)
+                            </span>
+                        </div>
+                    </div>
+                    @if (ViewBag.EnableSkip == null)
+                    {
+                        <div class="row">
+                            <div class="pull-left col-lg-3 col-md-3 col-xs-3">
+                                <p id="resend" style="padding: 0px 50px;"><a href="/CommonUser/TwofactorPhoneVerification?OtpMode=Resend" id="ResendOTP" title="Resend OTP" style="float: right;text-transform: uppercase;text-decoration: none;font-size: 13px;font-weight: bold;"><span style="color:#eeff41;">Didn't get the code? </span>Resend It</a> </p>
+                            </div>
+                        </div>
+                    }
+                    @if (ViewBag.EnableSkip != null)
+                    {
+                        <div class="row">
+                            <div class="pull-left col-lg-3 col-md-3 col-xs-3">
+                                <p id="resend" style="padding: 0px 50px;"><a href="/CommonUser/TwofactorPhoneVerification?OtpMode=Resend&&VerifyMode=Phone" id="ResendOTP" title="Resend OTP" style="float: right;text-transform: uppercase;text-decoration: none;font-size: 13px;font-weight: bold;"><span style="color:#eeff41;">Didn't get the code? </span>Resend It</a> </p>
+                            </div>
+                        </div>
+                    }
+                    @if (ViewBag.EnableSkip == null)
+                    {
+                        <div class="row">
+                            <div class="pull-left col-lg-5 col-md-5 col-xs-5">
+                                <p class="other-way auth-link"><a href="/CommonUser/Twofactor" title="Other ways to Authenticate" style="float: right;text-transform: uppercase;text-decoration: none;font-size: 13px;font-weight: bold;">Other ways to Authenticate</a></p>
+                            </div>
+                        </div>
+                    }
+                    @if (ViewBag.EnableSkip != null)
+                    {
+                        <div class="row">
+                            <div class="pull-left col-lg-5 col-md-5 col-xs-5">
+                                <p class="other-way auth-link"><a href="/CommonUser/SkipVerification" title="Skip" style="float: right;text-transform: uppercase;text-decoration: none;font-size: 13px;font-weight: bold;">Skip Now. Verify after some times</a></p>
+                            </div>
+                        </div>
+                    }
+                    <div class="row save-button-section">
+                        <div class="form-group col-md-6 col-sm-6 pull-left text-left">
+                            <input type="submit" class="btn btn-primary" title="Verify" value="Verify">
+                            @if (ViewBag.EnableSkip == null)
+                            {
+                                <input type="button" class="btn btn-secondary close-space" title="Back" value="Back" onclick="PreviousPage();" />
+                            }
+                            @if (ViewBag.EnableSkip != null)
+                            {
+                                <input type="button" class="btn btn-secondary close-space" title="Back" value="Back" onclick="PreviousLoginPage();" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 

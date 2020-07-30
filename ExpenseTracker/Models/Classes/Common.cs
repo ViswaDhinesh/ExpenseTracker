@@ -23,7 +23,7 @@ namespace ExpenseTracker
         public static bool sslId = Convert.ToBoolean(ConfigurationSettings.AppSettings["SSLID"]);
 
         //public static bool EmailVerification(string EmailId, string UserName, string LoginName, string Otp, string Title)
-        public static bool EmailVerification(string Title, ETUser UserDet)
+        public static bool EmailVerification(string Title, ETUser UserDet, string VerifyMode)
         {
             try
             {
@@ -33,7 +33,7 @@ namespace ExpenseTracker
                 smtp.Credentials = new System.Net.NetworkCredential(smtpLogin, smtpPassword);
 
                 System.Net.Mail.MailMessage mailMessage = new System.Net.Mail.MailMessage();
-                mailMessage.From = new System.Net.Mail.MailAddress(fromMail, "Expense Tracker");
+                mailMessage.From = new System.Net.Mail.MailAddress(fromMail, "Creative");
                 mailMessage.To.Add(new System.Net.Mail.MailAddress(UserDet.Email));
                 mailMessage.Subject = Title;
                 mailMessage.Priority = System.Net.Mail.MailPriority.Normal;
@@ -46,7 +46,7 @@ namespace ExpenseTracker
                 message_Body = reader.ReadToEnd();
                 reader.Close();
 
-                string DirectLogin = "Login/DirectLogin?RandomID=" + Common.EncryptPassword(UserDet.LoginName) + "&RandomValue=" + Common.EncryptPassword(UserDet.Otp) + "";
+                string DirectLogin = "Login/DirectLogin?RandomID=" + Common.EncryptPassword(UserDet.LoginName) + "&RandomValue=" + Common.EncryptPassword(UserDet.Otp) + "&VerifyMode=" + Common.EncryptPassword(VerifyMode) + "";
                 message_Body = message_Body.Replace("@imgUrl@", logo);
                 message_Body = message_Body.Replace("@UserName@", UserDet.FirstName + " " + UserDet.LastName);
                 message_Body = message_Body.Replace("@LoginName@", UserDet.LoginName);

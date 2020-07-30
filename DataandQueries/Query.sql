@@ -37,3 +37,10 @@ alter table ETMenuAccess alter column CreatedBy bigint NULL
 alter table ETMenuAccess alter column ModifiedBy bigint NULL
 
 alter table ETUser add DeviceType nvarchar(10) NULL
+
+
+alter table ETUser add OtpReceivedDate DateTime NULL
+
+alter table ETUser add OtpReceivedDevice nvarchar(1) NULL
+
+--alter table ETUser add OtpDevice nvarchar(1) NULL

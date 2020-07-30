@@ -349,7 +349,7 @@ namespace ExpenseTracker
         #endregion
 
         #region CheckLoginUserUsingOtp
-        public LoginDetailCheck CheckLoginUserUsingOtp(LoginDetail objLoginDetails)
+        public LoginDetailCheck CheckLoginUserUsingOtp(LoginDetail objLoginDetails, string DeviceType)
         {
             LoginDetailCheck logincheck = new LoginDetailCheck();
             if (dbEntities.ETUsers.Any(x => x.Email.Trim().Equals(objLoginDetails.Email.Trim()) && x.Otp != null))
@@ -359,7 +359,13 @@ namespace ExpenseTracker
                 {
                     logincheck.loginDetails = GetUserEmail(objLoginDetails.Email);
                     logincheck.isSuccess = true;
-                    logincheck.errorMessage = "";
+                    //logincheck.errorMessage = "";
+                    if (logincheck.loginDetails.OtpReceivedDevice != DeviceType)
+                        logincheck.errorMessage = "Device";
+                    else if (!(logincheck.loginDetails.OtpReceivedDate > DateTime.Now))
+                        logincheck.errorMessage = "Otp";
+                    else
+                        logincheck.errorMessage = "Valid";
                     return logincheck;
                 }
             }

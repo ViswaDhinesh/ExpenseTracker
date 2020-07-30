@@ -1,7 +1,7 @@
 ﻿@model  ExpenseTracker.TwoFactorVerification
 @{
     ViewBag.Title = "TwofactorEmailVerification";
-    Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
+    Layout = "~/Views/Shared/_LayoutHideMenuDesign.cshtml";
     ViewBag.Menu = "CommonUser";
 }
 <script>
@@ -79,7 +79,7 @@
                     }
                     <div class="row save-button-section">
                         <div class="form-group col-md-6 col-sm-6 pull-left text-left">
-                            <input type="submit" class="btn btn-primary" title="Save" value="Save">
+                            <input type="submit" class="btn btn-primary" title="Verify" value="Verify">
                             @if (ViewBag.EnableSkip == null)
                             {
                                 <input type="button" class="btn btn-secondary close-space" title="Back" value="Back" onclick="PreviousPage();" />

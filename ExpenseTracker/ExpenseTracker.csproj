@@ -884,6 +884,7 @@
     <Content Include="Views\CommonUser\TwofactorEmailVerification.cshtml" />
     <Content Include="Views\CommonUser\TwofactorPhoneVerification.cshtml" />
     <Content Include="Views\CommonUser\TwofactorPhoneTabVerification.cshtml" />
+    <Content Include="Views\Shared\_LayoutHideMenuDesign.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

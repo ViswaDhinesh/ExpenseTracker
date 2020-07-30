@@ -326,6 +326,11 @@ namespace ExpenseTracker
         [StringLength(10)]
         public string Otp { get; set; }
 
+        public DateTime? OtpReceivedDate { get; set; }
+
+        [StringLength(1)]
+        public string OtpReceivedDevice { get; set; }
+
         public string DeviceID { get; set; }
 
         public string UserField1 { get; set; }
