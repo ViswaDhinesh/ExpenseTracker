@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Configuration;
 using System.Data.Entity;
 using System.IO;
@@ -10,6 +11,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Services;
 using System.Web.Services;
+using Telesign;
 
 namespace ExpenseTracker.Controllers
 {
@@ -297,9 +299,107 @@ namespace ExpenseTracker.Controllers
         #endregion
 
         #region TwofactorPhoneVerification
+        [HttpGet]
         public ActionResult TwofactorPhoneVerification()
         {
+            long OneTimePassword = repUsers.OtpGeneration();
+            long UserID = Convert.ToInt64(Session["UserID"]);
+            bool IsOtpUpdate = OtpUpdateStatus(UserID, OneTimePassword, "P");
             ViewBag.messagealert = string.Empty;
+            string IsSuccess = null;
+            if (IsOtpUpdate)
+            {
+                string Title = "Two factor verification";
+                if (Request.QueryString["VerifyMode"] != null)
+                    Title = "Phone verification";
+                string LoginName = Session["LoginName"].ToString();
+                var UserDet = dbEntities.ETUsers.Where(x => x.UserID == UserID && x.LoginName.Equals(LoginName)).SingleOrDefault();
+                if (UserDet != null)
+                {
+                    long ExpiredMinute = Convert.ToInt64(ConfigurationSettings.AppSettings["OtpValidTime"]);
+                    string frontUrl = Convert.ToString(ConfigurationSettings.AppSettings["FrontURL"]);
+                    string Urls = frontUrl + "Login/DirectLogin?RandomID=" + Common.EncryptPassword(UserDet.LoginName) + "&RandomValue=" + Common.EncryptPassword(UserDet.Otp) + "&VerifyMode=" + Common.EncryptPassword("Phone") + "";
+                    string Messages = "Dear " + UserDet.FirstName + "\n" + " Your Otp is " + OneTimePassword + ". Your otp is expired within " +
+                        ExpiredMinute + " minutes. Please Verify this asap. \n You can also use below direct link \n <a>" + Urls + "</a>";
+                    IsSuccess = sendSMStoPhone(Messages, "919629987977");
+                    //sendCalltoPhoneTel(Messages, "919629987977");
+                    //sendSMStoPhoneTel(Messages, "919629987977");
+                }
+                if (IsSuccess != null)
+                //if (IsSuccess != null && IsSuccess.Contains("status:success"))
+                {
+                    ViewBag.messagealert = "Otp SMS sent to your registered phone number";
+                    if (Request.QueryString["OtpMode"] != null) { ViewBag.messagealert = "OTP again send it your Registered Phone number"; }
+                    if (Request.QueryString["VerifyMode"] != null)
+                    {
+                        ViewBag.EnableSkip = "Enable";
+                    }
+                    return View();
+                }
+                else
+                {
+                    ViewBag.messagealert = "Some problem in SMS. Please try again!";
+                    return RedirectToAction("Twofactor", "CommonUser");
+                }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult TwofactorPhoneVerification(TwoFactorVerification UserOtp)
+        {
+            TempData["messagealert"] = string.Empty;
+            var errors = ModelState.Values.SelectMany(v => v.Errors);
+            string IsValid = OtpStatusVerify(Convert.ToInt64(Session["UserID"]), UserOtp.Otp, "P");
+            if (IsValid == "Valid")
+            {
+                long UserId = Convert.ToInt64(Session["UserID"]);
+                var userVerify = dbEntities.ETUserVerifieds.Where(x => x.UserID == UserId && x.IsActive && !x.IsPhoneVerified).FirstOrDefault();
+                if (userVerify != null)
+                {
+                    userVerify.IsPhoneVerified = true;
+                    userVerify.ModifiedBy = Convert.ToInt64(Session["UserID"]);
+                    userVerify.ModifiedDate = DateTime.Now;
+                    dbEntities.Entry(userVerify).State = EntityState.Modified;
+                    dbEntities.SaveChanges();
+                }
+                long RoleID = Convert.ToInt64(Session["RoleID"]);
+                List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == RoleID && n.Status).Select(x => x.SubMenuID).ToList();
+                if (lstSubmenuId.Count > 0)
+                {
+                    Session["IsVerifyTwofactor"] = "Y";
+                    ETSubMenu objSubMenu = dbEntities.ETSubMenus.Where(n => lstSubmenuId.Contains(n.SubMenuID) && n.Status && n.IsMainMenu).OrderBy(x => x.OrderNo).FirstOrDefault();
+                    string Url = objSubMenu.SubMenuUrl;
+                    if (!string.IsNullOrEmpty(Url))
+                    {
+                        string[] urls = Url.Split('/');
+                        if (urls[1] != "" && urls[2] != "")
+                        {
+                            return RedirectToAction(urls[2], urls[1]);
+                        }
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Logout", "Login");
+                }
+            }
+            else if (IsValid == "Otp")
+            {
+                ViewBag.messagealert = "Otp Expired. Please try again.!";
+                return View();
+            }
+            else if (IsValid == "Device")
+            {
+                ViewBag.messagealert = "Your Device type is Invalid. Please try latest Device Link";
+                return View();
+            }
+            else
+            {
+                ViewBag.messagealert = "Invalid OTP. Please Enter correct OTP and try again.!";
+                return View();
+            }
+            ViewBag.messagealert = "Invalid OTP. Some problem in Verification. Please Try after some time.!";
             return View();
         }
         #endregion
@@ -448,6 +548,87 @@ namespace ExpenseTracker.Controllers
             return "test";
         }
 
+        #endregion
+
+        #region sendSMStoPhone
+        public string sendSMStoPhone(string Message, string Mobile)
+        {
+            string ApiKey = Convert.ToString(ConfigurationSettings.AppSettings["SMSApiKey"]);
+            string ApiURL = Convert.ToString(ConfigurationSettings.AppSettings["SMSApiURL"]);
+            string Sender = Convert.ToString(ConfigurationSettings.AppSettings["SMSSender"]);
+            //ApiKey = "ljgV4Z8dgEQ-txqQaCbjejjvvUDbZgt0tBcVYm1rEl";
+            //ApiURL = "https://api.textlocal.in/send/";
+            //Sender = "TXTLCL";
+            Message = HttpUtility.UrlEncode(Message);
+            using (var wb = new WebClient())
+            {
+                byte[] response = wb.UploadValues(ApiURL, new NameValueCollection()
+                {
+                {"apikey" , ApiKey},
+                {"numbers" , Mobile},
+                {"message" , Message},
+                {"sender" , Sender}
+                });
+                string result = System.Text.Encoding.UTF8.GetString(response);
+                return result;
+            }
+        }
+        #endregion
+
+        #region sendSMStoPhoneTel
+        public string sendSMStoPhoneTel(string Message, string Mobile)
+        {
+            string customerId = "F246C360-8CFD-443D-9227-D30134043B75";
+            string apiKey = "BdcTq1dXhaCnhKENlxEXzhYWm8B1Du/0bYDXMR8Ex+7Q3M9fMkFXQXiLzC6EdFovA7yIg7MYxigCj0UkkkpZwg==";
+
+            string phoneNumber = "919629987977";
+
+            string verifyCode = "12345";
+            string message = string.Format("Your code is {0}", verifyCode);
+            string messageType = "OTP";
+
+            try
+            {
+                MessagingClient messagingClient = new MessagingClient(customerId, apiKey);
+                RestClient.TelesignResponse telesignResponse = messagingClient.Message(phoneNumber, message, messageType);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            //Console.WriteLine("Press any key to quit.");
+            //Console.ReadKey();
+            return "";
+        }
+        #endregion
+
+        #region sendCalltoPhoneTel
+        public string sendCalltoPhoneTel(string Message, string Mobile)
+        {
+            string customerId = "F246C360-8CFD-443D-9227-D30134043B75";
+            string apiKey = "BdcTq1dXhaCnhKENlxEXzhYWm8B1Du/0bYDXMR8Ex+7Q3M9fMkFXQXiLzC6EdFovA7yIg7MYxigCj0UkkkpZwg==";
+
+            string phoneNumber = "919629987977";
+
+            string verifyCode = "12345";
+            string message = string.Format("Hello, your code is {0}. Once again, your code is {1}. Goodbye.", verifyCode, verifyCode);
+            string messageType = "OTP";
+
+            try
+            {
+                VoiceClient voiceClient = new VoiceClient(customerId, apiKey);
+                RestClient.TelesignResponse telesignResponse = voiceClient.Call(phoneNumber, message, messageType);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+
+            //Console.WriteLine("Press any key to quit.");
+            //Console.ReadKey();
+            return "";
+        }
         #endregion
 
         //#region GetNotificationStatus
