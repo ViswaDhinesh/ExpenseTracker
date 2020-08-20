@@ -321,9 +321,9 @@ namespace ExpenseTracker.Controllers
                     string Urls = frontUrl + "Login/DirectLogin?RandomID=" + Common.EncryptPassword(UserDet.LoginName) + "&RandomValue=" + Common.EncryptPassword(UserDet.Otp) + "&VerifyMode=" + Common.EncryptPassword("Phone") + "";
                     string Messages = "Dear " + UserDet.FirstName + "\n" + " Your Otp is " + OneTimePassword + ". Your otp is expired within " +
                         ExpiredMinute + " minutes. Please Verify this asap. \n You can also use below direct link \n <a>" + Urls + "</a>";
-                    IsSuccess = sendSMStoPhone(Messages, "919629987977");
-                    //sendCalltoPhoneTel(Messages, "919629987977");
-                    //sendSMStoPhoneTel(Messages, "919629987977");
+                    //IsSuccess = sendSMStoPhone(Messages, "919629987977");
+                    sendCalltoPhoneTel(Messages, "919629987977");
+                    sendSMStoPhoneTel(Messages, "919629987977");
                 }
                 if (IsSuccess != null)
                 //if (IsSuccess != null && IsSuccess.Contains("status:success"))

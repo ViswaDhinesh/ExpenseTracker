@@ -1,0 +1,22 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+
+</head>
+<body>
+    <div class="col-lg-12 col-md-12">
+        @if (ViewBag.messagealert != "" && ViewBag.messagealert != null)
+        {
+        <div>
+            @ViewBag.messagealert
+        </div>
+        }
+    </div>
+</body>
+</html>

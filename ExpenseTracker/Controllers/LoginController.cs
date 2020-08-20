@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
@@ -67,6 +68,65 @@ namespace ExpenseTracker.Controllers
                         objLoginDetails.Email = dbEntities.ETUsers.Where(x => x.LoginName == objLoginDetails.Email).Select(x => x.Email).First();
                     }
                 }
+
+                //////List<long> CompanyId = new List<long>();
+                //////List<long> TeamId = new List<long>();
+                //////var data = dbEntities.ETUsers.Where(x => CompanyId.Contains(x.UserID) || TeamId.Contains(x.RoleID));
+
+
+                ////////string strWhere = "UserID = 1";
+                ////////IQueryable<ETUser> emp = dbEntities.ETUsers.Select<ETUser>(strWhere).AsQueryable();
+
+                ////////DataTable dt = dbEntities.ETUsers.ToArray();
+
+                //////DataTable dt = new DataTable();
+                //////if (dt.Columns.Count == 0)
+                //////{
+                //////    dt.Columns.Add("UserId");
+                //////    dt.Columns.Add("Teams");
+                //////    dt.Columns.Add("UserName");
+                //////    dt.Columns.Add("City");
+                //////}
+
+                //////for (int i = 0; i < 10; i++)
+                //////{
+                //////    dt.Rows.Add();
+                //////    dt.Rows[i][0] = i;
+                //////    dt.Rows[i][1] = "Microsoft" + (i + 1).ToString();
+                //////    dt.Rows[i][2] = "Test" + (i + 1).ToString();
+                //////    dt.Rows[i][3] = "Chennai" + (i + 1).ToString();
+                //////}
+
+
+                //////string condition = "UserId = 1 or Teams = 'Microsoft5' or UserName = 'Test1'";
+                ////////DataTable dtFilter = dt.Select(condition).CopyToDataTable();
+                //////var filter = dt.Select(condition);
+
+                ////////var filters = dbEntities.ETUsers.Where(condition);
+
+                ////////    dbEntities.ETUsers.Select(x => new {
+                ////////    x.UserID, x.FirstName, x.LastName, x.Title, x.IsActive, x.IsTwoFactor, x.LoginName, x.MaritalStatus, x.Otp,
+                ////////    x.Phone, x.Email, x.UserLevel, x.RoleID
+
+                ////////}).CopyToDataTable();
+
+                //////string input = "data";
+                //////var result = dbEntities.ETUsers.Where(x => x.UserID.ToString().Contains(input) || x.FirstName.Contains(input) || x.LastName.Contains(input)).ToList();
+
+                //////string FirstName = "Dinesh";
+                //////string LastName = "Viswa";
+
+                //////var result1 = dbEntities.ETUsers.Where(x => x.UserID.ToString().Contains(input)).ToList();
+                //////if (FirstName != "")
+                //////{
+                //////    var result2 = dbEntities.ETUsers.Where(x => x.FirstName.ToString().Contains(FirstName)).ToList();
+                //////    result1.Union(result2);
+                //////}
+                //////if (LastName != "")
+                //////{
+                //////    var result2 = dbEntities.ETUsers.Where(x => x.LastName.ToString().Contains(LastName)).ToList();
+                //////    result1.Union(result2);
+                //////}
 
                 LoginDetailCheck checkLogin = repUser.CheckLoginUser(objLoginDetails);
                 if (checkLogin.isSuccess)

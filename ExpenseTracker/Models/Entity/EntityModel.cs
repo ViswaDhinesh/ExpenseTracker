@@ -226,6 +226,8 @@ namespace ExpenseTracker
         public DateTime? ModifiedDate { get; set; }
 
         public long? ModifiedBy { get; set; }
+
+        public long OrderNo { get; set; }
     }
 
     [Table("ETUser")]
@@ -746,5 +748,77 @@ namespace ExpenseTracker
         public DateTime? ModifiedDate { get; set; }
 
         public long? ModifiedBy { get; set; }
+    }
+
+    [Table("ETLandDetails")]
+    public partial class ETLandDetails
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public long LandID { get; set; }
+        public string District { get; set; }
+        public string Taluk { get; set; }
+        public string Division { get; set; }
+        public string Panchayat { get; set; }
+        public string Village { get; set; }
+        public string OwnerType { get; set; }
+        public string LandType { get; set; }
+        public string LandArea { get; set; }
+        public string PattaNumber { get; set; }
+        public string PulaNumber { get; set; }
+        public string SubDivisionNumber { get; set; }
+        public string OldSubDivisionNumber { get; set; }
+        public double? AcresSize { get; set; }
+        public double? AresSize { get; set; }
+        public double? HectareSize { get; set; }
+        public string OwnerName { get; set; }
+        public string OwnerNameInTamil { get; set; }
+        public string Remarks { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsOwned { get; set; }
+        public bool IsCommon { get; set; }
+        public bool IsVerified { get; set; }
+        public long UserID { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public long CreatedUser { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        public long ModifiedUser { get; set; }
+    }
+
+    [Table("ETLandDetailsLog")]
+    public partial class ETLandDetailsLog
+    {
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        [Key]
+        public long LandLogID { get; set; }
+        public long LandID { get; set; }
+        public string District { get; set; }
+        public string Taluk { get; set; }
+        public string Division { get; set; }
+        public string Panchayat { get; set; }
+        public string Village { get; set; }
+        public string OwnerType { get; set; }
+        public string LandType { get; set; }
+        public string LandArea { get; set; }
+        public string PattaNumber { get; set; }
+        public string PulaNumber { get; set; }
+        public string SubDivisionNumber { get; set; }
+        public string OldSubDivisionNumber { get; set; }
+        public double? AcresSize { get; set; }
+        public double? AresSize { get; set; }
+        public double? HectareSize { get; set; }
+        public string OwnerName { get; set; }
+        public string OwnerNameInTamil { get; set; }
+        public string Remarks { get; set; }
+        public string SourceType { get; set; }
+        public bool IsActive { get; set; }
+        public bool IsOwned { get; set; }
+        public bool IsCommon { get; set; }
+        public bool IsVerified { get; set; }
+        public long UserID { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public long CreatedUser { get; set; }
+        public DateTime ModifiedDate { get; set; }
+        public long ModifiedUser { get; set; }
     }
 }

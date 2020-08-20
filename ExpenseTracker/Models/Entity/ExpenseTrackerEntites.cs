@@ -24,6 +24,8 @@ namespace ExpenseTracker
         public virtual DbSet<ETUserLog> ETUserLogs { get; set; }
         public virtual DbSet<ETBank> ETBanks { get; set; }
         public virtual DbSet<ETUserVerified> ETUserVerifieds { get; set; }
+        public virtual DbSet<ETLandDetails> ETLandDetail { get; set; }
+        public virtual DbSet<ETLandDetailsLog> ETLandDetailsLogs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
