@@ -38,6 +38,9 @@ alter table ETMenuAccess alter column ModifiedBy bigint NULL
 
 alter table ETUser add DeviceType nvarchar(10) NULL
 
+select * from ETLandDetails where OwnerNameInTamil is null
+select * from ETLandDetailsLog where LandID = 0
+
 
 alter table ETUser add OtpReceivedDate DateTime NULL
 

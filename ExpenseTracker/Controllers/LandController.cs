@@ -82,6 +82,51 @@ namespace ExpenseTracker.Controllers
                     //    ViewBag.AccountTypes = repLand.getDataValues("AccountType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     //    return View(Land);
                     //}
+                    if (Land.OwnerType == "Government")
+                    {
+                        Land.OldSubDivisionNumber = Land.PulaNumber + "-" + Land.SubDivisionNumber;
+                        if (string.IsNullOrEmpty(Convert.ToString(Land.PattaNumber)))
+                            Land.PattaNumber = "0";
+                        if (string.IsNullOrEmpty(Convert.ToString(Land.AresSize)))
+                            Land.AresSize = 0;
+                        if (string.IsNullOrEmpty(Convert.ToString(Land.AcresSize)))
+                            Land.AcresSize = 0;
+                        if (string.IsNullOrEmpty(Convert.ToString(Land.HectareSize)))
+                            Land.HectareSize = 0;
+                        if (string.IsNullOrEmpty(Convert.ToString(Land.OwnerName)))
+                            Land.OwnerName = "Government";
+                        if (string.IsNullOrEmpty(Convert.ToString(Land.OwnerNameInTamil)))
+                            Land.OwnerNameInTamil = "Government";
+                        if (string.IsNullOrEmpty(Convert.ToString(Land.Remarks)))
+                            Land.Remarks = "Government";
+                    }
+                    else if (string.IsNullOrEmpty(Convert.ToString(Land.PulaNumber)) || string.IsNullOrEmpty(Convert.ToString(Land.SubDivisionNumber)))
+                    {
+                        ViewBag.messagealert = "Please Enter the Pula or Sub Division Number.";
+                        ViewBag.Districts = repLand.getDataValues("District", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Taluks = repLand.getDataValues("Taluk", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Divisions = repLand.getDataValues("Division", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Panchayats = repLand.getDataValues("Panchayat", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Villages = repLand.getDataValues("Village", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.OwnerTypes = repLand.getDataValues("OwnerType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.LandTypes = repLand.getDataValues("LandType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.LandAreas = repLand.getDataValues("LandArea", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        return View(Land);
+                    }
+                    else if (string.IsNullOrEmpty(Convert.ToString(Land.PattaNumber)) || string.IsNullOrEmpty(Convert.ToString(Land.OwnerName)) || string.IsNullOrEmpty(Convert.ToString(Land.OwnerNameInTamil)))
+                    {
+                        ViewBag.messagealert = "Please Enter the Required Values.";
+                        ViewBag.Districts = repLand.getDataValues("District", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Taluks = repLand.getDataValues("Taluk", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Divisions = repLand.getDataValues("Division", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Panchayats = repLand.getDataValues("Panchayat", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Villages = repLand.getDataValues("Village", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.OwnerTypes = repLand.getDataValues("OwnerType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.LandTypes = repLand.getDataValues("LandType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.LandAreas = repLand.getDataValues("LandArea", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        return View(Land);
+                    }
+
                     if (string.IsNullOrEmpty(Convert.ToString(Land.AresSize)) && string.IsNullOrEmpty(Convert.ToString(Land.HectareSize)) && string.IsNullOrEmpty(Convert.ToString(Land.AcresSize)))
                     {
                         ViewBag.messagealert = "Please Enter the Size of Land (Ares or Hectare or Acres).";
@@ -121,6 +166,9 @@ namespace ExpenseTracker.Controllers
                         Land.CreatedDate = DateTime.Now;
                         Land.ModifiedUser = Convert.ToInt64(Session["UserID"]);
                         Land.ModifiedDate = DateTime.Now;
+                        if (string.IsNullOrEmpty(Convert.ToString(Land.OldSubDivisionNumber)))
+                            Land.OldSubDivisionNumber = Land.PulaNumber + "-" + Land.SubDivisionNumber;
+
                         dbEntities.ETLandDetail.Add(Land);
 
                         // Land Log
@@ -137,7 +185,10 @@ namespace ExpenseTracker.Controllers
                         LandLog.PattaNumber = Land.PattaNumber;
                         LandLog.PulaNumber = Land.PulaNumber;
                         LandLog.SubDivisionNumber = Land.SubDivisionNumber;
-                        LandLog.OldSubDivisionNumber = Land.OldSubDivisionNumber;
+                        if (string.IsNullOrEmpty(Convert.ToString(Land.OldSubDivisionNumber)))
+                            LandLog.OldSubDivisionNumber = Land.PulaNumber + "-" + Land.SubDivisionNumber;
+                        else
+                            LandLog.OldSubDivisionNumber = Land.OldSubDivisionNumber;
                         LandLog.AcresSize = Land.AcresSize;
                         LandLog.AresSize = Land.AresSize;
                         LandLog.HectareSize = Land.HectareSize;
@@ -196,6 +247,7 @@ namespace ExpenseTracker.Controllers
 
             if (ModelState.IsValid)
             {
+
                 if (string.IsNullOrEmpty(Convert.ToString(updateLand.AresSize)) && string.IsNullOrEmpty(Convert.ToString(updateLand.HectareSize)) && string.IsNullOrEmpty(Convert.ToString(updateLand.AcresSize)))
                 {
                     ViewBag.messagealert = "Please Enter the Size of Land (Ares or Hectare or Acres).";
@@ -273,6 +325,50 @@ namespace ExpenseTracker.Controllers
                     Land.ModifiedUser = Convert.ToInt64(Session["UserID"]);
                     Land.ModifiedDate = DateTime.Now;
 
+                    if (updateLand.OwnerType == "Government")
+                    {
+                        Land.OldSubDivisionNumber = updateLand.PulaNumber + "-" + updateLand.SubDivisionNumber;
+                        if (string.IsNullOrEmpty(Convert.ToString(updateLand.PattaNumber)))
+                            Land.PattaNumber = "0";
+                        if (string.IsNullOrEmpty(Convert.ToString(updateLand.AresSize)))
+                            Land.AresSize = 0;
+                        if (string.IsNullOrEmpty(Convert.ToString(updateLand.AcresSize)))
+                            Land.AcresSize = 0;
+                        if (string.IsNullOrEmpty(Convert.ToString(updateLand.HectareSize)))
+                            Land.HectareSize = 0;
+                        if (string.IsNullOrEmpty(Convert.ToString(updateLand.OwnerName)))
+                            Land.OwnerName = "Government";
+                        if (string.IsNullOrEmpty(Convert.ToString(updateLand.OwnerNameInTamil)))
+                            Land.OwnerNameInTamil = "Government";
+                        if (string.IsNullOrEmpty(Convert.ToString(updateLand.Remarks)))
+                            Land.Remarks = "Government";
+                    }
+                    else if (string.IsNullOrEmpty(Convert.ToString(updateLand.PulaNumber)) || string.IsNullOrEmpty(Convert.ToString(updateLand.SubDivisionNumber)))
+                    {
+                        ViewBag.messagealert = "Please Enter the Pula or Sub Division Number.";
+                        ViewBag.Districts = repLand.getDataValues("District", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Taluks = repLand.getDataValues("Taluk", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Divisions = repLand.getDataValues("Division", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Panchayats = repLand.getDataValues("Panchayat", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Villages = repLand.getDataValues("Village", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.OwnerTypes = repLand.getDataValues("OwnerType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.LandTypes = repLand.getDataValues("LandType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.LandAreas = repLand.getDataValues("LandArea", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        return View(updateLand);
+                    }
+                    else if (string.IsNullOrEmpty(Convert.ToString(updateLand.PattaNumber)) || string.IsNullOrEmpty(Convert.ToString(updateLand.OldSubDivisionNumber)) || string.IsNullOrEmpty(Convert.ToString(updateLand.OwnerName)) || string.IsNullOrEmpty(Convert.ToString(updateLand.OwnerNameInTamil)))
+                    {
+                        ViewBag.messagealert = "Please Enter the Required Values.";
+                        ViewBag.Districts = repLand.getDataValues("District", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Taluks = repLand.getDataValues("Taluk", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Divisions = repLand.getDataValues("Division", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Panchayats = repLand.getDataValues("Panchayat", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.Villages = repLand.getDataValues("Village", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.OwnerTypes = repLand.getDataValues("OwnerType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.LandTypes = repLand.getDataValues("LandType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        ViewBag.LandAreas = repLand.getDataValues("LandArea", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
+                        return View(updateLand);
+                    }
 
                     if (!string.IsNullOrEmpty(Convert.ToString(updateLand.AresSize)) && (string.IsNullOrEmpty(Convert.ToString(updateLand.HectareSize)) || string.IsNullOrEmpty(Convert.ToString(updateLand.AcresSize))))
                     {

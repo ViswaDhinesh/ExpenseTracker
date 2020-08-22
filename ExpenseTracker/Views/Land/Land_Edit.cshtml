@@ -181,11 +181,11 @@
                             <label style="font-weight:bold">IsOwned</label>
                             <div class="attr-section">
                                 <label class="radio radio-inline">
-                                    @Html.RadioButtonFor(m => m.IsOwned, true, new { }) Enable
+                                    @Html.RadioButtonFor(m => m.IsOwned, true, new { @checked = true }) Enable
                                     <span class="checkround"></span>
                                 </label>
                                 <label class="radio radio-inline">
-                                    @Html.RadioButtonFor(m => m.IsOwned, false, new { @checked = true }) Disable
+                                    @Html.RadioButtonFor(m => m.IsOwned, false, new { }) Disable
                                     <span class="checkround"></span>
                                 </label>
                             </div>
@@ -194,11 +194,11 @@
                             <label style="font-weight:bold">IsCommon</label>
                             <div class="attr-section">
                                 <label class="radio radio-inline">
-                                    @Html.RadioButtonFor(m => m.IsCommon, true, new { }) Enable
+                                    @Html.RadioButtonFor(m => m.IsCommon, true, new { @checked = true }) Enable
                                     <span class="checkround"></span>
                                 </label>
                                 <label class="radio radio-inline">
-                                    @Html.RadioButtonFor(m => m.IsCommon, false, new { @checked = true }) Disable
+                                    @Html.RadioButtonFor(m => m.IsCommon, false, new { }) Disable
                                     <span class="checkround"></span>
                                 </label>
                             </div>
@@ -207,11 +207,11 @@
                             <label style="font-weight:bold">IsVerified</label>
                             <div class="attr-section">
                                 <label class="radio radio-inline">
-                                    @Html.RadioButtonFor(m => m.IsVerified, true, new { }) Enable
+                                    @Html.RadioButtonFor(m => m.IsVerified, true, new { @checked = true }) Enable
                                     <span class="checkround"></span>
                                 </label>
                                 <label class="radio radio-inline">
-                                    @Html.RadioButtonFor(m => m.IsVerified, false, new { @checked = true }) Disable
+                                    @Html.RadioButtonFor(m => m.IsVerified, false, new { }) Disable
                                     <span class="checkround"></span>
                                 </label>
                             </div>
