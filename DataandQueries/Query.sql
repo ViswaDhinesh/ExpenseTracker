@@ -58,5 +58,13 @@ alter table ETLandDetailsLog alter column HectareSize float NOT NULL
 
 alter table ETValue add OrderNo bigint NULL
 alter table ETValue alter column OrderNo bigint NOT NULL
-
+------------------
 update ETValue set OrderNo = 0
+-------------------
+
+;With a as (
+Select ROW_NUMBER() OVER(PARTITION BY PulaNumber, SubdivisionNumber ORDER BY PulaNumber, SubdivisionNumber ASC) as RowNo, * from ETLandDetails
+)
+--update a set IsActive = 0 where RowNo = 2
+--delete from a where RowNo = 2
+--Select * from a where RowNo = 2
