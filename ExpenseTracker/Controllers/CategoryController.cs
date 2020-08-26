@@ -27,6 +27,12 @@ namespace ExpenseTracker.Controllers
             }
             Categories = new List<ETCategory>();
             Categories = repCategory.GetAllCategory(Convert.ToInt64(Session["UserID"]), Session["UserLevel"].ToString());
+            foreach (var item in Categories)
+            {
+                //item.SourceName = dbEntities.ETSources.Where(x => x.SourceID == item.SourceID).Select(m => m.SourceName).ToString();
+                ETSource SourceNames = dbEntities.ETSources.Where(x => x.SourceID == item.SourceID).Single();
+                item.SourceName = SourceNames.SourceName;
+            }
             return View(Categories);
         }
         #endregion
@@ -134,6 +140,8 @@ namespace ExpenseTracker.Controllers
         public ActionResult Category_view(long Id)
         {
             Category = repCategory.GetCategory(Id);
+            ETSource SourceNames = dbEntities.ETSources.Where(x => x.SourceID == Category.SourceID).Single();
+            Category.SourceName = SourceNames.SourceName;
             return View(Category);
         }
         #endregion

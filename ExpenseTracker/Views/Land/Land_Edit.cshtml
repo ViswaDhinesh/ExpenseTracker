@@ -1,0 +1,230 @@
+﻿@model  ExpenseTracker.ETLandDetails
+@{
+    ViewBag.Title = "Land Updation";
+    Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
+    ViewBag.Menu = "Land";
+}
+<script>
+    function PreviousPage() {
+        window.location = "/Land/Index";
+    }
+</script>
+@using (Html.BeginForm("Land_Edit", "Land", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.ValidationSummary(true)
+    @Html.AntiForgeryToken()
+    <div class="container-fluid">
+        <div class="pageheader col-lg-12">
+            <h3 class="page-title text-primary">Land Details Updation</h3>
+            <hr>
+        </div>
+    </div>
+    <div class="container-fluid">
+
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            @if (ViewBag.messagealert != string.Empty)
+            {
+                <div class="alert alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    @ViewBag.messagealert
+                </div>
+            }
+            <div class="panel panel-success">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Land Details</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">District<span class="required"> *</span></label>
+                            @Html.DropDownListFor(m => m.District, new SelectList(ViewBag.Districts, "Value", "Text", ViewBag.DistrictID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.District)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Taluk<span class="required"> *</span></label>
+                            @Html.DropDownListFor(m => m.Taluk, new SelectList(ViewBag.Taluks, "Value", "Text", ViewBag.TalukID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.Taluk)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Division<span class="required"> *</span></label>
+                            @Html.DropDownListFor(m => m.Division, new SelectList(ViewBag.Divisions, "Value", "Text", ViewBag.DivisionID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.Division)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Panchayat<span class="required"> *</span></label>
+                            @Html.DropDownListFor(m => m.Panchayat, new SelectList(ViewBag.Panchayats, "Value", "Text", ViewBag.PanchayatID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.Panchayat)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Village<span class="required"> *</span></label>
+                            @Html.DropDownListFor(m => m.Village, new SelectList(ViewBag.Villages, "Value", "Text", ViewBag.VillageID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.Village)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Owner Type<span class="required"> *</span></label>
+                            @Html.DropDownListFor(m => m.OwnerType, new SelectList(ViewBag.OwnerTypes, "Value", "Text", ViewBag.OwnerTypeID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.OwnerType)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Land Type<span class="required"> *</span></label>
+                            @Html.DropDownListFor(m => m.LandType, new SelectList(ViewBag.LandTypes, "Value", "Text", ViewBag.LandTypeID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.LandType)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Land Area<span class="required"> *</span></label>
+                            @Html.DropDownListFor(m => m.LandArea, new SelectList(ViewBag.LandAreas, "Value", "Text", ViewBag.LandAreaID), new { @class = "form-control IsRequiredDropDown singleSelect" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.LandArea)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Old Sub Division Number<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.OldSubDivisionNumber, new { @class = "form-control", autocomplete = "off", maxlength = 100 })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.OldSubDivisionNumber)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Patta Number<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.PattaNumber, new { @class = "form-control", autocomplete = "off", maxlength = 100 })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.PattaNumber)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Pula Number<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.PulaNumber, new { @class = "form-control", autocomplete = "off", maxlength = 100 })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.PulaNumber)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Sub Division Number<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.SubDivisionNumber, new { @class = "form-control", autocomplete = "off", maxlength = 100 })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.SubDivisionNumber)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Ares Size</label>
+                            @Html.TextBoxFor(m => m.AresSize, new { @class = "form-control", autocomplete = "off", maxlength = 25 })
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Hectare Size</label>
+                            @Html.TextBoxFor(m => m.HectareSize, new { @class = "form-control", autocomplete = "off", maxlength = 25 })
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Acres Size</label>
+                            @Html.TextBoxFor(m => m.AcresSize, new { @class = "form-control", autocomplete = "off", maxlength = 25 })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Owner Name<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.OwnerName, new { @class = "form-control", autocomplete = "off" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.OwnerName)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Owner Name Tamil<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.OwnerNameInTamil, new { @class = "form-control", autocomplete = "off" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.OwnerNameInTamil)
+                            </span>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">Remarks<span class="required"> *</span></label>
+                            @Html.TextBoxFor(m => m.Remarks, new { @class = "form-control", autocomplete = "off" })
+                            <span class="error-text">
+                                @Html.ValidationMessageFor(model => model.Remarks)
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">IsActive</label>
+                            <div class="attr-section">
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsActive, true, new { @checked = true }) Enable
+                                    <span class="checkround"></span>
+                                </label>
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsActive, false, new { }) Disable
+                                    <span class="checkround"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">IsOwned</label>
+                            <div class="attr-section">
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsOwned, true, new { @checked = true }) Enable
+                                    <span class="checkround"></span>
+                                </label>
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsOwned, false, new { }) Disable
+                                    <span class="checkround"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">IsCommon</label>
+                            <div class="attr-section">
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsCommon, true, new { @checked = true }) Enable
+                                    <span class="checkround"></span>
+                                </label>
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsCommon, false, new { }) Disable
+                                    <span class="checkround"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-3 col-sm-3">
+                            <label style="font-weight:bold">IsVerified</label>
+                            <div class="attr-section">
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsVerified, true, new { @checked = true }) Enable
+                                    <span class="checkround"></span>
+                                </label>
+                                <label class="radio radio-inline">
+                                    @Html.RadioButtonFor(m => m.IsVerified, false, new { }) Disable
+                                    <span class="checkround"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row save-button-section">
+                        <div class="form-group col-md-6 col-sm-6 pull-left text-left">
+                            <input type="submit" class="btn btn-primary" title="Save" value="Save">
+                            <input type="button" class="btn btn-secondary close-space" title="Back" value="Back" onclick="PreviousPage();" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

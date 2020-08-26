@@ -11,7 +11,7 @@ namespace ExpenseTracker.Controllers
     {
         // GET: User
         ExpenseTrackerEntites dbEntities = new ExpenseTrackerEntites();
-        ETUser User = new ETUser();
+        ETUser Userval = new ETUser();
         ETValue Values = new ETValue();
         UserRepository repUsers = new UserRepository();
         List<ETUser> Users = new List<ETUser>();
@@ -51,22 +51,23 @@ namespace ExpenseTracker.Controllers
             ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.ReportingUser = repUsers.getMappedReportingUser();//getDataValues("ReportingUser", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"])); // Need to change
+            ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.Role = repUsers.getRole();
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult User_add(ETUser User)
+        public ActionResult User_add(ETUser addUser)
         {
             TempData["messagealert"] = string.Empty;
             ViewBag.messagealert = string.Empty;
 
             if (ModelState.IsValid)
             {
-                if (User != null)
+                if (addUser != null)
                 {
-                    if (repUsers.LogInNameIsExist(User.LoginName, 0))
+                    if (repUsers.LogInNameIsExist(addUser.LoginName, 0))
                     {
                         ViewBag.messagealert = "LogInName already exist";
                         ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
@@ -74,12 +75,13 @@ namespace ExpenseTracker.Controllers
                         ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.ReportingUser = repUsers.getMappedReportingUser();
+                        ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.Role = repUsers.getRole();
-                        return View(User);
+                        return View(addUser);
                     }
-                    else if (repUsers.EmailIsExist(User.Email, 0) || !Common.IsValidEmail(User.Email))
+                    else if (repUsers.EmailIsExist(addUser.Email, 0) || !Common.IsValidEmail(addUser.Email))
                     {
-                        if (!Common.IsValidEmail(User.Email))
+                        if (!Common.IsValidEmail(addUser.Email))
                             ViewBag.messagealert = "Please Enter Valid Email";
                         else
                             ViewBag.messagealert = "Email already exist";
@@ -88,10 +90,11 @@ namespace ExpenseTracker.Controllers
                         ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.ReportingUser = repUsers.getMappedReportingUser();
+                        ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.Role = repUsers.getRole();
-                        return View(User);
+                        return View(addUser);
                     }
-                    else if (repUsers.PhoneIsExist(User.Phone, 0))
+                    else if (repUsers.PhoneIsExist(addUser.Phone, 0))
                     {
                         ViewBag.messagealert = "Phone already exist";
                         ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
@@ -99,24 +102,42 @@ namespace ExpenseTracker.Controllers
                         ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.ReportingUser = repUsers.getMappedReportingUser();
+                        ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                         ViewBag.Role = repUsers.getRole();
-                        return View(User);
+                        return View(addUser);
                     }
                     else
                     {
                         //try
                         //{
-                        User.SourceOfCreation = "User Form";
-                        User.Password = Common.EncryptPassword(User.Password);
-                        User.ConfirmPassword = Common.EncryptPassword(User.ConfirmPassword);
-                        User.UserID = repUsers.UserIdGeneration();
-                        User.CreatedBy = Convert.ToInt64(Session["UserID"]);
-                        User.CreatedDate = DateTime.Now;
-                        User.ModifiedBy = Convert.ToInt64(Session["UserID"]);
-                        User.ModifiedDate = DateTime.Now;
-                        dbEntities.ETUsers.Add(User);
+                        addUser.SourceOfCreation = "User Form";
+                        addUser.Password = Common.EncryptPassword(addUser.Password);
+                        addUser.ConfirmPassword = Common.EncryptPassword(addUser.ConfirmPassword);
+                        addUser.UserID = repUsers.UserIdGeneration();
+                        addUser.CreatedBy = Convert.ToInt64(Session["UserID"]);
+                        addUser.CreatedDate = DateTime.Now;
+                        addUser.ModifiedBy = Convert.ToInt64(Session["UserID"]);
+                        addUser.ModifiedDate = DateTime.Now;
+                        dbEntities.ETUsers.Add(addUser);
                         dbEntities.SaveChanges();
-                        if (User.UserID != 0)
+
+                        ETUserVerified userVerified = new ETUserVerified();
+                        userVerified.UserID = addUser.UserID;
+                        userVerified.IsEmailVefified = false;
+                        userVerified.IsPhoneVerified = false;
+                        userVerified.IsOtherVerified = false;
+                        userVerified.IsOtherVerified1 = false;
+                        userVerified.IsOtherVerified2 = false;
+                        userVerified.IsOtherVerified3 = false;
+                        userVerified.IsActive = true;
+                        userVerified.CreatedBy = Convert.ToInt64(Session["UserID"]);
+                        userVerified.CreatedDate = DateTime.Now;
+                        userVerified.ModifiedBy = Convert.ToInt64(Session["UserID"]);
+                        userVerified.ModifiedDate = DateTime.Now;
+                        dbEntities.ETUserVerifieds.Add(userVerified);
+                        dbEntities.SaveChanges();
+
+                        if (addUser.UserID != 0)
                         {
                             TempData["messagealert"] = Status.Save;
                         }
@@ -152,24 +173,25 @@ namespace ExpenseTracker.Controllers
         public ActionResult User_edit(long Id)
         {
             ViewBag.messagealert = string.Empty;
-            User = new ETUser();
-            User = repUsers.GetUser(Id);
-            User.Password = Common.DecryptPassword(User.Password);
+            Userval = new ETUser();
+            Userval = repUsers.GetUser(Id);
+            Userval.Password = Common.DecryptPassword(Userval.Password);
             ViewBag.UserTitles = repUsers.getDataValues("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             //repUsers.getTitle("Title", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.Gender = repUsers.getDataValues("Gender", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.ReportingUser = repUsers.getMappedReportingUser();
+            ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
             ViewBag.Role = repUsers.getRole();
-            
-            //ViewBag.ReportingUserID = User.ReportingUser;
-            //ViewBag.UserLevelID = User.UserLevel;
-            //ViewBag.RoleID = User.RoleID;
-            //ViewBag.MaritalStatusID = User.MaritalStatus;
-            //ViewBag.GenderID = User.Gender;
-            //ViewBag.TitleID = User.Title;
-            return View(User);
+
+            //ViewBag.ReportingUserID = Userval.ReportingUser;
+            //ViewBag.UserLevelID = Userval.UserLevel;
+            //ViewBag.RoleID = Userval.RoleID;
+            //ViewBag.MaritalStatusID = Userval.MaritalStatus;
+            //ViewBag.GenderID = Userval.Gender;
+            //ViewBag.TitleID = Userval.Title;
+            return View(Userval);
         }
 
         [HttpPost]
@@ -180,8 +202,8 @@ namespace ExpenseTracker.Controllers
             //var errors = ModelState.Values.SelectMany(v => v.Errors);
             if (ModelState.IsValid)
             {
-                User = new ETUser();
-                User = repUsers.GetUser(id);
+                Userval = new ETUser();
+                Userval = repUsers.GetUser(id);
 
                 if (repUsers.LogInNameIsExist(updateUser.LoginName, id))
                 {
@@ -191,8 +213,9 @@ namespace ExpenseTracker.Controllers
                     ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.ReportingUser = repUsers.getMappedReportingUser();
+                    ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.Role = repUsers.getRole();
-                    return View(User);
+                    return View(Userval);
                 }
                 else if (repUsers.EmailIsExist(updateUser.Email, id) || !Common.IsValidEmail(updateUser.Email))
                 {
@@ -205,8 +228,9 @@ namespace ExpenseTracker.Controllers
                     ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.ReportingUser = repUsers.getMappedReportingUser();
+                    ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.Role = repUsers.getRole();
-                    return View(User);
+                    return View(Userval);
                 }
                 else if (repUsers.PhoneIsExist(updateUser.Phone, id))
                 {
@@ -216,42 +240,66 @@ namespace ExpenseTracker.Controllers
                     ViewBag.MaritalStatus = repUsers.getDataValues("MaritalStatus", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.UserLevel = repUsers.getDataValues("UserLevel", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.ReportingUser = repUsers.getMappedReportingUser();
+                    ViewBag.DeviceType = repUsers.getDataValues("DeviceType", Session["UserLevel"].ToString(), Convert.ToInt64(Session["UserID"]), Convert.ToInt64(Session["ReportingUser"]));
                     ViewBag.Role = repUsers.getRole();
-                    return View(User);
+                    return View(Userval);
                 }
                 else
                 {
-                    User.Title = updateUser.Title;
-                    User.FirstName = updateUser.FirstName;
-                    User.MiddleName = updateUser.MiddleName;
-                    User.LastName = updateUser.LastName;
-                    User.Email = updateUser.Email;
-                    User.Phone = updateUser.Phone;
-                    User.Gender = updateUser.Gender;
-                    User.MaritalStatus = updateUser.MaritalStatus;
-                    User.DOB = updateUser.DOB;
-                    User.Address = updateUser.Address;
-                    User.RoleID = updateUser.RoleID;
-                    User.LoginName = updateUser.LoginName;
-                    User.Password = Common.EncryptPassword(updateUser.Password);
-                    User.ConfirmPassword = Common.EncryptPassword(updateUser.ConfirmPassword);
-                    //User.Password = updateUser.Password;
-                    User.IsTwoFactor = updateUser.IsTwoFactor;
-                    User.UserLevel = updateUser.UserLevel;
-                    User.ReportingUser = updateUser.ReportingUser;
-                    //User.IsOwner = updateUser.IsOwner;
-                    //User.IsAdmin = updateUser.IsAdmin;
-                    //User.IsManager = updateUser.IsManager;
-                    User.IsActive = updateUser.IsActive;
-                    User.DeviceID = updateUser.DeviceID;
-                    User.UserField1 = updateUser.UserField1;
-                    User.UserField2 = updateUser.UserField2;
-                    User.UserField3 = updateUser.UserField3;
-                    User.ModifiedBy = Convert.ToInt64(Session["UserID"]);
-                    User.ModifiedDate = DateTime.Now;
-                    dbEntities.Entry(User).State = EntityState.Modified;
+                    long UserId = Convert.ToInt64(Session["UserID"]);
+                    Userval.Title = updateUser.Title;
+                    Userval.FirstName = updateUser.FirstName;
+                    Userval.MiddleName = updateUser.MiddleName;
+                    Userval.LastName = updateUser.LastName;
+                    Userval.Email = updateUser.Email;
+                    Userval.Phone = updateUser.Phone;
+                    Userval.Gender = updateUser.Gender;
+                    Userval.MaritalStatus = updateUser.MaritalStatus;
+                    Userval.DOB = updateUser.DOB;
+                    Userval.Address = updateUser.Address;
+                    Userval.RoleID = updateUser.RoleID;
+                    Userval.LoginName = updateUser.LoginName;
+                    Userval.Password = Common.EncryptPassword(updateUser.Password);
+                    Userval.ConfirmPassword = Common.EncryptPassword(updateUser.ConfirmPassword);
+                    //Userval.Password = updateUser.Password;
+                    Userval.IsTwoFactor = updateUser.IsTwoFactor;
+                    Userval.UserLevel = updateUser.UserLevel;
+                    Userval.ReportingUser = updateUser.ReportingUser;
+                    //Userval.IsOwner = updateUser.IsOwner;
+                    //Userval.IsAdmin = updateUser.IsAdmin;
+                    //Userval.IsManager = updateUser.IsManager;
+                    Userval.IsActive = updateUser.IsActive;
+                    Userval.DeviceID = updateUser.DeviceID;
+                    Userval.DeviceType = updateUser.DeviceType;
+                    Userval.UserField1 = updateUser.UserField1;
+                    Userval.UserField2 = updateUser.UserField2;
+                    Userval.UserField3 = updateUser.UserField3;
+                    Userval.ModifiedBy = UserId;
+                    Userval.ModifiedDate = DateTime.Now;
+                    dbEntities.Entry(Userval).State = EntityState.Modified;
                     dbEntities.SaveChanges();
-                    if (User.UserID != 0)
+
+                    var userVerify = dbEntities.ETUserVerifieds.Where(x => x.UserID == Userval.UserID && x.IsActive).FirstOrDefault();
+                    if (userVerify == null)
+                    {
+                        ETUserVerified userVerified = new ETUserVerified();
+                        userVerified.UserID = Userval.UserID;
+                        userVerified.IsEmailVefified = false;
+                        userVerified.IsPhoneVerified = false;
+                        userVerified.IsOtherVerified = false;
+                        userVerified.IsOtherVerified1 = false;
+                        userVerified.IsOtherVerified2 = false;
+                        userVerified.IsOtherVerified3 = false;
+                        userVerified.IsActive = true;
+                        userVerified.CreatedBy = UserId;
+                        userVerified.CreatedDate = DateTime.Now;
+                        userVerified.ModifiedBy = UserId;
+                        userVerified.ModifiedDate = DateTime.Now;
+                        dbEntities.ETUserVerifieds.Add(userVerified);
+                        dbEntities.SaveChanges();
+                    }
+
+                    if (Userval.UserID != 0)
                     {
                         TempData["messagealert"] = Status.Update;
                     }
@@ -265,9 +313,9 @@ namespace ExpenseTracker.Controllers
         #region User View
         public ActionResult User_view(long Id)
         {
-            User = repUsers.GetUser(Id);
-            User.Password = Common.DecryptPassword(User.Password);
-            return View(User);
+            Userval = repUsers.GetUser(Id);
+            Userval.Password = Common.DecryptPassword(Userval.Password);
+            return View(Userval);
         }
         #endregion
 
@@ -277,11 +325,11 @@ namespace ExpenseTracker.Controllers
             if (!dbEntities.ETUsers.Where(x => x.UserID == 1).Any()) // Need to change
             {
                 TempData["messagealert"] = Status.Delete;
-                User = new ETUser();
-                User = dbEntities.ETUsers.Where(x => x.UserID == id).SingleOrDefault();
+                Userval = new ETUser();
+                Userval = dbEntities.ETUsers.Where(x => x.UserID == id).SingleOrDefault();
                 if (User != null)
                 {
-                    dbEntities.ETUsers.Remove(User);
+                    dbEntities.ETUsers.Remove(Userval);
                     dbEntities.SaveChanges();
                     return true;
                 }
@@ -307,24 +355,66 @@ namespace ExpenseTracker.Controllers
         #region UserUpdateStatus
         public bool UserUpdateStatus(bool status, long Userid)
         {
-            User = new ETUser();
-            User = repUsers.GetUser(Userid);
+            Userval = new ETUser();
+            Userval = repUsers.GetUser(Userid);
 
-            if (User != null)
+            if (Userval != null)
             {
+                //try
+                //{
+                Userval.ConfirmPassword = Userval.Password;
                 if (status)
                 {
-                    User.IsActive = false;
-                    User.ModifiedBy = Convert.ToInt64(Session["UserID"]);
-                    User.ModifiedDate = DateTime.Now;
+                    Userval.IsActive = false;
+                    Userval.ModifiedBy = Convert.ToInt64(Session["UserID"]);
+                    Userval.ModifiedDate = DateTime.Now;
                 }
                 else
                 {
-                    User.IsActive = true;
-                    User.ModifiedBy = Convert.ToInt64(Session["UserID"]);
-                    User.ModifiedDate = DateTime.Now;
+                    Userval.IsActive = true;
+                    Userval.ModifiedBy = Convert.ToInt64(Session["UserID"]);
+                    Userval.ModifiedDate = DateTime.Now;
                 }
-                dbEntities.Entry(User).State = EntityState.Modified;
+                dbEntities.Entry(Userval).State = EntityState.Modified;
+                dbEntities.SaveChanges();
+                //}
+                //catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                //{
+                //    Exception raise = dbEx;
+                //    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                //    {
+                //        foreach (var validationError in validationErrors.ValidationErrors)
+                //        {
+                //            string message = string.Format("{0}:{1}",
+                //                validationErrors.Entry.Entity.ToString(),
+                //                validationError.ErrorMessage);
+                //            // raise a new exception nesting
+                //            // the current instance as InnerException
+                //            raise = new InvalidOperationException(message, raise);
+                //        }
+                //    }
+                //    throw raise;
+                //}
+                return true;
+            }
+
+            return false;
+        }
+        #endregion
+
+        #region OtpUpdateStatus
+        public bool OtpUpdateStatus(long Userid, long Otp)
+        {
+            Userval = new ETUser();
+            Userval = repUsers.GetUser(Userid);
+
+            if (Userval != null)
+            {
+                Userval.ConfirmPassword = Userval.Password;
+                Userval.Otp = Otp.ToString();
+                Userval.ModifiedBy = Convert.ToInt64(Session["UserID"]);
+                Userval.ModifiedDate = DateTime.Now;
+                dbEntities.Entry(Userval).State = EntityState.Modified;
                 dbEntities.SaveChanges();
                 return true;
             }

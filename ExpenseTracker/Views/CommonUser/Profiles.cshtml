@@ -44,7 +44,7 @@
                         </div>
                         <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">First Name<span class="required"> *</span></label>
-                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", autocomplete = "off", maxlength = 50 })
+                            @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", autocomplete = "off", maxlength = 100 })
                             <span class="error-text">
                                 @Html.ValidationMessageFor(model => model.FirstName)
                             </span>
@@ -53,11 +53,11 @@
                     <div class="row">
                         <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">Middle Name</label>
-                            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", autocomplete = "off", maxlength = 5 })
+                            @Html.TextBoxFor(m => m.MiddleName, new { @class = "form-control", autocomplete = "off", maxlength = 100 })
                         </div>
                         <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">Last Name<span class="required"> *</span></label>
-                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", autocomplete = "off", maxlength = 50 })
+                            @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", autocomplete = "off", maxlength = 100 })
                             <span class="error-text">
                                 @Html.ValidationMessageFor(model => model.LastName)
                             </span>
@@ -119,8 +119,6 @@
                                 @Html.ValidationMessageFor(model => model.LoginName)
                             </span>
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">IsTwoFactor</label>
                             <div class="attr-section">
@@ -141,15 +139,21 @@
                             @Html.TextBoxFor(m => m.DeviceID, new { @class = "form-control", autocomplete = "off" })
                         </div>
                         <div class="form-group col-md-4 col-sm-4">
-                            <label style="font-weight:bold">Additional Fields 1</label>
-                            @Html.TextBoxFor(m => m.UserField1, new { @class = "form-control", autocomplete = "off" })
+                            <label style="font-weight:bold">Device Type</label>
+                            @Html.DropDownListFor(m => m.DeviceType, new SelectList(ViewBag.DeviceType, "Value", "Text", ViewBag.DeviceTypeID), new { @class = "form-control IsRequiredDropDown singleSelect" })
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-4 col-sm-4">
+                            <label style="font-weight:bold">Additional Fields 1</label>
+                            @Html.TextBoxFor(m => m.UserField1, new { @class = "form-control", autocomplete = "off" })
+                        </div>
+                        <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">Additional Fields 2</label>
                             @Html.TextBoxFor(m => m.UserField2, new { @class = "form-control", autocomplete = "off" })
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="form-group col-md-4 col-sm-4">
                             <label style="font-weight:bold">Additional Fields 3</label>
                             @Html.TextBoxFor(m => m.UserField3, new { @class = "form-control", autocomplete = "off" })

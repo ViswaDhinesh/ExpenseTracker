@@ -110,6 +110,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Telesign, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Telesign.2.2.2\lib\net452\Telesign.dll</HintPath>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
@@ -133,6 +136,7 @@
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\CommonUserController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LandController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -140,10 +144,12 @@
     <Compile Include="Controllers\SubMenuController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValueController.cs" />
+    <Compile Include="Controllers\WindowsToWebController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Classes\Common.cs" />
+    <Compile Include="Models\Classes\LandRepository.cs" />
     <Compile Include="Models\Classes\SourceRepository.cs" />
     <Compile Include="Models\Classes\UserRepository.cs" />
     <Compile Include="Models\Entity\EntityModel.cs" />
@@ -526,6 +532,7 @@
     <Content Include="Content\Admin\images\avatar.png" />
     <Content Include="Content\Admin\images\Front.jpg" />
     <Content Include="Content\Admin\images\Login.jpg" />
+    <Content Include="Content\Admin\images\Logo.jpg" />
     <Content Include="Content\Admin\images\Stock.jpg" />
     <Content Include="Content\Admin\js\app.js" />
     <Content Include="Content\Admin\js\bootstrap-datepicker.min.js" />
@@ -569,6 +576,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Emails\ChangePassword.html" />
+    <Content Include="Content\Emails\EmailVerification.html" />
     <Content Include="Content\Front\css\animate.css" />
     <Content Include="Content\Front\css\bootstrap-grid.css" />
     <Content Include="Content\Front\css\bootstrap-grid.min.css" />
@@ -876,6 +885,17 @@
     <Content Include="Views\Bank\Bank_add.cshtml" />
     <Content Include="Views\Bank\Bank_edit.cshtml" />
     <Content Include="Views\Bank\Bank_view.cshtml" />
+    <Content Include="Views\Login\SignUp.cshtml" />
+    <Content Include="Views\CommonUser\Twofactor.cshtml" />
+    <Content Include="Views\CommonUser\TwofactorEmailVerification.cshtml" />
+    <Content Include="Views\CommonUser\TwofactorPhoneVerification.cshtml" />
+    <Content Include="Views\CommonUser\TwofactorPhoneTabVerification.cshtml" />
+    <Content Include="Views\Shared\_LayoutHideMenuDesign.cshtml" />
+    <Content Include="Views\WindowsToWeb\Index.cshtml" />
+    <Content Include="Views\Land\Index.cshtml" />
+    <Content Include="Views\Land\Land_Add.cshtml" />
+    <Content Include="Views\Land\Land_Edit.cshtml" />
+    <Content Include="Views\Land\Land_View.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

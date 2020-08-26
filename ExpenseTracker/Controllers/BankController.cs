@@ -7,7 +7,7 @@ using System.Web.Mvc;
 
 namespace ExpenseTracker.Controllers
 {
-    public class BankController : Controller
+    public class BankController : BaseController
     {
         ExpenseTrackerEntites dbEntities = new ExpenseTrackerEntites();
         ETBank Bank = new ETBank();

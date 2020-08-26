@@ -35,3 +35,36 @@ alter table ETValue alter column ModifiedBy bigint NULL
 alter table ETMenuAccess alter column CreatedBy bigint NULL
 
 alter table ETMenuAccess alter column ModifiedBy bigint NULL
+
+alter table ETUser add DeviceType nvarchar(10) NULL
+
+select * from ETLandDetails where OwnerNameInTamil is null
+select * from ETLandDetailsLog where LandID = 0
+
+
+alter table ETUser add OtpReceivedDate DateTime NULL
+
+alter table ETUser add OtpReceivedDevice nvarchar(1) NULL
+
+--alter table ETUser add OtpDevice nvarchar(1) NULL
+
+alter table ETLandDetails alter column AcresSize float NOT NULL
+alter table ETLandDetails alter column AresSize float NOT NULL
+alter table ETLandDetails alter column HectareSize float NOT NULL
+
+alter table ETLandDetailsLog alter column AcresSize float NOT NULL
+alter table ETLandDetailsLog alter column AresSize float NOT NULL
+alter table ETLandDetailsLog alter column HectareSize float NOT NULL
+
+alter table ETValue add OrderNo bigint NULL
+alter table ETValue alter column OrderNo bigint NOT NULL
+------------------
+update ETValue set OrderNo = 0
+-------------------
+
+;With a as (
+Select ROW_NUMBER() OVER(PARTITION BY PulaNumber, SubdivisionNumber ORDER BY PulaNumber, SubdivisionNumber ASC) as RowNo, * from ETLandDetails
+)
+--update a set IsActive = 0 where RowNo = 2
+--delete from a where RowNo = 2
+--Select * from a where RowNo = 2

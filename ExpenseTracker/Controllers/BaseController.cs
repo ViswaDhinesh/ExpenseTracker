@@ -40,6 +40,7 @@ namespace ExpenseTracker.Controllers
                     Session["UserLevel"] = null;
                     Session["ReportingUser"] = null;
                     Session["MappedUser"] = null;
+                    Session["IsVerifyTwofactor"] = null;
                     TempData["SessionExpired"] = "You don't have permission to access this page";
                     Response.Redirect("/Login");
                 }
@@ -71,6 +72,7 @@ namespace ExpenseTracker.Controllers
                             Session["UserLevel"] = null;
                             Session["ReportingUser"] = null;
                             Session["MappedUser"] = null;
+                            Session["IsVerifyTwofactor"] = null;
                             TempData["SessionExpired"] = "Sorry, Your account was deactivated";
                             Response.Redirect("/Login");
                         }
@@ -79,13 +81,18 @@ namespace ExpenseTracker.Controllers
                             menuMappings = dbEntities.ETMenuAccesses.Where(x => x.RoleID == roleId).ToList();
                             if (menuMappings != null && menuMappings.Count > 0)
                             {
-                                menuIds = menuMappings.Select(x => x.MenuID).Distinct().ToList();
-                                subMenuIds = menuMappings.Select(x => x.SubMenuID).Distinct().ToList();
-                                menus = dbEntities.ETMenus.Where(x => menuIds.Contains(x.MenuID) && x.Status).OrderBy(x => x.OrderNo).ThenBy(x => x.MenuName).ToList();
-                                subMenus = dbEntities.ETSubMenus.Where(x => subMenuIds.Contains(x.SubMenuID) && x.Status).OrderBy(x => x.OrderNo).ThenBy(x => x.SubMenuName).ToList();
+                                if (Session["IsVerifyTwofactor"] == null && !Url.Contains("CommonUser"))
+                                    Response.Redirect("/CommonUser/Twofactor");
+                                else
+                                {
+                                    menuIds = menuMappings.Select(x => x.MenuID).Distinct().ToList();
+                                    subMenuIds = menuMappings.Select(x => x.SubMenuID).Distinct().ToList();
+                                    menus = dbEntities.ETMenus.Where(x => menuIds.Contains(x.MenuID) && x.Status).OrderBy(x => x.OrderNo).ThenBy(x => x.MenuName).ToList();
+                                    subMenus = dbEntities.ETSubMenus.Where(x => subMenuIds.Contains(x.SubMenuID) && x.Status).OrderBy(x => x.OrderNo).ThenBy(x => x.SubMenuName).ToList();
 
-                                ViewBag.menus = menus;
-                                ViewBag.subMenus = subMenus;
+                                    ViewBag.menus = menus;
+                                    ViewBag.subMenus = subMenus;
+                                }
                             }
                             else
                             {
@@ -102,6 +109,7 @@ namespace ExpenseTracker.Controllers
                                 Session["UserLevel"] = null;
                                 Session["ReportingUser"] = null;
                                 Session["MappedUser"] = null;
+                                Session["IsVerifyTwofactor"] = null;
                                 TempData["SessionExpired"] = "Sorry, You don't have permission";
                                 Response.Redirect("/Login");
                             }
@@ -122,6 +130,7 @@ namespace ExpenseTracker.Controllers
                         Session["UserLevel"] = null;
                         Session["ReportingUser"] = null;
                         Session["MappedUser"] = null;
+                        Session["IsVerifyTwofactor"] = null;
                         TempData["SessionExpired"] = "Session Expired";
                         Response.Redirect("/Login");
                     }
@@ -142,6 +151,7 @@ namespace ExpenseTracker.Controllers
                 Session["UserLevel"] = null;
                 Session["ReportingUser"] = null;
                 Session["MappedUser"] = null;
+                Session["IsVerifyTwofactor"] = null;
                 Response.Redirect("/Login");
             }
 

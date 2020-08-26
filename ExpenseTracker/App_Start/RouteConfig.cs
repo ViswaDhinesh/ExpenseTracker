@@ -25,10 +25,16 @@ namespace ExpenseTracker
             //    defaults: new { controller = "CommonUser", action = "Profiles", id = UrlParameter.Optional }
             //);
 
+            //routes.MapRoute(
+            //    name: "Default",
+            //    url: "{controller}/{action}/{id}",
+            //    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+            //);
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Value", action = "Index", id = UrlParameter.Optional }
             );
         }
     }

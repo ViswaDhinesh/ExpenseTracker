@@ -1,0 +1,87 @@
+{"balance":9,"batch_id":1287521242,"cost":1,"num_messages":1,"message":{"num_parts":1,"sender":"TXTLCL","content":"This is your message"},"receipt_url":"","custom":"","messages":[{"id":"11819745715","recipient":919629987977}],"status":"success"}
+
+
+offline web apps - angular
+
+abondon - angular
+
+Dear Dinesh
+Your Otp is228324. Your can expired within5minutes. Please use this.
+
+
+Login/DirectLogin?RandomID=YWE=&RandomValue=MjgwNTM1&VerifyMode=UGhvbmU=
+
+
+
+Dear Dinesh
+ Your Otp is 280535. Your can expired within 5 minutes. Please use this. 
+ Login/DirectLogin?RandomID=YWE=&RandomValue=MjgwNTM1&VerifyMode=UGhvbmU=
+
+
+------------------
+https://localhost:44381/Login/DirectLogin?RandomID=YWE=&RandomValue=Mjg0Nzc1&VerifyMode=UGhvbmU=
+
+
+Dear Dinesh
+ Your Otp is 284775. Your can expired within 5 minutes. Please use this. 
+ https://localhost:44381/Login/DirectLogin?RandomID=YWE=&RandomValue=Mjg0Nzc1&VerifyMode=UGhvbmU=
+
+
+Dear Dinesh
+ Your Otp is 284775. Your can expired within 5 minutes. Please use this. 
+ https://localhost:44381/Login/DirectLogin?RandomID=YWE=&RandomValue=Mjg0Nzc1&VerifyMode=UGhvbmU=
+
+
+----------------
+
+https://localhost:44381/Login/DirectLogin?RandomID=YWE=&RandomValue=Nzg1NzA2&VerifyMode=UGhvbmU=
+
+Dear Dinesh
+ Your Otp is 785706. Your can expired within 5 minutes. Please use this. 
+ https://localhost:44381/Login/DirectLogin?RandomID=YWE=&RandomValue=Nzg1NzA2&VerifyMode=UGhvbmU=
+
+
+
+{"balance":5,"batch_id":1287679739,"cost":2,"num_messages":1,"message":{"num_parts":2,"sender":"TXTLCL","content":"Dear Dinesh\n Your Otp is 785706. Your can expired within 5 minutes. Please use this. \n https:\/\/localhost:44381\/Login\/DirectLogin?RandomID=YWE=&RandomValue=Nzg1NzA2&VerifyMode=UGhvbmU="},"receipt_url":"","custom":"","messages":[{"id":"11819938244","recipient":919629987977}],"status":"success"}
+
+-----------------------------------
+
+https://localhost:44381/Login/DirectLogin?RandomID=YWE=&RandomValue=NjA1MDY=&VerifyMode=UGhvbmU=
+
+Dear Dinesh
+ Your Otp is 60506. Your otp is expired within 5 minutes. Please Verify this asap. 
+ You can use below direct link 
+ https://localhost:44381/Login/DirectLogin?RandomID=YWE=&RandomValue=NjA1MDY=&VerifyMode=UGhvbmU=
+
+{"balance":3,"batch_id":1287683654,"cost":2,"num_messages":1,"message":{"num_parts":2,"sender":"TXTLCL","content":"Dear Dinesh\n Your Otp is 60506. Your otp is expired within 5 minutes. Please Verify this asap. \n You can use below direct link \n https:\/\/localhost:44381\/Login\/DirectLogin?RandomID=YWE=&RandomValue=NjA1MDY=&VerifyMode=UGhvbmU="},"receipt_url":"","custom":"","messages":[{"id":"11819945349","recipient":919629987977}],"status":"success"}
+
+-------------------------------
+
+https://localhost:44381/Login/DirectLogin?RandomID=YWE=&RandomValue=OTM5MTE3&VerifyMode=UGhvbmU=
+
+---------------------
+TELESIGN:
+
+Name: Dev
+
+Email: expensivetracker@gmail.com
+
+Password: Viswadhinesh1
+
+Mobile: 9629987977
+
+Customer ID: F246C360-8CFD-443D-9227-D30134043B75
+
+REST Endpoint: https://rest-api.telesign.com
+
+
+API: DBdcTq1dXhaCnhKENlxEXzhYWm8B1Du/0bYDXMR8Ex+7Q3M9fMkFXQXiLzC6EdFovA7yIg7MYxigCj0UkkkpZwg==V
+
+Remove name in api
+
+https://portal.telesign.com/portal/account-settings
+
+
+
+
+
