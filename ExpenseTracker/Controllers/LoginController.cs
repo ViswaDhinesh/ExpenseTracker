@@ -138,7 +138,7 @@ namespace ExpenseTracker.Controllers
                         Session["UserID"] = loginDetails.UserID;
                         Session["UserName"] = loginDetails.FirstName + " " + loginDetails.MiddleName + " " + loginDetails.LastName;
                         Session["RoleID"] = loginDetails.RoleID;
-                        Session["RoleName"] = null; //loginDetails.ETRole.RoleName;
+                        Session["RoleName"] = dbEntities.ETRoles.Where(x => x.RoleID == loginDetails.RoleID).Select(x => x.RoleName).SingleOrDefault();//loginDetails.ETRole.RoleName;
                         Session["LoginName"] = loginDetails.LoginName;  // New
                         Session["Email"] = loginDetails.Email;
                         Session["Phone"] = loginDetails.Phone;
@@ -236,7 +236,7 @@ namespace ExpenseTracker.Controllers
                         Session["UserID"] = loginDetails.UserID;
                         Session["UserName"] = loginDetails.FirstName + " " + loginDetails.MiddleName + " " + loginDetails.LastName;
                         Session["RoleID"] = loginDetails.RoleID;
-                        Session["RoleName"] = null; //loginDetails.ETRole.RoleName;
+                        Session["RoleName"] = dbEntities.ETRoles.Where(x => x.RoleID == loginDetails.RoleID).Select(x => x.RoleName).SingleOrDefault(); //loginDetails.ETRole.RoleName;
                         Session["LoginName"] = loginDetails.LoginName;  // New
                         Session["Email"] = loginDetails.Email;
                         Session["Phone"] = loginDetails.Phone;
@@ -524,5 +524,185 @@ namespace ExpenseTracker.Controllers
 
         #endregion        
 
+
+        #region Old Login
+
+        [HttpGet]
+        public ActionResult NewIndex()
+        {
+            ViewBag.Error = string.Empty;
+            ViewBag.messagealert = string.Empty;
+            if (Session["UserID"] != null)
+            {
+                string roleName = Convert.ToString(Session["RoleName"]);
+                long roleId = Convert.ToInt64(Session["RoleID"]);
+                List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == roleId && n.Status).Select(x => x.SubMenuID).ToList();
+                if (lstSubmenuId.Count > 0)
+                {
+                    ETSubMenu objSubMenu = dbEntities.ETSubMenus.Where(n => lstSubmenuId.Contains(n.SubMenuID) && n.Status && n.IsMainMenu).OrderBy(x => x.OrderNo).FirstOrDefault();
+                    string Url = objSubMenu.SubMenuUrl;
+                    if (!string.IsNullOrEmpty(Url))
+                    {
+                        string[] urls = Url.Split('/');
+                        if (urls[1] != "" && urls[2] != "")
+                        {
+                            return RedirectToAction(urls[2], urls[1]);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ViewBag.messagealert = TempData["SessionExpired"];
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult NewIndex(LoginDetail objLoginDetails)
+        {
+            if (objLoginDetails != null)
+            {
+                if (Common.IsValidEmail(objLoginDetails.Email))
+                {
+                    objLoginDetails.GetTypes = "Email Id";
+                }
+                else
+                {
+                    objLoginDetails.GetTypes = "Usename";
+                    if (dbEntities.ETUsers.Any(x => x.LoginName == objLoginDetails.Email))
+                    {
+                        objLoginDetails.Email = dbEntities.ETUsers.Where(x => x.LoginName == objLoginDetails.Email).Select(x => x.Email).First();
+                    }
+                }
+
+                //////List<long> CompanyId = new List<long>();
+                //////List<long> TeamId = new List<long>();
+                //////var data = dbEntities.ETUsers.Where(x => CompanyId.Contains(x.UserID) || TeamId.Contains(x.RoleID));
+
+
+                ////////string strWhere = "UserID = 1";
+                ////////IQueryable<ETUser> emp = dbEntities.ETUsers.Select<ETUser>(strWhere).AsQueryable();
+
+                ////////DataTable dt = dbEntities.ETUsers.ToArray();
+
+                //////DataTable dt = new DataTable();
+                //////if (dt.Columns.Count == 0)
+                //////{
+                //////    dt.Columns.Add("UserId");
+                //////    dt.Columns.Add("Teams");
+                //////    dt.Columns.Add("UserName");
+                //////    dt.Columns.Add("City");
+                //////}
+
+                //////for (int i = 0; i < 10; i++)
+                //////{
+                //////    dt.Rows.Add();
+                //////    dt.Rows[i][0] = i;
+                //////    dt.Rows[i][1] = "Microsoft" + (i + 1).ToString();
+                //////    dt.Rows[i][2] = "Test" + (i + 1).ToString();
+                //////    dt.Rows[i][3] = "Chennai" + (i + 1).ToString();
+                //////}
+
+
+                //////string condition = "UserId = 1 or Teams = 'Microsoft5' or UserName = 'Test1'";
+                ////////DataTable dtFilter = dt.Select(condition).CopyToDataTable();
+                //////var filter = dt.Select(condition);
+
+                ////////var filters = dbEntities.ETUsers.Where(condition);
+
+                ////////    dbEntities.ETUsers.Select(x => new {
+                ////////    x.UserID, x.FirstName, x.LastName, x.Title, x.IsActive, x.IsTwoFactor, x.LoginName, x.MaritalStatus, x.Otp,
+                ////////    x.Phone, x.Email, x.UserLevel, x.RoleID
+
+                ////////}).CopyToDataTable();
+
+                //////string input = "data";
+                //////var result = dbEntities.ETUsers.Where(x => x.UserID.ToString().Contains(input) || x.FirstName.Contains(input) || x.LastName.Contains(input)).ToList();
+
+                //////string FirstName = "Dinesh";
+                //////string LastName = "Viswa";
+
+                //////var result1 = dbEntities.ETUsers.Where(x => x.UserID.ToString().Contains(input)).ToList();
+                //////if (FirstName != "")
+                //////{
+                //////    var result2 = dbEntities.ETUsers.Where(x => x.FirstName.ToString().Contains(FirstName)).ToList();
+                //////    result1.Union(result2);
+                //////}
+                //////if (LastName != "")
+                //////{
+                //////    var result2 = dbEntities.ETUsers.Where(x => x.LastName.ToString().Contains(LastName)).ToList();
+                //////    result1.Union(result2);
+                //////}
+
+                LoginDetailCheck checkLogin = repUser.CheckLoginUser(objLoginDetails);
+                if (checkLogin.isSuccess)
+                {
+                    ETUser loginDetails = checkLogin.loginDetails;
+                    if (loginDetails != null)
+                    {
+                        List<long> MappedUser = new List<long>();
+                        Session["UserID"] = loginDetails.UserID;
+                        Session["UserName"] = loginDetails.FirstName + " " + loginDetails.MiddleName + " " + loginDetails.LastName;
+                        Session["RoleID"] = loginDetails.RoleID;
+                        Session["RoleName"] = dbEntities.ETRoles.Where(x => x.RoleID == loginDetails.RoleID).Select(x => x.RoleName).SingleOrDefault(); //loginDetails.ETRole.RoleName;
+                        Session["LoginName"] = loginDetails.LoginName;  // New
+                        Session["Email"] = loginDetails.Email;
+                        Session["Phone"] = loginDetails.Phone;
+                        Session["LastName"] = loginDetails.LastName;
+                        Session["IsTwoFactor"] = loginDetails.IsTwoFactor;
+                        Session["UserLevel"] = loginDetails.UserLevel;
+                        Session["ReportingUser"] = loginDetails.ReportingUser;
+                        MappedUser = dbEntities.ETUsers.Where(x => x.ReportingUser == loginDetails.UserID || x.UserID == loginDetails.UserID).Select(x => x.UserID).Distinct().ToList();
+                        Session["MappedUser"] = MappedUser;
+                        Session.Timeout = 300;
+                        repUser.LogForUserLogin(checkLogin, objLoginDetails.Email);
+                        var userVerify = dbEntities.ETUserVerifieds.Where(x => x.UserID == loginDetails.UserID && x.IsActive).FirstOrDefault();
+                        if (loginDetails.IsTwoFactor)
+                        {
+                            return RedirectToAction("Twofactor", "CommonUser");
+                        }
+                        else if (userVerify != null && (!userVerify.IsEmailVefified || !userVerify.IsPhoneVerified)) // || !userVerify.IsOtherVerified))
+                        {
+                            if (!userVerify.IsEmailVefified)
+                                //return RedirectToAction("TwofactorEmailVerification?VerifyMode=Email", "CommonUser");
+                                return RedirectToAction("TwofactorEmailVerification", "CommonUser", new { VerifyMode = "Email" });
+                            else if (!userVerify.IsPhoneVerified)
+                                return RedirectToAction("TwofactorPhoneVerification", "CommonUser", new { VerifyMode = "Phone" });
+
+                            //else if (!userVerify.IsOtherVerified) // Maybe verify this in future
+                            //    return RedirectToAction("TwofactorPhoneTabVerification", "CommonUser", new { VerifyMode = "PhoneTab" });
+                        }
+                        else
+                        {
+                            Session["IsVerifyTwofactor"] = "Y";
+                            List<long> lstSubmenuId = dbEntities.ETMenuAccesses.Where(n => n.RoleID == loginDetails.RoleID && n.Status).Select(x => x.SubMenuID).ToList();
+                            if (lstSubmenuId.Count > 0)
+                            {
+                                ETSubMenu objSubMenu = dbEntities.ETSubMenus.Where(n => lstSubmenuId.Contains(n.SubMenuID) && n.Status && n.IsMainMenu).OrderBy(x => x.OrderNo).FirstOrDefault();
+                                string Url = objSubMenu.SubMenuUrl;
+                                if (!string.IsNullOrEmpty(Url))
+                                {
+                                    string[] urls = Url.Split('/');
+                                    if (urls[1] != "" && urls[2] != "")
+                                    {
+                                        return RedirectToAction(urls[2], urls[1]);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    //repUser.LogForUserLogin(checkLogin, objLoginDetails.Email);
+                    ViewBag.Error = checkLogin.errorMessage;
+                    return View();
+                }
+            }
+            return View();
+        }
+
+        #endregion
     }
 }

@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutHDesignNew.cshtml";
+}
+<script>
+    function FileRenames(cimageid) {
+        alert('dinesh');
+        var url = "/Files/File_Rename";
+        //var img = $(anchor).find("img")[0];
+        $.get(url, { Fileid: cimageid }, function (data) {
+
+            if (data == "True") {
+                alert("Files are renamed successfully!");
+            }
+        });
+    }
+</script>
+
+<div class="main-container">
+    <div class="container-fluid">
+        <div class="col-lg-12">
+            <div class="pageheader col-lg-12">
+                <h3 class="page-title text-primary">File Rename</h3>
+                <hr>
+                <div class="form-group text-right">
+                    <a href="javascript:void(0)" class="btn btn-primary add-emp" data-toggle="modal" title="Rename" onclick="location.href='@Url.Action("File_Rename", "Files")'">Rename</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

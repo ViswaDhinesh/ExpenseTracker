@@ -1,0 +1,79 @@
+﻿@model ExpenseTracker.LoginDetail
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+
+    @System.Web.Optimization.Styles.Render("~/bundles/Admin/css")
+    @System.Web.Optimization.Scripts.Render("~/bundles/Admin/js")
+
+</head>
+<body class="frontLogin" style="padding-bottom:0;margin-bottom:0;">
+    <div class="main-container login-container">
+        <div class="container">
+            <div class="row login-row">
+                <div class="row">
+                    <div class="page-header text-center">
+                        <div class="navbar-header">
+                            <h2>Expense Tracker</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12">
+                    <div class="well login-box">
+                        @if (!string.IsNullOrEmpty(ViewBag.Error))
+                        {
+                            <p class="alert alert-dismissible alert-danger text-center" id="validateerrormsg1"><button type="button" class="close loginclose" data-dismiss="alert">×</button>@ViewBag.Error</p>
+                        }
+                        @using (Html.BeginForm("NewIndex", "Login", FormMethod.Post, new { enctype = "multipart/form-data", @class = "login-form" }))
+                        {
+                            @Html.ValidationSummary(true)
+
+                            if (ViewBag.messagealert != "" && ViewBag.messagealert != null)
+                            {
+                                <div class="alert alert-dismissible alert-success" id="removediv">
+                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                    @ViewBag.messagealert
+                                </div>
+                            }
+
+                            <div class="form-group">
+                                <label for="EMAIL_ID">Email Id or Username</label>
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control UName", @placeholder = "Email ID or Username" })
+                                <span class="error-text">
+                                    @Html.ValidationMessageFor(model => model.Email)
+                                </span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="PASSWORD">Password</label>
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control UPassword", @placeholder = "Password" })
+                                <span class="error-text">
+                                    @Html.ValidationMessageFor(model => model.Password)
+                                </span>
+                            </div>
+                            <div class="form-group frt-pw" style="padding-top:20px;">
+                                <a href="/Login/forgotpassword" class="forget-pw col-lg-6 col-md-6 col-xs-6 text-left" tabindex=4 title="Forgot your Password">Forgot your Password ?</a>
+                                <a href="/Login/SignUp" class="forget-pw col-lg-6 col-md-6 col-xs-6 text-right" tabindex=4 title="Forgot your Password">SignUp</a>
+                            </div>
+                            <div class="form-group text-center" style="padding-top:35px;">
+                                <button class="btn btn-primary btnlogin" type="submit" title="Sign In">Sign In</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

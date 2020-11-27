@@ -4,90 +4,113 @@
     ViewBag.Title = "Login";
     Layout = null;
 }
-<!doctype html>
-<html lang="en">
+
+<!DOCTYPE html>
+
+<html>
 <head>
-    <meta charset="utf-8">
     <title>Login</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
-    <script src="~/Scripts/knockout-3.4.2.js"></script>
-    <script src="~/Scripts/knockout-3.4.2.debug.js"></script>
-    <script src="~/Scripts/knockout.validation.min.js"></script>
+    @System.Web.Optimization.Styles.Render("~/bundles/NewLogincss")
+    @System.Web.Optimization.Scripts.Render("~/bundles/NewLoginjs")
 
-    <!--[if lt IE 9]>
-        <script src="~/Content/Admin/js/html5shiv.js"></script>
-        <script src="~/Content/Admin/js/respond.min.js"></script>
-    <![endif]-->
+    @*//for textbox validations and facebook and twitter icons*@
     @System.Web.Optimization.Styles.Render("~/bundles/Admin/css")
     @System.Web.Optimization.Scripts.Render("~/bundles/Admin/js")
 
-    <script src="../../Content/Admin/datatbaleJs/jquery.dataTables.min.js"></script>
-    <script src="../../Content/Admin/datatbaleJs/dataTables.bootstrap.min.js"></script>
-    <link href="../../Content/Admin/datatbaleJs/dataTables.bootstrap.min.css" rel="stylesheet" />
-    <script src="../../Content/Admin/datatbaleJs/dataTables.responsive.min.js"></script>
-    <link href="../../Content/Admin/datatbaleJs/responsive.dataTables.min.css" rel="stylesheet" />
-    <script src="~/Content/Admin/datatbaleJs/datagridperiority.js"></script>
-    <script src="~/Content/Admin/js/bootstrap-datepicker.min.js"></script>
 </head>
-<body class="frontLogin" style="padding-bottom:0;margin-bottom:0;">
-    <div class="main-container login-container">
-        <div class="container">
-            <div class="row login-row">
-                <div class="row">
-                    <div class="page-header text-center">
-                        <div class="navbar-header">
-                            <h2>Expense Tracker</h2>
+
+<body style="background-color: #666666;">
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="wrap-login100">
+                <div class="login100-form validate-form">
+                    <span class="login100-form-title p-b-30">
+                        Login to continue
+                    </span>
+
+                    @if (!string.IsNullOrEmpty(ViewBag.Error))
+                    {
+                        <p class="alert alert-dismissible alert-danger text-center" id="validateerrormsg1"><button type="button" class="close loginclose" data-dismiss="alert">×</button>@ViewBag.Error</p>
+                    }
+                    @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { enctype = "multipart/form-data", @class = "login-form" }))
+                    {
+
+                        if (ViewBag.messagealert != "" && ViewBag.messagealert != null)
+                        {
+                            <div class="alert alert-dismissible alert-success" id="removediv">
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                                @ViewBag.messagealert
+                            </div>
+                        }
+
+                        @*<div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                            <input class="input100" type="text" name="email">
+                            <span class="focus-input100"></span>
+                            <span class="label-input100">Email</span>
+                        </div>*@
+
+                        <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                            @Html.TextBoxFor(m => m.Email, new { @class = "input100 UName", @type = "text", @name = "email" })
+                            @*<input class="input100" type="text" name="email">*@
+                            <span class="focus-input100"></span>
+                            <span class="label-input100">Email id or User name</span>
                         </div>
-                    </div>
+
+                        <div class="wrap-input100 validate-input" data-validate="Password is required">
+                            @Html.PasswordFor(m => m.Password, new { @class = "input100 UPassword", @type = "password", @name = "pass" })
+                            @*<input class="input100" type="password" name="pass">*@
+                            <span class="focus-input100"></span>
+                            <span class="label-input100">Password</span>
+                        </div>
+
+                        <div class="flex-sb-m w-full p-t-3 p-b-32">
+                            <div class="contact100-form-checkbox">
+                                <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                                <label class="label-checkbox100" for="ckb1">
+                                    Remember me
+                                </label>
+                            </div>
+                            <div>
+                                <a href="/Login/forgotpassword" class="txt1">
+                                    Forgot Password?
+                                </a>
+                            </div>
+                        </div>
+                        <div class="container-login100-form-btn">
+                            <button class="login100-form-btn" type="submit" title="Sign In">Sign In</button>
+                        </div>
+                        <div class="text-center p-t-46 p-b-20">
+                            <span class="txt2">
+                                <a href="/Login/SignUp" class="txt1">
+                                    sign up
+                                </a>
+                                <br />
+                                or using
+                            </span>
+                        </div>
+                        <div class="login100-form-social flex-c-m">
+                            <a href="#" class="login100-form-social-item flex-c-m bg1 m-r-5">
+                                <i class="fa fa-facebook-f" aria-hidden="true"></i>
+                            </a>
+                            <a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
+                                <i class="fa fa-twitter" aria-hidden="true"></i>
+                            </a>
+
+                            <a href="#" class="login100-form-social-item flex-c-m bg2 m-r-5">
+                                <i class="fa fa-google-plus" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    }
                 </div>
-                <div class="col-lg-12 col-md-12">
-                    <div class="well login-box">
-                        @if (!string.IsNullOrEmpty(ViewBag.Error))
-                        {
-                            <p class="alert alert-dismissible alert-danger text-center" id="validateerrormsg1"><button type="button" class="close loginclose" data-dismiss="alert">×</button>@ViewBag.Error</p>
-                        }
-                        @using (Html.BeginForm("Index", "Login", FormMethod.Post, new { enctype = "multipart/form-data", @class = "login-form" }))
-                        {
-                            @Html.ValidationSummary(true)
-
-                            if (ViewBag.messagealert != "" && ViewBag.messagealert != null)
-                            {
-                                <div class="alert alert-dismissible alert-success" id="removediv">
-                                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                                    @ViewBag.messagealert
-                                </div>
-                            }
-
-                            <div class="form-group">
-                                <label for="EMAIL_ID">Email Id or Username</label>
-                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control UName", @placeholder = "Email ID or Username" })
-                                <span class="error-text">
-                                    @Html.ValidationMessageFor(model => model.Email)
-                                </span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="PASSWORD">Password</label>
-                                @Html.PasswordFor(m => m.Password, new { @class = "form-control UPassword", @placeholder = "Password" })
-                                <span class="error-text">
-                                    @Html.ValidationMessageFor(model => model.Password)
-                                </span>
-                            </div>
-                            <div class="form-group frt-pw" style="padding-top:20px;">
-                                <a href="/Login/forgotpassword" class="forget-pw col-lg-6 col-md-6 col-xs-6 text-left" tabindex=4 title="Forgot your Password">Forgot your Password ?</a>
-                                <a href="/Login/SignUp" class="forget-pw col-lg-6 col-md-6 col-xs-6 text-right" tabindex=4 title="Forgot your Password">SignUp</a>
-                            </div>
-                            <div class="form-group text-center" style="padding-top:35px;">
-                                <button class="btn btn-primary btnlogin" type="submit" title="Sign In">Sign In</button>
-                            </div>
-                        }
-                    </div>
+                <div class="login100-more" style="background-image: url('../Content/Login/Images/bg-01.jpg');">
                 </div>
             </div>
         </div>
     </div>
 
 </body>
+
 </html>

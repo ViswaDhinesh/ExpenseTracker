@@ -34,8 +34,11 @@
     <div id="preloader" style="display:none">
         <div id="preloader_status"></div>
     </div>
-    <nav class="navbar navbar-default bg-primary col-lg-12">
-        <div class="container-fluid">
+
+    <link href="~/Content/Home/css/style.css" rel="stylesheet" />
+
+    <div class="header-main fixed">
+        <div class="header-left">
 
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
@@ -46,86 +49,234 @@
                 </button>
                 <a class="navbar-brand logo" href="/Home/Index"><img src="~/Content/Admin/images/Logo.jpg" /></a>
             </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav cater-menu">
-                    @* -- *@
-                    @*<ul class="nav navbar-nav cater-menu">
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" href="#" data-toggle="dropdown" title="Bank">Bank<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                <ul aria-labelledby="download" class="dropdown-menu">
-                                    <li>
-                                        <a href="Home" title="Bank">Bank</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" href="#" data-toggle="dropdown" title="Source">Source<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                <ul aria-labelledby="download" class="dropdown-menu">
-                                    <li>
-                                        <a href="Source" title="Source">Source</a>
-                                        <a href="Source1" title="Source1">Source1</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" href="#" data-toggle="dropdown" title="Test">Test<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                <ul aria-labelledby="download" class="dropdown-menu">
-                                    <li>
-                                        <a href="Test" title="Test">Test</a>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>*@
-                    @* -- *@
 
-                    @if (menus != null)
-                    {
-                        foreach (var menu in menus)
-                        {
-                            currentSubMenus = new List<ETSubMenu>();
-                            currentSubMenus = subMenus.Where(x => x.MenuID == menu.MenuID && x.Status && x.IsMainMenu).ToList();
-
-                            if (currentSubMenus.Count > 0)
+            <nav class="navbar navbar-default bg-primary col-lg-12">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav cater-menu">
+                            @if (menus != null)
                             {
-                                <li class="dropdown">
-                                    <a class="dropdown-toggle" href="#" data-toggle="dropdown" title="@menu.MenuName">@menu.MenuName<i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                                    <ul aria-labelledby="download" class="dropdown-menu">
-                                        @foreach (var submenu in currentSubMenus)
-                                        {
-                                            <li>
-                                                <a href=@submenu.SubMenuUrl title="@submenu.SubMenuName">@submenu.SubMenuName</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                </li>
-                            }
-                            else
-                            {
-                                <li class="dropdown">
-                                    <a class="" href="@menu.MenuUrl" data-toggle="dropdown" title="@menu.MenuName">@menu.MenuName</a>
-                                </li>
-                            }
-                        }
-                    }
+                                foreach (var menu in menus)
+                                {
+                                    currentSubMenus = new List<ETSubMenu>();
+                                    currentSubMenus = subMenus.Where(x => x.MenuID == menu.MenuID && x.Status && x.IsMainMenu).ToList();
 
-                </ul>
+                                    if (currentSubMenus.Count > 0)
+                                    {
+                                        <li class="dropdown">
+                                            <a class="dropdown-toggle" href="#" data-toggle="dropdown" title="@menu.MenuName">@menu.MenuName<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                            <ul aria-labelledby="download" class="dropdown-menu">
+                                                @foreach (var submenu in currentSubMenus)
+                                                {
+                                                    <li>
+                                                        <a href=@submenu.SubMenuUrl title="@submenu.SubMenuName">@submenu.SubMenuName</a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li class="dropdown">
+                                            <a class="" href="@menu.MenuUrl" data-toggle="dropdown" title="@menu.MenuName">@menu.MenuName</a>
+                                        </li>
+                                    }
+                                }
+                            }
 
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="customprofile">
-                        <a data-toggle="dropdown" class="dropdown-toggle pull-left" href="javascript:void(0);" aria-expanded="true"><i class="fa fa-user" aria-hidden="true"></i><span>@Session["UserName"]</span> <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="header-right">
+            <div class="profile_details_left">
+                <!--notifications of menu start -->
+                <ul class="nofitications-dropdown">
+                    <li class="dropdown head-dpdn">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-envelope"></i><span class="badge">3</span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="/CommonUser/PasswordChange" title="Change Password"><i class="fa fa-cog"></i><span>Change Password</span></a></li>
-                            <li><a href="/CommonUser/Profiles"><i class="fa fa-sign-out"></i> <span>Profile</span></a></li>
-                            @*<li><a href="/login/Forgot Password"><i class="fa fa-sign-out"></i> <span>Forgot Password</span></a></li>*@
-                            <li><a href="/login/logout"><i class="fa fa-sign-out"></i> <span>Logout</span></a></li>
+                            <li>
+                                <div class="notification_header">
+                                    <h3>You have 3 new messages</h3>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="user_img"><img src="images/p4.png" alt=""></div>
+                                    <div class="notification_desc">
+                                        <p>Lorem ipsum dolor</p>
+                                        <p><span>1 hour ago</span></p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                            <li class="odd">
+                                <a href="#">
+                                    <div class="user_img"><img src="images/p2.png" alt=""></div>
+                                    <div class="notification_desc">
+                                        <p>Lorem ipsum dolor </p>
+                                        <p><span>1 hour ago</span></p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="user_img"><img src="images/p3.png" alt=""></div>
+                                    <div class="notification_desc">
+                                        <p>Lorem ipsum dolor</p>
+                                        <p><span>1 hour ago</span></p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                            <li>
+                                <div class="notification_bottom">
+                                    <a href="#">See all messages</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown head-dpdn">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-bell"></i><span class="badge blue">3</span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="notification_header">
+                                    <h3>You have 3 new notification</h3>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="user_img"><img src="images/p5.png" alt=""></div>
+                                    <div class="notification_desc">
+                                        <p>Lorem ipsum dolor</p>
+                                        <p><span>1 hour ago</span></p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                            <li class="odd">
+                                <a href="#">
+                                    <div class="user_img"><img src="images/p6.png" alt=""></div>
+                                    <div class="notification_desc">
+                                        <p>Lorem ipsum dolor</p>
+                                        <p><span>1 hour ago</span></p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="user_img"><img src="images/p7.png" alt=""></div>
+                                    <div class="notification_desc">
+                                        <p>Lorem ipsum dolor</p>
+                                        <p><span>1 hour ago</span></p>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </a>
+                            </li>
+                            <li>
+                                <div class="notification_bottom">
+                                    <a href="#">See all notifications</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown head-dpdn">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false"><i class="fa fa-tasks"></i><span class="badge blue1">9</span></a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <div class="notification_header">
+                                    <h3>You have 8 pending task</h3>
+                                </div>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="task-info">
+                                        <span class="task-desc">Database update</span><span class="percentage">40%</span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="progress progress-striped active">
+                                        <div class="bar yellow" style="width:40%;"></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="task-info">
+                                        <span class="task-desc">Dashboard done</span><span class="percentage">90%</span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="progress progress-striped active">
+                                        <div class="bar green" style="width:90%;"></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="task-info">
+                                        <span class="task-desc">Mobile App</span><span class="percentage">33%</span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="progress progress-striped active">
+                                        <div class="bar red" style="width: 33%;"></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div class="task-info">
+                                        <span class="task-desc">Issues fixed</span><span class="percentage">80%</span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                    <div class="progress progress-striped active">
+                                        <div class="bar  blue" style="width: 80%;"></div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li>
+                                <div class="notification_bottom">
+                                    <a href="#">See all pending tasks</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="clearfix"> </div>
+            </div>
+            <!--notification menu end -->
+            <div class="profile_details">
+                <ul>
+                    <li class="dropdown profile_details_drop">
+                        <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <div class="profile_img">
+                                <span class="prfil-img"><img src="~/Content/Home/images/p1.png" alt=""> </span>
+                                <div class="user-name">
+                                    <p>@Session["UserName"]</p>
+                                    <span>@Session["RoleName"]</span>
+                                </div>
+                                <i class="fa fa-angle-down lnr"></i>
+                                <i class="fa fa-angle-up lnr"></i>
+                                <div class="clearfix"></div>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu drp-mnu">
+                            <li> <a href="/CommonUser/PasswordChange"><i class="fa fa-support"></i> Change Password</a> </li>
+                            <li> <a href="/login/Forgot Password"><i class="fa fa-cog"></i> Forgot Password</a> </li>
+                            <li> <a href="/CommonUser/Profiles"><i class="fa fa-user"></i> Profile</a> </li>
+                            <li> <a href="/login/logout"><i class="fa fa-sign-out"></i> Logout</a> </li>
                         </ul>
                     </li>
                 </ul>
             </div>
+            <div class="clearfix"> </div>
         </div>
-    </nav>
+        <div class="clearfix"> </div>
+    </div>
 
-    <div class="body-content">
+    <div style="margin-top: 115px;">
         <div class="site-loader" style="display:none;"><div class="siteloader-in"></div></div>
         @RenderBody()
         @Html.Partial("_FooterLayout")

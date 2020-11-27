@@ -19,6 +19,15 @@ namespace ExpenseTracker
                 "~/Content/Admin/css/Styles.css" //New
                 ));
 
+            bundles.Add(new StyleBundle("~/bundles/NewLogincss").Include(
+                "~/Content/Login/Css/Login.css"
+                ));
+
+
+            bundles.Add(new ScriptBundle("~/bundles/NewLoginjs").Include(
+                "~/Content/Login/js/main.js"
+                ));
+
             bundles.Add(new StyleBundle("~/bundles/Front/css").Include(
              "~/Content/Front/css/jquery.toast.min.css",
              "~/Content/Front/css/bootstrap.min.css",

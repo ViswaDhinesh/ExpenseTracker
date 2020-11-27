@@ -949,7 +949,7 @@ table.table-bordered.dataTable tbody th.wrap-notes, table.table-bordered.dataTab
 
 .navbar-default {
     background-color: #fff;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    /*border: 1px solid rgba(0, 0, 0, 0.1);*/
 }
 
     .navbar-default .navbar-nav > li > a {
